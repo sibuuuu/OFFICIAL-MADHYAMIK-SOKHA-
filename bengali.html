@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0A2547">
+<title>বাংলা সাজেশন | Madhyamik Sokha Web</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* ═══════════════════════════════════════════════════════════
+   VARIABLES & RESET
+   ═══════════════════════════════════════════════════════════ */
+:root{
+  --primary:        #12386E; 
+  --primary-dark:   #0A2547;
+  --primary-light:  #2B6CB0;
+  --accent:         #F59E0B;
+  --accent-hover:   #D97706;
+  
+  --bg:             #F4F7FC;
+  --card:           #FFFFFF;
+  --text:           #1E293B;
+  --text-soft:      #475569;
+  --muted:          #94A3B8;
+  --line:           #E2E8F0;
+  
+  --success:        #10B981;
+  --success-bg:     #ECFDF5;
+  --danger:         #EF4444;
+  --danger-bg:      #FEF2F2;
+  
+  --radius:         24px;
+  --radius-sm:      16px;
+  --shadow-sm:      0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  --shadow-md:      0 10px 25px -3px rgba(0, 0, 0, 0.08);
+  --shadow-lg:      0 20px 40px -5px rgba(26, 54, 93, 0.15);
+  --maxw:           820px;
+}
+
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+body{
+  font-family:'Noto Sans Bengali', system-ui, -apple-system, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  font-size:16px;
+  line-height:1.7;
+  padding-bottom:calc(30px + env(safe-area-inset-bottom));
+}
+a{ text-decoration:none; color:inherit; }
+button{ font-family:inherit; cursor:pointer; border:none; background:none; }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+.animate-up { animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+/* ═══════════════════════════════════════════════════════════
+   HEADER
+   ═══════════════════════════════════════════════════════════ */
+.app-header {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+  color: #fff;
+  padding: 16px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: var(--shadow-sm);
+}
+.hdr-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.back-btn {
+  width: 38px; height: 38px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.back-btn:hover { background: rgba(255,255,255,0.25); }
+.hdr-icon {
+  width: 38px; height: 38px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.hdr-text h1 { font-size: 17px; font-weight: 700; }
+.hdr-text p { font-size: 12px; color: #A0AEC0; }
+
+/* ═══════════════════════════════════════════════════════════
+   MAIN LAYOUT
+   ═══════════════════════════════════════════════════════════ */
+main {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 20px 16px;
+}
+
+/* Ad Slots */
+.ad-container {
+  width: 100%;
+  display: flex; justify-content: center; align-items: center;
+  margin: 16px 0;
+  min-height: 50px;
+  overflow: hidden;
+}
+.ad-container iframe { border: none; }
+
+/* Section Titles */
+.section-title {
+  font-size: 18px; font-weight: 800; color: var(--primary-dark);
+  margin: 24px 0 16px; display: flex; align-items: center; gap: 10px;
+  background: #EAF1FB; padding: 12px 16px; border-radius: var(--radius-sm);
+  border-left: 4px solid var(--primary);
+}
+.section-title i { color: var(--primary); font-size: 20px; }
+
+/* Chapter Accordion */
+.chapter-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.chapter-header {
+  width: 100%;
+  padding: 16px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: #fff; text-align: left;
+  font-size: 16px; font-weight: 700; color: var(--primary-dark);
+  transition: background 0.2s;
+}
+.chapter-header:hover { background: #F8FAFD; }
+.chapter-header.active { background: #F0F4FA; color: var(--primary); border-bottom: 1px solid var(--line); }
+.chapter-header i { color: var(--accent); transition: transform 0.3s; font-size: 14px; }
+.chapter-header.active i { transform: rotate(180deg); }
+
+.chapter-body {
+  display: none;
+  padding: 20px;
+  background: #FCFDFF;
+}
+.chapter-body.active { display: block; animation: fadeUp 0.3s ease; }
+
+/* ── LONG QUESTIONS ── */
+.long-q {
+  margin-bottom: 24px;
+  border-bottom: 1px dashed var(--line);
+  padding-bottom: 20px;
+}
+.long-q:last-child { margin-bottom: 0; border-bottom: none; padding-bottom: 0; }
+.long-q .q-text {
+  font-size: 15.5px; font-weight: 600; color: var(--text); margin-bottom: 12px;
+  line-height: 1.6;
+}
+.write-area {
+  background: repeating-linear-gradient(to bottom, transparent 0, transparent 28px, #E2E8F0 28px, #E2E8F0 29px);
+  min-height: 120px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px;
+}
+.write-area span {
+  font-size: 12px; color: var(--muted); font-style: italic;
+}
+
+/* ── SHORT QUESTIONS (MCQ) ── */
+.short-q {
+  margin-bottom: 20px;
+  border-bottom: 1px dashed var(--line);
+  padding-bottom: 20px;
+}
+.short-q:last-child { margin-bottom: 0; border-bottom: none; padding-bottom: 0; }
+.short-q .q-text {
+  font-size: 15.5px; font-weight: 600; color: var(--text); margin-bottom: 12px;
+  line-height: 1.6;
+}
+.opts {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.opt-btn {
+  background: #fff;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex; align-items: center; gap: 10px;
+  font-size: 14.5px; color: var(--text-soft); text-align: left;
+  transition: all 0.2s;
+}
+.opt-btn:hover { border-color: var(--primary-light); background: #F8FAFD; }
+.opt-btn:disabled { cursor: not-allowed; }
+.opt-ltr {
+  width: 24px; height: 24px;
+  border-radius: 6px; background: #EAF1FB; color: var(--primary);
+  font-size: 12px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+/* Answer States */
+.opt-btn.correct { border-color: var(--success); background: var(--success-bg); color: #065F46; }
+.opt-btn.correct .opt-ltr { background: var(--success); color: #fff; }
+.opt-btn.wrong { border-color: var(--danger); background: var(--danger-bg); color: #991B1B; }
+.opt-btn.wrong .opt-ltr { background: var(--danger); color: #fff; }
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     ★ ADSTERRA POPUNDER & SOCIAL BAR ★
+     ═══════════════════════════════════════════════════════════ -->
+<script data-cfasync="false" src="https://abscloud.org/1/4d482fd3597918ddb54ba328e416dee0"></script>
+<script data-cfasync="false" src="https://bauval.org/14/15746e84cd36001e9d3e4ac7c874823d"></script>
+
+
+<header class="app-header">
+  <div class="hdr-inner">
+    <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+    <div class="hdr-icon"><i class="fa-solid fa-book-open"></i></div>
+    <div class="hdr-text">
+      <h1>বাংলা সাজেশন</h1>
+      <p>Madhyamik Sokha Web</p>
+    </div>
+  </div>
+</header>
+
+<main class="animate-up">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       ★ ADSTERRA BANNER (Top) ★
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="ad-container" id="ad-bengali-top"></div>
+
+  <!-- ═══════════ BORO PROSHNO (LONG QUESTIONS) ═══════════ -->
+  <h2 class="section-title"><i class="fa-solid fa-pen-nib"></i> বড় প্রশ্ন (৩ ও ৫ নম্বর)</h2>
+  <div id="long-container"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       ★ ADSTERRA NATIVE (Mid Transition) ★
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="ad-container" id="ad-bengali-mid" style="min-height:250px;"></div>
+
+  <!-- ═══════════ CHOTO PROSHNO (SHORT QUESTIONS) ═══════════ -->
+  <h2 class="section-title"><i class="fa-solid fa-check-square"></i> ছোট প্রশ্ন ও উত্তর</h2>
+  <div id="short-container"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       ★ ADSTERRA BANNER (Bottom) ★
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="ad-container" id="ad-bengali-bottom" style="margin-top:30px;"></div>
+
+</main>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   ১. বাংলা ডেটা (Long & Short Questions)
+   ═══════════════════════════════════════════════════════════ */
+const bengaliData = {
+  long: [
+    {
+      chapter: '১. জ্ঞানচক্ষু (আশাপূর্ণা দেবী)',
+      questions: [
+        '"পৃথিবীতে এমন অলৌকিক ঘটনাও ঘটে!"—কোন ঘটনাকে অলৌকিক বলা হয়েছে? তাকে অলৌকিক বলার কারণ কী? (৩)',
+        '"তপন আর পড়তে পারে না। বোবার মতো বসে থাকে।"—তপনের এমন অবস্থার কারণ কী? (৩)',
+        '"আজ যেন তার জীবনের সবচেয়ে দুঃখের দিন।"—বক্তা কে? দিনটিকে সবচেয়ে দুঃখের দিন মনে হওয়ার কারণ কী? (৫)',
+        'জ্ঞানচক্ষু গল্প অবলম্বনে তপন চরিত্রটি বিশ্লেষণ করো। (৫)'
+      ]
+    },
+    {
+      chapter: '২. অসুখী একজন (পাবলো নেরুদা)',
+      questions: [
+        '"আর সেই মেয়েটি আমার অপেক্ষায়"—মেয়েটির অপেক্ষার মধ্য দিয়ে কবি কী বোঝাতে চেয়েছেন? (৩)',
+        '"তারপর যুদ্ধ এল"—যুদ্ধ আসার পর কী কী ঘটল তার বর্ণনা দাও। (৫)',
+        'অসুখী একজন কবিতায় যুদ্ধ ও ধ্বংসের যে মর্মস্পর্শী ছবি ফুটে উঠেছে, তা নিজের ভাষায় লেখো। (৫)'
+      ]
+    },
+    {
+      chapter: '৩. আয় আরো বেঁধে বেঁধে থাকি (শঙ্খ ঘোষ)',
+      questions: [
+        '"আমাদের ইতিহাস নেই / অথবা এমনি ইতিহাস"—আমাদের ইতিহাস না থাকার কারণ কী? (৩)',
+        '"আয় আরো হাতে হাত রেখে / আয় আরো বেঁধে বেঁধে থাকি"—কবির এই আহ্বানের পেছনের কারণগুলি বিশ্লেষণ করো। (৫)'
+      ]
+    },
+    {
+      chapter: '৪. বহুরূপী (সুবোধ ঘোষ)',
+      questions: [
+        '"আপনি কি ভগবানের চেয়েও বড়ো?"—কাকে, কেন এ কথা বলা হয়েছে? (৩)',
+        '"অদৃষ্ট কখনো হরিদার এই ভুল ক্ষমা করবে না।"—হরিদা কী ভুল করেছিলেন? অদৃষ্ট ক্ষমা না করার পরিণাম কী? (৩)',
+        '"হরিদার জীবনে সত্যিই একটা নাটকীয় বৈচিত্র্য আছে।"—হরিদার জীবনের নাটকীয় বৈচিত্র্যের পরিচয় দাও। (৫)',
+        'বিরাগীবেশী হরিদার চরিত্র ও তাঁর বলা কথাগুলি জগদীশবাবুর উপর কী প্রভাব ফেলেছিল তা আলোচনা করো। (৫)'
+      ]
+    },
+    {
+      chapter: '৫. আফ্রিকা (রবীন্দ্রনাথ ঠাকুর)',
+      questions: [
+        '"চিরচিহ্ন দিয়ে গেল তোমার অপমানিত ইতিহাসে"—কাদের কথা বলা হয়েছে? তারা কীভাবে অপমানিত ইতিহাসে চিরচিহ্ন দিয়ে গেল? (৩)',
+        'আফ্রিকা কবিতায় আফ্রিকার জন্ম ও তার ওপর সাম্রাজ্যবাদীদের নির্মম অত্যাচারের যে বর্ণনা আছে তা লেখো। (৫)'
+      ]
+    },
+    {
+      chapter: '৬. পথের দাবী (শরৎচন্দ্র চট্টোপাধ্যায়)',
+      questions: [
+        '"বাবুটির স্বাস্থ্য গেছে, কিন্তু শখ ষোলো আনাই বজায় আছে"—বাবুটি কে? তার সাজসজ্জার পরিচয় দাও। (৩)',
+        '"পলিটিক্যাল সাসপেক্ট সব্যসাচী মল্লিককে নিমাইবাবুর সামনে হাজির করা হলো।"—সব্যসাচীকে হাজির করার পর পুলিশ স্টেশনে কী পরিস্থিতি তৈরি হয়েছিল? (৫)'
+      ]
+    },
+    {
+      chapter: '৭. অভিষেক (মাইকেল মধুসূদন দত্ত)',
+      questions: [
+        '"নমি পুত্র পিতার চরণে"—পিতা ও পুত্রের কথোপকথন নিজের ভাষায় লেখো। (৫)',
+        'অভিষেক কবিতা অবলম্বনে ইন্দ্রজিতের দেশপ্রেম ও বীরত্বের পরিচয় দাও। (৫)'
+      ]
+    },
+    {
+      chapter: '৮. হারিয়ে যাওয়া কালি কলম (শ্রীপান্থ)',
+      questions: [
+        '"কলমকে বলা হয় তলোয়ারের চেয়ে শক্তিধর।"—প্রাবন্ধিক এ কথা কেন বলেছেন? (৫)',
+        'ফাউন্টেন পেন কীভাবে তৈরি হয়েছিল বা এর জন্ম ইতিহাস নিজের ভাষায় লেখো। (৫)',
+        'দোয়াত-কালি তৈরির প্রাচীন পদ্ধতিটি প্রবন্ধ অবলম্বনে লেখো। (৫)'
+      ]
+    },
+    {
+      chapter: '৯. নদীর বিদ্রোহ (মানিক বন্দ্যোপাধ্যায়)',
+      questions: [
+        '"নিজের এই পাগলামিতে যেন আনন্দই উপভোগ করে।"—কার পাগলামির কথা বলা হয়েছে? তার এই পাগলামির পরিচয় দাও। (৩)',
+        'নদীর বিদ্রোহ গল্প অবলম্বনে নদেরচাঁদের নদীপ্রেমের পরিচয় দাও। (৫)'
+      ]
+    },
+    {
+      chapter: '১০. প্রলয়োল্লাস (কাজী নজরুল ইসলাম)',
+      questions: [
+        '"তোরা সব জয়ধ্বনি কর!"—কবি কাদের উদ্দেশ্যে এই আহ্বান করেছেন? কেন তিনি জয়ধ্বনি করতে বলেছেন? (৫)',
+        'প্রলয়োল্লাস কবিতায় ধ্বংস ও সৃজনের যে দ্বৈত ছবি ফুটে উঠেছে, তা আলোচনা করো। (৫)'
+      ]
+    },
+    {
+      chapter: '১১. সিন্ধু-তীরে (সৈয়দ আলাওল)',
+      questions: [
+        '"কৃপা করি দিল স্থান"—কে, কাকে স্থান দিয়েছিল? কীভাবে এই কৃপা লাভ হয়েছিল? (৩)',
+        'সমুদ্রকন্যা পদ্মার চরিত্রটি সিন্ধু-তীরে কাব্যাংশ অবলম্বনে বিশ্লেষণ করো। (৫)',
+        'পদ্মা ও তার সখীরা কীভাবে অচৈতন্য পদ্মাবতীর প্রাণরক্ষা করেছিল? (৫)'
+      ]
+    },
+    {
+      chapter: '১২. অস্ত্রের বিরুদ্ধে গান (জয় গোস্বামী)',
+      questions: [
+        '"অস্ত্র ফ্যাল, অস্ত্র রাখো পায়ে"—কবির এই আবেদনের তাৎপর্য বিশ্লেষণ করো। (৫)'
+      ]
+    },
+    {
+      chapter: '১৩. অদল বদল (পান্নালাল প্যাটেল)',
+      questions: [
+        '"ও আমাকে শিখিয়েছে, খাঁটি জিনিস কাকে বলে।"—কে, কাকে শিখিয়েছে? খাঁটি জিনিসটি কী? (৩)',
+        'অদল বদল গল্প অবলম্বনে অমৃত ও ইসাবের বন্ধুত্বের গভীরতার পরিচয় দাও। (৫)',
+        '"অমৃতের জবাব আমাকে বদলে দিয়েছে।"—অমৃত কী জবাব দিয়েছিল? তা কীভাবে বক্তাকে বদলে দিয়েছিল? (৫)'
+      ]
+    },
+    {
+      chapter: '১৪. বাংলা ভাষায় বিজ্ঞান (রাজশেখর বসু)',
+      questions: [
+        'বাংলা ভাষায় বিজ্ঞান চর্চার ক্ষেত্রে প্রাবন্ধিক কী কী বাধার কথা বলেছেন এবং তা উত্তরণের উপায় কী? (৫)',
+        '"আমাদের আলংকারিকগণ শব্দের ত্রিবিধ কথা বলেছেন।"—এই ত্রিবিধ বিষয় কী? বিজ্ঞান চর্চায় এর গুরুত্ব আলোচনা করো। (৫)'
+      ]
+    },
+    {
+      chapter: '১৫. সিরাজদ্দৌলা (শচীন্দ্রনাথ সেনগুপ্ত)',
+      questions: [
+        '"বাংলার এই দুর্দিনে আমাকে ত্যাগ করবেন না।"—সিরাজ কাদের উদ্দেশ্যে, কেন এই কথা বলেছেন? (৪)',
+        'সিরাজদ্দৌলা নাট্যাংশ অবলম্বনে সিরাজদ্দৌলার চরিত্র বিশ্লেষণ করো। (৪)',
+        'ঘসেটি বেগম চরিত্রের পরিচয় দাও। (৪)',
+        '"পলাশি, রাক্ষসী পলাশি!"—উক্তিটির তাৎপর্য বিশ্লেষণ করো। (৪)'
+      ]
+    },
+    {
+      chapter: '১৬. কোনি (মতি নন্দী)',
+      questions: [
+        '"ফাইট কোনি ফাইট"—এই শব্দবন্ধটি কীভাবে কোনির জীবনের মূলমন্ত্র হয়ে উঠেছিল? (৫)',
+        'কোনি উপন্যাসে ক্ষিতীশ সিংহ (ক্ষিদ্দা) চরিত্রের পরিচয় দাও। (৫)',
+        'দারিদ্র্য ও বঞ্চনার বিরুদ্ধে কোনির যে কঠোর জীবনসংগ্রাম, তা উপন্যাসের আলোকে আলোচনা করো। (৫)',
+        'জাতীয় সাঁতার চ্যাম্পিয়নশিপে কোনির চূড়ান্ত সাফল্যের বর্ণনা দাও। (৫)'
+      ]
+    }
+  ],
+  
+  short: [
+    {
+      chapter: '১. জ্ঞানচক্ষু',
+      questions: [
+        { q: 'জ্ঞানচক্ষু গল্পের লেখক কে?', options: ['রবীন্দ্রনাথ ঠাকুর', 'শরৎচন্দ্র চট্টোপাধ্যায়', 'আশাপূর্ণা দেবী', 'মানিক বন্দ্যোপাধ্যায়'], correct: 2 },
+        { q: 'তপনের নতুন মেসোমশাই পেশায় কী ছিলেন?', options: ['অধ্যাপক', 'ডাক্তার', 'ইঞ্জিনিয়ার', 'উকিল'], correct: 0 },
+        { q: 'তপনের লেখা প্রথম গল্পটির নাম কী ছিল?', options: ['স্কুলের দিন', 'প্রথম দিন', 'ভালোবাসার দিন', 'জীবনের প্রথম দিন'], correct: 1 },
+        { q: 'তপনের লেখা গল্পটি কোন পত্রিকায় ছাপা হয়েছিল?', options: ['দেশ', 'আনন্দমেলা', 'শুকতারা', 'সন্ধ্যাতারা'], correct: 3 },
+        { q: 'জ্ঞানচক্ষু গল্পটি আশাপূর্ণা দেবীর কোন গল্পগ্রন্থ থেকে নেওয়া হয়েছে?', options: ['কুমকুম', 'বাক্স বদল', 'জল আর আগুন', 'শশীবাবুর সংসার'], correct: 0 }
+      ]
+    },
+    {
+      chapter: '২. অসুখী একজন',
+      questions: [
+        { q: 'অসুখী একজন কবিতাটি কার লেখা?', options: ['জীবনানন্দ দাশ', 'পাবলো নেরুদা', 'শঙ্খ ঘোষ', 'জয় গোস্বামী'], correct: 1 },
+        { q: 'অসুখী একজন কবিতাটি বাংলায় তরজমা করেছেন কে?', options: ['সুনীল গঙ্গোপাধ্যায়', 'শক্তি চট্টোপাধ্যায়', 'নবারুণ ভট্টাচার্য', 'বুদ্ধদেব বসু'], correct: 2 },
+        { q: 'তারা আর স্বপ্ন দেখতে পারল না—কারা স্বপ্ন দেখতে পারল না?', options: ['শিশুরা', 'যোদ্ধারা', 'সাধারণ মানুষ', 'শান্ত হলুদ দেবতারা'], correct: 3 },
+        { q: 'অসুখী একজন কবিতায় যুদ্ধ কী রূপে এল?', options: ['কালবৈশাখী ঝড়ের মতো', 'বন্যা ও মহামারীর মতো', 'রক্তের এক আগ্নেয়পাহাড়ের মতো', 'মৃত্যুদূতের মতো'], correct: 2 }
+      ]
+    },
+    {
+      chapter: '৩. আয় আরো বেঁধে বেঁধে থাকি',
+      questions: [
+        { q: 'আয় আরো বেঁধে বেঁধে থাকি কবিতাটির রচয়িতা কে?', options: ['শঙ্খ ঘোষ', 'সুভাষ মুখোপাধ্যায়', 'শক্তি চট্টোপাধ্যায়', 'অরুণ মিত্র'], correct: 0 },
+        { q: 'আমাদের ডানপাশে কী রয়েছে?', options: ['ধস', 'গিরিখাত', 'বোমারু', 'হিমবাহ'], correct: 1 },
+        { q: 'আমাদের বাঁয়ে কী রয়েছে?', options: ['গিরিখাত', 'হিমবাহ', 'ধস', 'বোমারু'], correct: 2 },
+        { q: 'আমাদের মাথায় কী রয়েছে?', options: ['বোমারু', 'আকাশ', 'মেঘ', 'হিমবাহ'], correct: 0 }
+      ]
+    },
+    {
+      chapter: '৪. বহুরূপী',
+      questions: [
+        { q: 'বহুরূপী গল্পের লেখক কে?', options: ['সুবোধ ঘোষ', 'মানিক বন্দ্যোপাধ্যায়', 'প্রমথনাথ বিশী', 'বিভূতিভূষণ বন্দ্যোপাধ্যায়'], correct: 0 },
+        { q: 'বহুরূপী গল্পে হরিদা প্রথম কী সেজে রাস্তায় বেরিয়েছিলেন?', options: ['বাইজি', 'পাগল', 'পুলিশ', 'কাবুলিওয়ালা'], correct: 1 },
+        { q: 'জগদীশবাবু হরিদাকে কত টাকা প্রণামী দিতে চেয়েছিলেন?', options: ['পাঁচশো এক টাকা', 'দশ টাকা', 'একশো এক টাকা', 'পঞ্চাশ টাকা'], correct: 2 },
+        { q: 'স্কুলের মাস্টারমশাই হরিদাকে পুলিশ ভেবে কত ঘুষ দিয়েছিলেন?', options: ['আট আনা', 'এক টাকা', 'চার আনা', 'দু টাকা'], correct: 0 }
+      ]
+    },
+    {
+      chapter: '৫. পথের দাবী',
+      questions: [
+        { q: 'গিরীশ মহাপাত্রের মাথার চুলে কীসের গন্ধ ছিল?', options: ['নেবুর তেলের', 'নারকেল তেলের', 'জবা কুসুম তেলের', 'সরষের তেলের'], correct: 0 },
+        { q: 'গিরীশ মহাপাত্রের পায়ে কী ধরনের মোজা ছিল?', options: ['সাদা সুতির', 'কালো পশমের', 'বাঘ আঁকা সবুজ রঙের ফুলমোজা', 'লাল রঙের'], correct: 2 },
+        { q: 'সব্যসাচী মল্লিকের ছদ্মনাম কী ছিল?', options: ['অপূর্ব', 'গিরীশ মহাপাত্র', 'রামদাস তলওয়ালকর', 'তেওয়ারি'], correct: 1 }
+      ]
+    },
+    {
+      chapter: '৬. হারিয়ে যাওয়া কালি কলম',
+      questions: [
+        { q: 'হারিয়ে যাওয়া কালি কলম প্রবন্ধে লেখক শ্রীপান্থ-এর প্রকৃত নাম কী?', options: ['রাজশেখর বসু', 'নিখিল সরকার', 'বলাইচাঁদ মুখোপাধ্যায়', 'সমরেশ বসু'], correct: 1 },
+        { q: 'ফাউন্টেন পেন বাংলায় কী নামে পরিচিতি পেয়েছিল?', options: ['পালক কলম', 'খাগের কলম', 'ঝরনা কলম', 'বল পেন'], correct: 2 },
+        { q: 'ঝরনা কলম নামটি কার দেওয়া বলে মনে করা হয়?', options: ['শরৎচন্দ্র চট্টোপাধ্যায়', 'বঙ্কিমচন্দ্র চট্টোপাধ্যায়', 'রবীন্দ্রনাথ ঠাকুর', 'সত্যজিৎ রায়'], correct: 2 },
+        { q: 'কলমের আঘাতে কোন বাঙালি সাহিত্যিকের মৃত্যু হয়েছিল?', options: ['বঙ্কিমচন্দ্র চট্টোপাধ্যায়', 'ত্রৈলোক্যনাথ মুখোপাধ্যায়', 'দীনবন্ধু মিত্র', 'মধুসূদন দত্ত'], correct: 1 }
+      ]
+    },
+    {
+      chapter: '৭. নদীর বিদ্রোহ',
+      questions: [
+        { q: 'নদীর বিদ্রোহ গল্পে নদেরচাঁদের বয়স কত ছিল?', options: ['তিরিশ বছর', 'পঁচিশ বছর', 'পঁয়ত্রিশ বছর', 'চল্লিশ বছর'], correct: 0 },
+        { q: 'নদেরচাঁদকে কোন ট্রেনটি পিষে দিয়ে চলে গেল?', options: ['৫ নং আপ মেল', '৭ নং ডাউন প্যাসেঞ্জার', '১০ নং মালগাড়ি', '৩ নং এক্সপ্রেস'], correct: 1 },
+        { q: 'নদীর বিদ্রোহ গল্পের লেখক কে?', options: ['মানিক বন্দ্যোপাধ্যায়', 'তারাশঙ্কর বন্দ্যোপাধ্যায়', 'বিভূতিভূষণ বন্দ্যোপাধ্যায়', 'সমরেশ বসু'], correct: 0 }
+      ]
+    },
+    {
+      chapter: '৮. বাংলা ব্যাকরণ (কারক, সমাস, বাচ্য)',
+      questions: [
+        { q: 'ক্রিয়াপদের সঙ্গে নামপদের সম্পর্ককে কী বলে?', options: ['কারক', 'সমাস', 'বিভক্তি', 'অনুসর্গ'], correct: 0 },
+        { q: 'বুলবুলিতে ধান খেয়েছে—এখানে বুলবুলিতে কোন কারক?', options: ['কর্মকারক', 'করণকারক', 'কর্তৃকারক', 'অধিকরণ কারক'], correct: 2 },
+        { q: 'তিলে তৈল হয়—তিলে কোন কারক?', options: ['অধিকরণ কারক', 'অপাদান কারক', 'করণ কারক', 'কর্ম কারক'], correct: 1 },
+        { q: 'সিংহাসন কোন সমাসের উদাহরণ?', options: ['সাধারণ কর্মধারয়', 'উপমান কর্মধারয়', 'রূপক কর্মধারয়', 'মধ্যপদলোপী কর্মধারয়'], correct: 3 },
+        { q: 'রবীন্দ্রনাথ গীতাঞ্জলি লিখেছেন—এটি কোন বাচ্যের উদাহরণ?', options: ['কর্মবাচ্য', 'কর্তৃবাচ্য', 'ভাববাচ্য', 'কর্মকর্তৃবাচ্য'], correct: 1 }
+      ]
+    }
+  ]
+};
+
+
+/* ═══════════════════════════════════════════════════════════
+   ২. রেন্ডারিং লজিক
+   ═══════════════════════════════════════════════════════════ */
+const longContainer = document.getElementById('long-container');
+const shortContainer = document.getElementById('short-container');
+const LETTERS = ['ক', 'খ', 'গ', 'ঘ'];
+let adCounter = 0; // To track how many ads loaded
+
+// Function to generate Long Questions HTML
+function renderLong() {
+  let html = '';
+  bengaliData.long.forEach((chap, idx) => {
+    const isFirst = idx === 0 ? 'active' : '';
+    
+    let questionsHtml = '';
+    chap.questions.forEach(q => {
+      questionsHtml += `
+        <div class="long-q">
+          <div class="q-text">${q}</div>
+          <div class="write-area"><span>এখানে উত্তর লিখুন...</span></div>
+        </div>
+      `;
+    });
+
+    html += `
+      <div class="chapter-card">
+        <button class="chapter-header ${isFirst}" onclick="toggleChapter(this)">
+          <span>${chap.chapter}</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="chapter-body ${isFirst}">
+          ${questionsHtml}
+        </div>
+      </div>
+    `;
+  });
+  longContainer.innerHTML = html;
+}
+
+// Function to generate Short Questions (MCQ) HTML
+function renderShort() {
+  let html = '';
+  bengaliData.short.forEach((chap, idx) => {
+    const isFirst = idx === 0 ? 'active' : '';
+    
+    let questionsHtml = '';
+    chap.questions.forEach((item, qIdx) => {
+      const opts = item.options.map((opt, oIdx) => `
+        <button class="opt-btn" onclick="checkAnswer(this, ${item.correct}, ${oIdx})">
+          <span class="opt-ltr">${LETTERS[oIdx]}</span>
+          <span>${opt}</span>
+        </button>
+      `).join('');
+
+      questionsHtml += `
+        <div class="short-q">
+          <div class="q-text">${qIdx + 1}. ${item.q}</div>
+          <div class="opts">${opts}</div>
+        </div>
+      `;
+
+      // Insert an ad every 4 questions
+      if ((qIdx + 1) % 4 === 0) {
+        questionsHtml += `
+          <!-- ADSTERRA INLINE AD (${chap.chapter} - Q${qIdx+1}) -->
+          <div class="ad-container" id="ad-inline-${adCounter}"></div>
+        `;
+        adCounter++;
+      }
+    });
+
+    html += `
+      <div class="chapter-card">
+        <button class="chapter-header ${isFirst}" onclick="toggleChapter(this)">
+          <span>${chap.chapter}</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="chapter-body ${isFirst}">
+          ${questionsHtml}
+        </div>
+      </div>
+    `;
+  });
+  shortContainer.innerHTML = html;
+
+  // Load inline ads after HTML is injected
+  for (let i = 0; i < adCounter; i++) {
+    loadAd(`ad-inline-${i}`, getAd300x250(), '300px', '250px');
+  }
+}
+
+// Accordion Toggle
+function toggleChapter(btn) {
+  const body = btn.nextElementSibling;
+  const isActive = btn.classList.contains('active');
+  
+  // Close all open chapters in the same container for cleaner UI
+  const allHeaders = btn.closest('div[id]').querySelectorAll('.chapter-header');
+  const allBodies = btn.closest('div[id]').querySelectorAll('.chapter-body');
+  
+  allHeaders.forEach(h => h.classList.remove('active'));
+  allBodies.forEach(b => b.classList.remove('active'));
+
+  // Open clicked one
+  if (!isActive) {
+    btn.classList.add('active');
+    body.classList.add('active');
+  }
+}
+
+// MCQ Check Answer
+function checkAnswer(clickedBtn, correctIdx, selectedIdx) {
+  const parent = clickedBtn.closest('.opts');
+  const allBtns = parent.querySelectorAll('.opt-btn');
+  
+  // Disable all
+  allBtns.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === correctIdx) btn.classList.add('correct');
+  });
+
+  if (selectedIdx !== correctIdx) {
+    clickedBtn.classList.add('wrong');
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   ৩. অ্যাড লোডিং (Safe Iframe Method)
+   ═══════════════════════════════════════════════════════════ */
+function getAd320x50() {
+  return `
+    <script type="text/javascript">
+      atOptions = {'key' : '7e2bfecea97b8d1c4d46994c09686617','format' : 'iframe','height' : 50,'width' : 320,'params' : {}};
+    <\/script>
+    <script type="text/javascript" src="https://bauval.org/22/7e2bfecea97b8d1c4d46994c09686617"><\/script>
+  `;
+}
+function getAd300x250() {
+  return `
+    <script type="text/javascript">
+      atOptions = {'key' : '8c14f11bb2637107aa1a4f5781c7195d','format' : 'iframe','height' : 250,'width' : 300,'params' : {}};
+    <\/script>
+    <script type="text/javascript" src="https://bauval.org/22/8c14f11bb2637107aa1a4f5781c7195d"><\/script>
+  `;
+}
+function getAdNative() {
+  return `
+    <script async="async" data-cfasync="false" src="https://bauval.org/21/f34bb8b6c4aa493eb66251b630110542"><\/script>
+    <div id="container-f34bb8b6c4aa493eb66251b630110542"></div>
+  `;
+}
+
+function loadAd(containerId, adCode, width, height) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  if (container.querySelector('iframe')) return;
+
+  const iframe = document.createElement('iframe');
+  iframe.style.width = width;
+  iframe.style.height = height;
+  iframe.style.border = 'none';
+  iframe.style.overflow = 'hidden';
+  iframe.setAttribute('scrolling', 'no');
+  
+  container.appendChild(iframe);
+
+  const doc = iframe.contentWindow.document;
+  doc.open();
+  doc.write(`
+    <html>
+      <head><style>body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; background: transparent; }</style></head>
+      <body>${adCode}</body>
+    </html>
+  `);
+  doc.close();
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   ৪. ইনিশিয়ালাইজেশন
+   ═══════════════════════════════════════════════════════════ */
+document.addEventListener("DOMContentLoaded", () => {
+  // Render HTML
+  renderLong();
+  renderShort();
+
+  // Load Main Ads
+  loadAd('ad-bengali-top', getAd320x50(), '320px', '50px');
+  loadAd('ad-bengali-mid', getAdNative(), '100%', '250px');
+  loadAd('ad-bengali-bottom', getAd300x250(), '300px', '250px');
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0A2547">
+<title>কুইজ চ্যালেঞ্জ | Madhyamik Sokha Web</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* ═══════════════════════════════════════════════════════════
+   VARIABLES & RESET
+   ═══════════════════════════════════════════════════════════ */
+:root{
+  --primary:        #12386E; 
+  --primary-dark:   #0A2547;
+  --primary-light:  #2B6CB0;
+  --accent:         #F59E0B;
+  --accent-hover:   #D97706;
+  
+  --bg:             #F4F7FC;
+  --card:           #FFFFFF;
+  --text:           #1E293B;
+  --text-soft:      #475569;
+  --muted:          #94A3B8;
+  --line:           #E2E8F0;
+  
+  --success:        #10B981;
+  --success-bg:     #ECFDF5;
+  --danger:         #EF4444;
+  --danger-bg:      #FEF2F2;
+  
+  --radius:         24px;
+  --radius-sm:      16px;
+  --shadow-sm:      0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  --shadow-md:      0 10px 25px -3px rgba(0, 0, 0, 0.08);
+  --shadow-lg:      0 20px 40px -5px rgba(26, 54, 93, 0.15);
+  --maxw:           720px;
+}
+
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+body{
+  font-family:'Noto Sans Bengali', system-ui, -apple-system, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  font-size:16px;
+  line-height:1.6;
+  min-height:100vh;
+  padding-bottom:calc(30px + env(safe-area-inset-bottom));
+}
+a{ text-decoration:none; color:inherit; }
+button{ font-family:inherit; cursor:pointer; border:none; background:none; }
+
+/* ═══════════════════════════════════════════════════════════
+   ANIMATIONS & UTILS
+   ═══════════════════════════════════════════════════════════ */
+@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fade { from { opacity:0; } to { opacity:1; } }
+@keyframes pulseLive { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
+.animate-up { animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+/* ═══════════════════════════════════════════════════════════
+   HEADER
+   ═══════════════════════════════════════════════════════════ */
+.app-header {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+  color: #fff;
+  padding: 16px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: var(--shadow-sm);
+}
+.hdr-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.back-btn {
+  width: 38px; height: 38px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.back-btn:hover { background: rgba(255,255,255,0.25); }
+.hdr-text h1 { font-size: 17px; font-weight: 700; }
+.hdr-text p { font-size: 12px; color: #A0AEC0; }
+
+/* ═══════════════════════════════════════════════════════════
+   MAIN LAYOUT & SCREENS
+   ═══════════════════════════════════════════════════════════ */
+main {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 20px 16px;
+  position: relative;
+}
+
+.screen { display: none; animation: fade 0.3s ease; }
+.screen.active { display: block; }
+
+/* ── SCREEN 1: WEEKLY ROUTINE ── */
+.section-title {
+  font-size: 18px; font-weight: 800; color: var(--primary-dark);
+  margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+}
+.section-title i { color: var(--accent); }
+
+/* Today's Quiz Card (Countdown / Live / Closed) */
+.today-card {
+  background: var(--card);
+  border: 2px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* State: LOCKED */
+.today-card.locked { background: #F8FAFD; border-color: var(--line); }
+.today-card.locked .today-icon { background: #E2E8F0; color: #94A3B8; box-shadow: none; }
+.today-card.locked .today-subject { color: var(--muted); }
+
+/* State: LIVE */
+.today-card.live { 
+  border-color: var(--success); 
+  background: linear-gradient(145deg, #ffffff, #ECFDF5);
+  animation: pulseLive 2s infinite;
+}
+.today-card.live .today-icon { background: var(--success); color: #fff; box-shadow: 0 4px 10px rgba(16,185,129,0.3); }
+.today-card.live .today-subject { color: #065F46; }
+
+/* State: CLOSED */
+.today-card.closed { background: #FEF2F2; border-color: #FECACA; }
+.today-card.closed .today-icon { background: #FCA5A5; color: #991B1B; box-shadow: none; }
+.today-card.closed .today-subject { color: #991B1B; }
+
+.today-icon {
+  width: 64px; height: 64px;
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; margin-bottom: 16px;
+  transition: all 0.3s ease;
+}
+
+.today-subject {
+  font-size: 20px; font-weight: 800;
+  margin-bottom: 6px;
+  transition: all 0.3s ease;
+}
+
+.today-status-text {
+  font-size: 14px; font-weight: 600; color: var(--text-soft);
+  margin-bottom: 16px;
+}
+
+/* Countdown Display */
+.countdown-display {
+  background: #F1F5F9;
+  border-radius: var(--radius-sm);
+  padding: 12px 20px;
+  font-size: 22px; font-weight: 800;
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 1px;
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 16px;
+}
+.countdown-display i { font-size: 18px; color: var(--accent); }
+
+/* Action Button inside Card */
+.today-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: var(--radius-sm);
+  font-size: 16px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: all 0.2s;
+}
+.today-btn.btn-disabled { background: #CBD5E1; color: #64748B; cursor: not-allowed; }
+.today-btn.btn-start { background: var(--success); color: #fff; }
+.today-btn.btn-start:hover { background: #059669; }
+.today-btn.btn-closed { background: #FECACA; color: #991B1B; cursor: not-allowed; }
+
+/* Routine Grid */
+.routine-grid {
+  display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 24px;
+}
+.routine-item {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.routine-day { font-size: 14px; font-weight: 700; color: var(--text-soft); width: 75px; }
+.routine-subj { font-size: 15px; font-weight: 800; color: var(--primary); flex: 1; text-align: center; }
+.routine-item.active-routine { border-color: var(--primary); background: #EAF1FB; }
+
+/* ── SCREEN 2: START SCREEN ── */
+.start-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 30px 20px;
+  box-shadow: var(--shadow-md);
+  text-align: center;
+}
+.start-icon {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #EAF1FB, #DCE8F8);
+  color: var(--primary);
+  font-size: 36px;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px;
+}
+.start-card h2 { font-size: 22px; font-weight: 800; color: var(--primary-dark); margin-bottom: 8px; }
+.start-card p { font-size: 14px; color: var(--text-soft); margin-bottom: 24px; }
+.rules-box {
+  background: #F8FAFD;
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  text-align: left;
+  margin-bottom: 24px;
+}
+.rule-item {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 14px; color: var(--text-soft);
+  margin-bottom: 12px;
+}
+.rule-item:last-child { margin-bottom: 0; }
+.rule-item i { color: var(--accent); font-size: 16px; width: 20px; text-align: center; }
+.btn-start {
+  width: 100%;
+  background: var(--primary);
+  color: #fff;
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.btn-start:hover { background: var(--primary-light); }
+
+/* ── SCREEN 3: QUIZ SCREEN ── */
+.progress-wrap { margin-bottom: 20px; }
+.progress-top {
+  display: flex; justify-content: space-between;
+  font-size: 13px; font-weight: 600; color: var(--text-soft);
+  margin-bottom: 8px;
+}
+.progress-top b { color: var(--primary); font-size: 15px; }
+.progress-bar {
+  height: 8px; background: var(--line); border-radius: 999px; overflow: hidden;
+}
+.progress-fill {
+  height: 100%; background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  border-radius: 999px; transition: width 0.3s ease; width: 0%;
+}
+
+.q-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 20px;
+  border-top: 4px solid var(--accent);
+}
+.q-badge {
+  display: inline-block;
+  background: #FEF3C7; color: #B45309;
+  font-size: 12px; font-weight: 700;
+  padding: 4px 12px; border-radius: 999px;
+  margin-bottom: 12px;
+}
+.q-text {
+  font-size: 17px; font-weight: 700; line-height: 1.6; color: var(--text);
+}
+.opts { display: flex; flex-direction: column; gap: 12px; }
+.opt-btn {
+  background: var(--card);
+  border: 2px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  display: flex; align-items: center; gap: 14px;
+  font-size: 15px; font-weight: 600; color: var(--text-soft);
+  text-align: left;
+  transition: all 0.15s;
+}
+.opt-btn:hover { border-color: #BFD5F2; background: #FAFCFF; }
+.opt-btn:disabled { cursor: not-allowed; }
+.opt-ltr {
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  background: #EAF1FB; color: var(--primary);
+  font-size: 14px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.opt-btn.correct { border-color: var(--success); background: var(--success-bg); color: #065F46; }
+.opt-btn.correct .opt-ltr { background: var(--success); color: #fff; }
+.opt-btn.wrong { border-color: var(--danger); background: var(--danger-bg); color: #991B1B; }
+.opt-btn.wrong .opt-ltr { background: var(--danger); color: #fff; }
+
+.btn-next {
+  width: 100%;
+  background: var(--primary);
+  color: #fff;
+  padding: 14px;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 700;
+  display: none;
+  align-items: center; justify-content: center; gap: 8px;
+  margin-top: 20px;
+  animation: fadeUp 0.3s ease;
+}
+.btn-next.show { display: flex; }
+
+/* ── SCREEN 4: RESULT SCREEN ── */
+.result-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 30px 20px;
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+}
+.result-emoji {
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  background: #FEF3C7; color: #B45309;
+  font-size: 40px;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+}
+.result-title { font-size: 24px; font-weight: 800; color: var(--primary-dark); margin-bottom: 8px; }
+.result-score {
+  font-size: 48px; font-weight: 800; color: var(--accent);
+  margin: 16px 0; line-height: 1;
+}
+.result-score span { font-size: 24px; color: var(--muted); }
+.result-msg { font-size: 15px; color: var(--text-soft); margin-bottom: 24px; }
+
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+.stat-box { background: #F8FAFD; border-radius: var(--radius-sm); padding: 16px; }
+.stat-box b { display: block; font-size: 22px; font-weight: 800; }
+.stat-box span { font-size: 12px; font-weight: 600; color: var(--muted); }
+.stat-box.correct b { color: var(--success); }
+.stat-box.wrong b { color: var(--danger); }
+
+.share-box {
+  background: linear-gradient(135deg, #EAF1FB, #DCE8F8);
+  border: 1px solid #C9D9EE;
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.share-box h3 { font-size: 16px; font-weight: 700; color: var(--primary-dark); margin-bottom: 6px; }
+.share-box p { font-size: 13px; color: var(--text-soft); margin-bottom: 14px; }
+.btn-share {
+  width: 100%; background: var(--primary); color: #fff;
+  padding: 14px; border-radius: 12px;
+  font-size: 15px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.btn-home {
+  display: block; width: 100%;
+  background: #fff; color: var(--primary);
+  border: 2px solid var(--primary);
+  padding: 14px; border-radius: 12px;
+  font-size: 15px; font-weight: 700;
+  text-align: center;
+}
+
+/* ── AD SLOTS ── */
+.ad-container {
+  width: 100%;
+  display: flex; justify-content: center; align-items: center;
+  margin: 20px 0;
+  min-height: 50px;
+  overflow: hidden;
+}
+.ad-container iframe { border: none; }
+
+@media (min-width: 600px) {
+  .routine-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     ★ ADSTERRA POPUNDER ★
+     ═══════════════════════════════════════════════════════════ -->
+<script data-cfasync="false" src="https://abscloud.org/1/4d482fd3597918ddb54ba328e416dee0"></script>
+
+<header class="app-header">
+  <div class="hdr-inner">
+    <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+    <div class="hdr-text">
+      <h1>কুইজ রুটিন</h1>
+      <p>Madhyamik Sokha Web</p>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ═══════════ SCREEN 1: WEEKLY ROUTINE ═══════════ -->
+  <section class="screen active" id="screen-routine">
+    
+    <h2 class="section-title"><i class="fa-solid fa-calendar-day"></i> আজকের কুইজ</h2>
+    
+    <!-- Today's Card (Dynamic based on time) -->
+    <div class="today-card locked" id="today-card">
+      <div class="today-icon" id="today-icon"><i class="fa-solid fa-lock"></i></div>
+      <h3 class="today-subject" id="today-subject">বাংলা কুইজ</h3>
+      <p class="today-status-text" id="today-status">অপেক্ষা করুন...</p>
+      
+      <div class="countdown-display" id="countdown-box">
+        <i class="fa-regular fa-clock"></i>
+        <span id="countdown-text">-- : -- : --</span>
+      </div>
+      
+      <button class="today-btn btn-disabled" id="today-btn">
+        <i class="fa-solid fa-lock"></i> কুইজ লকড
+      </button>
+    </div>
+
+    <!-- Top Ad -->
+    <div class="ad-container" id="ad-top-banner"></div>
+
+    <h2 class="section-title"><i class="fa-solid fa-list-check"></i> সাপ্তাহিক রুটিন</h2>
+    <div class="routine-grid" id="routine-grid">
+      <!-- Routine generated by JS -->
+    </div>
+
+    <!-- Native Ad at Bottom -->
+    <div class="ad-container" id="ad-native-banner" style="min-height: 250px;"></div>
+
+  </section>
+
+  <!-- ═══════════ SCREEN 2: START SCREEN ═══════════ -->
+  <section class="screen" id="screen-start">
+    <div class="start-card">
+      <div class="start-icon"><i class="fa-solid fa-pen-fancy"></i></div>
+      <h2 id="start-subj-name">কুইজ</h2>
+      <p>আজকের বিষয়ের ওপর নিজেকে পরীক্ষা করুন।</p>
+      
+      <div class="rules-box">
+        <div class="rule-item"><i class="fa-solid fa-list-ol"></i><span>মোট ২৫টি র‍্যান্ডম প্রশ্ন</span></div>
+        <div class="rule-item"><i class="fa-solid fa-clock"></i><span>কোনো সময়সীমা নেই, শান্তভাবে ভাবুন</span></div>
+        <div class="rule-item"><i class="fa-solid fa-circle-check"></i><span>সঠিক উত্তর সাথে সাথে দেখাবে</span></div>
+      </div>
+      
+      <button class="btn-start" id="btn-begin-quiz">
+        <i class="fa-solid fa-play"></i> কুইজ শুরু করুন
+      </button>
+    </div>
+  </section>
+
+  <!-- ═══════════ SCREEN 3: QUIZ SCREEN ═══════════ -->
+  <section class="screen" id="screen-quiz">
+    <div class="progress-wrap">
+      <div class="progress-top">
+        <span>প্রশ্ন <b id="quiz-cur">১</b> / <b id="quiz-total">২৫</b></span>
+        <span>স্কোর: <b id="quiz-score">০</b></span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="quiz-progress"></div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <span class="q-badge" id="quiz-q-num">প্রশ্ন ১</span>
+      <div class="q-text" id="quiz-q-text">প্রশ্ন লোড হচ্ছে...</div>
+    </div>
+
+    <div class="opts" id="quiz-options"></div>
+    
+    <!-- Mid-Quiz Ad -->
+    <div class="ad-container" id="ad-mid-quiz" style="display:none; margin: 24px 0;"></div>
+    
+    <button class="btn-next" id="btn-next-q">
+      পরবর্তী প্রশ্ন <i class="fa-solid fa-arrow-right"></i>
+    </button>
+  </section>
+
+  <!-- ═══════════ SCREEN 4: RESULT SCREEN ═══════════ -->
+  <section class="screen" id="screen-result">
+    <div class="result-card">
+      <div class="result-emoji" id="res-emoji"><i class="fa-solid fa-trophy"></i></div>
+      <h2 class="result-title" id="res-title">অভিনন্দন!</h2>
+      <div class="result-score" id="res-score-box"><span id="res-score">০</span> <span>/ ২৫</span></div>
+      <p class="result-msg" id="res-msg">আপনি দুর্দান্ত করেছেন।</p>
+
+      <div class="stats-grid">
+        <div class="stat-box correct">
+          <b id="res-correct">০</b><span>সঠিক</span>
+        </div>
+        <div class="stat-box wrong">
+          <b id="res-wrong">০</b><span>ভুল</span>
+        </div>
+      </div>
+
+      <!-- Result Ad -->
+      <div class="ad-container" id="ad-quiz-result"></div>
+
+      <div class="share-box">
+        <h3><i class="fa-solid fa-share-nodes"></i> বন্ধুদের সাথে শেয়ার করুন</h3>
+        <p>আপনার স্কোর আপনার ১০ জন বন্ধুকে জানান!</p>
+        <button class="btn-share" onclick="shareResult()">
+          <i class="fa-solid fa-share"></i> শেয়ার করুন
+        </button>
+      </div>
+
+      <a href="index.html" class="btn-home">হোমে ফিরুন</a>
+    </div>
+  </section>
+
+</main>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   ১. DEMO DATA (পরবর্তীতে আপনার আসল ডেটা এখানে বসাবেন)
+   ═══════════════════════════════════════════════════════════ */
+const QUIZ_DATA = {
+  'bengali': [
+    { q: 'জ্ঞানচক্ষু গল্পের লেখক কে?', options: ['রবীন্দ্রনাথ ঠাকুর', 'শরৎচন্দ্র চট্টোপাধ্যায়', 'আশাপূর্ণা দেবী', 'মানিক বন্দ্যোপাধ্যায়'], correct: 2 },
+    { q: 'তপনের নতুন মেসোমশাই পেশায় কী ছিলেন?', options: ['অধ্যাপক', 'ডাক্তার', 'ইঞ্জিনিয়ার', 'উকিল'], correct: 0 },
+    { q: 'তপনের লেখা প্রথম গল্পটির নাম কী ছিল?', options: ['স্কুলের দিন', 'প্রথম দিন', 'ভালোবাসার দিন', 'জীবনের প্রথম দিন'], correct: 1 },
+    { q: 'তপনের লেখা গল্পটি কোন পত্রিকায় ছাপা হয়েছিল?', options: ['দেশ', 'আনন্দমেলা', 'শুকতারা', 'সন্ধ্যাতারা'], correct: 3 },
+    { q: 'জ্ঞানচক্ষু গল্পটি আশাপূর্ণা দেবীর কোন গল্পগ্রন্থ থেকে নেওয়া হয়েছে?', options: ['কুমকুম', 'বাক্স বদল', 'জল আর আগুন', 'শশীবাবুর সংসার'], correct: 0 },
+    { q: 'ছোটোমাসি তপনের থেকে কত বছরের বড়ো ছিলেন?', options: ['পাঁচ বছরের', 'দশ বছরের', 'আট বছরের', 'বারো বছরের'], correct: 2 },
+    { q: 'তপন মামার বাড়িতে কেন গিয়েছিল?', options: ['গরমের ছুটিতে', 'বেড়াতে', 'পূজার ছুটিতে', 'ছোটোমাসির বিয়ে উপলক্ষে'], correct: 3 },
+    { q: 'তপন কোথায় বসে তার প্রথম গল্পটি লিখেছিল?', options: ['ঘরের কোণে', 'বাগানে', 'তিনতলার সিঁড়িতে', 'বারান্দায়'], correct: 2 },
+    { q: 'পৃথিবীতে এমন অলৌকিক ঘটনাও ঘটে!—অলৌকিক ঘটনাটি কী?', options: ['তপনের নাম ছাপার অক্ষরে প্রকাশ', 'তপনের পুরস্কার লাভ', 'মেসোর বাড়ি আসা', 'গল্প লেখা'], correct: 0 },
+    { q: 'তপন সংকল্প করে—তপনের সংকল্পটি কী ছিল?', options: ['আর কখনো গল্প লিখবে না', 'মেসোকে আর লেখা দেখাবে না', 'শুধু কবিতা লিখবে', 'নিজের লেখা নিজে গিয়ে ছাপতে দেবে'], correct: 3 },
+  ],
+  'english': [
+    { q: 'According to Swami, at what time did Samuel get most angry?', options: ['At the end of the day', 'During the prayer', 'While inspecting home lessons', 'During arithmetic class'], correct: 2 },
+    { q: 'What can the squirrel do that the mountain cannot?', options: ['Control the weather', 'Carry forests', 'Make a squirrel track', 'Crack a nut'], correct: 3 },
+    { q: 'Gandhiji\'s ashes were immersed in the Ganges at which city?', options: ['Allahabad', 'Varanasi', 'Kolkata', 'Haridwar'], correct: 0 },
+    { q: 'In My Own True Family, what was the poet looking for in the oakwood?', options: ['Firewood', 'A stag', 'A rabbit', 'An old woman'], correct: 1 },
+    { q: 'What did the old woman have in her little bag?', options: ['The poet\'s secret', 'Magical herbs', 'Gold coins', 'Oak twigs'], correct: 0 },
+    { q: 'With what did the children patch up the torn kite?', options: ['Cardboard', 'A piece of cloth', 'A newspaper', 'An old letter'], correct: 3 },
+    { q: 'What kind of life does the poet desire in Sea Fever?', options: ['A king\'s life', 'A vagrant gypsy life', 'A luxurious life', 'A peaceful village life'], correct: 1 },
+    { q: 'In The Cat, when does the cat\'s true life begin?', options: ['At midnight', 'In the evening', 'At noon', 'In the morning'], correct: 1 },
+    { q: 'In the poem The Snail, what happens when you touch the snail\'s horns?', options: ['It falls off the wall', 'It runs away quickly', 'It shrinks into its house', 'It bites you'], correct: 2 },
+    { q: 'Choose the correct phrasal verb for tolerate: I cannot _____ such insult.', options: ['put off', 'put up with', 'put down', 'put out'], correct: 1 },
+  ],
+  'mathematics': [
+    { q: 'বার্ষিক কত সরল সুদের হারে কোনো আসল ২০ বছরে দ্বিগুণ হবে?', options: ['৪%', '৮%', '১০%', '৫%'], correct: 3 },
+    { q: 'ax^2 + bx + c = 0 (a != 0) দ্বিঘাত সমীকরণের বীজদ্বয় বাস্তব ও সমান হওয়ার শর্ত কী?', options: ['b^2 = -4ac', 'b^2 = 4ac', 'b^2 < 4ac', 'b^2 > 4ac'], correct: 1 },
+    { q: 'যদি x প্রোপোরশনাল টু y হয়, তবে নিচের কোনটি সঠিক?', options: ['x - y = ধ্রুবক', 'x / y = ধ্রুবক', 'x + y = ধ্রুবক', 'x * y = ধ্রুবক'], correct: 1 },
+    { q: 'দুটি গোলকের আয়তনের অনুপাত 8:27 হলে, তাদের সমগ্রতলের ক্ষেত্রফলের অনুপাত কত?', options: ['2:9', '4:9', '2:3', '16:81'], correct: 1 },
+    { q: 'একটি অংশীদারি ব্যবসায় A ৬০০ টাকা ৫ মাসের জন্য এবং B ৫০০ টাকা ৯ মাসের জন্য নিয়োজিত করলে, তাদের লাভের অনুপাত কত হবে?', options: ['6:5', '2:3', '3:2', '5:9'], correct: 1 },
+    { q: 'ষষ্টিক পদ্ধতিতে ৬০ ডিগ্রি কোণের বৃত্তীয় মান কত?', options: ['pi / 3', 'pi / 2', 'pi / 6', 'pi / 4'], correct: 0 },
+    { q: 'যদি sin(theta) = cos(theta) হয় (যেখানে 0 <= theta <= 90 ডিগ্রি), তবে theta-এর মান কত?', options: ['৩০ ডিগ্রি', '০ ডিগ্রি', '৪৫ ডিগ্রি', '৬০ ডিগ্রি'], correct: 2 },
+    { q: '১২ মিটার দীর্ঘ, ৯ মিটার প্রশস্ত এবং ৮ মিটার উঁচু একটি ঘরে সর্বাধিক কত দৈর্ঘ্যের দণ্ড রাখা যাবে?', options: ['২১ মিটার', '১৯ মিটার', '১৫ মিটার', '১৭ মিটার'], correct: 3 },
+    { q: 'কোনো দ্বিঘাত সমীকরণের বীজদ্বয়ের সমষ্টি ৫ এবং গুণফল ৬ হলে, সমীকরণটি কী হবে?', options: ['x^2 + 5x + 6 = 0', 'x^2 - 5x + 6 = 0', 'x^2 - 5x - 6 = 0', 'x^2 + 6x - 5 = 0'], correct: 1 },
+    { q: 'অর্ধবৃত্তস্থ কোণের মান সর্বদা কত হয়?', options: ['৬০ ডিগ্রি', '১২০ ডিগ্রি', '১৮০ ডিগ্রি', '৯০ ডিগ্রি'], correct: 3 },
+  ],
+  'physical_science': [
+    { q: 'বায়ুমণ্ডলের কোন স্তরটি পৃথিবীর সবচেয়ে কাছে অবস্থিত?', options: ['মেসোস্ফিয়ার', 'ট্রপোস্ফিয়ার', 'থার্মোস্ফিয়ার', 'স্ট্র্যাটোস্ফিয়ার'], correct: 1 },
+    { q: 'নিচের কোন গ্যাসটি গ্রিনহাউস গ্যাস নয়?', options: ['কার্বন ডাইঅক্সাইড', 'অক্সিজেন', 'নাইট্রাস অক্সাইড', 'মিথেন'], correct: 1 },
+    { q: 'বয়েলের সূত্রানুযায়ী স্থির উষ্ণতায় নির্দিষ্ট ভরের গ্যাসের ক্ষেত্রে PV-এর মান কী হয়?', options: ['অসীম', 'ধ্রুবক', 'T-এর সমানুপাতিক', 'শূন্য'], correct: 1 },
+    { q: 'সেলসিয়াস স্কেলে পরম শূন্য উষ্ণতার মান কত?', options: ['-২৭৩ ডিগ্রি সে.', '২৭৩ ডিগ্রি সে.', '০ ডিগ্রি সে.', '-১০০ ডিগ্রি সে.'], correct: 0 },
+    { q: 'দাঁতের ডাক্তাররা দাঁত পরীক্ষার জন্য কোন দর্পণ ব্যবহার করেন?', options: ['সমতল দর্পণ', 'উত্তল দর্পণ', 'অবতল দর্পণ', 'অধিবৃত্তীয় দর্পণ'], correct: 2 },
+    { q: 'গাড়ির ভিউ-ফাইন্ডার হিসেবে কোন দর্পণ ব্যবহৃত হয়?', options: ['উত্তল দর্পণ', 'সমতল দর্পণ', 'অবতল দর্পণ', 'গোলীয় দর্পণ'], correct: 0 },
+    { q: 'মায়োপিয়া বা হ্রস্বদৃষ্টি দূর করতে কোন লেন্সের চশমা ব্যবহার করা হয়?', options: ['উত্তল লেন্স', 'সিলিন্ড্রিক্যাল লেন্স', 'অবতল লেন্স', 'বাইফোকাল লেন্স'], correct: 2 },
+    { q: 'হাইপারমেট্রোপিয়া বা দীর্ঘদৃষ্টি দূর করতে কোন লেন্স ব্যবহৃত হয়?', options: ['অবতল লেন্স', 'সমতল লেন্স', 'উত্তল লেন্স', 'অবতল দর্পণ'], correct: 2 },
+    { q: 'তড়িৎ আধানের SI একক কী?', options: ['ভোল্ট', 'কুলম্ব', 'অ্যাম্পিয়ার', 'ওহম'], correct: 1 },
+    { q: 'তড়িৎ প্রবাহমাত্রার SI একক কী?', options: ['অ্যাম্পিয়ার', 'ওয়াট', 'ভোল্ট', 'কুলম্ব'], correct: 0 },
+  ],
+  'life_science': [
+    { q: 'আলোর উদ্দীপনায় উদ্ভিদের অঙ্গের চলনকে কী বলে?', options: ['ফটোট্রপিক চলন', 'জিওট্রপিক চলন', 'কেমোট্রপিক চলন', 'হাইড্রোট্রপিক চলন'], correct: 0 },
+    { q: 'লজ্জাবতী লতার পাতা স্পর্শ করলে মুদে যায়—এটি কোন প্রকার চলন?', options: ['কেমোন্যাস্টিক', 'সিসমোন্যাস্টিক', 'থার্মোন্যাস্টিক', 'ফটোন্যাস্টিক'], correct: 1 },
+    { q: 'কোন উদ্ভিদ হরমোন ফল পাকাতে সাহায্য করে এবং গ্যাসীয় প্রকৃতির?', options: ['সাইটোকাইনিন', 'ইথিলিন', 'অক্সিন', 'জিব্বেরেলিন'], correct: 1 },
+    { q: 'বীজবিহীন ফল উৎপাদনের প্রক্রিয়াকে কী বলে?', options: ['পরাগযোগ', 'পার্থেনোজেনেসিস', 'পার্থেনোকার্পি', 'অ্যাপোগ্যামি'], correct: 2 },
+    { q: 'ডাবের জলে কোন উদ্ভিদ হরমোন পাওয়া যায়?', options: ['ইথিলিন', 'অক্সিন', 'জিব্বেরেলিন', 'সাইটোকাইনিন'], correct: 3 },
+    { q: 'মানবদেহের কোন গ্রন্থিকে প্রভু গ্রন্থি বা মাস্টার গ্ল্যান্ড (Master Gland) বলা হয়?', options: ['অগ্ন্যাশয়', 'থাইরয়েড', 'পিটুইটারি', 'অ্যাড্রিনাল'], correct: 2 },
+    { q: 'কোন হরমোনকে আপৎকালীন বা জরুরি হরমোন (Emergency Hormone) বলা হয়?', options: ['টেস্টোস্টেরন', 'অ্যাড্রিনালিন', 'থাইরক্সিন', 'ইনসুলিন'], correct: 1 },
+    { q: 'ইনসুলিন হরমোনের কম ক্ষরণে কোন রোগ হয়?', options: ['ডায়াবেটিস মেলিটাস (মধুমেহ)', 'বামনত্ব', 'ডায়াবেটিস ইনসিপিডাস (বহুমূত্র)', 'গলগণ্ড'], correct: 0 },
+    { q: 'থাইরক্সিন হরমোনের অভাবে শিশুদের কোন রোগ হয়?', options: ['গয়টার', 'মিক্সিডিমা', 'অ্যাক্রোমেগালি', 'ক্রেটিনিজম'], correct: 3 },
+    { q: 'স্নায়ুতন্ত্রের গঠনগত ও কার্যগত একক কী?', options: ['অ্যাক্সন', 'নেফ্রন', 'সাইনাপস', 'নিউরন'], correct: 3 },
+  ],
+  'geography': [
+    { q: 'যে প্রক্রিয়ায় ভূমির উচ্চতা বৃদ্ধি পায়, তাকে কী বলে?', options: ['আবহাওয়াবিকার', 'অবরোহণ', 'ক্ষয়ীভবন', 'আরোহণ'], correct: 3 },
+    { q: 'যে প্রক্রিয়ায় ক্ষয়ের মাধ্যমে ভূমির উচ্চতা হ্রাস পায়, তাকে কী বলে?', options: ['অবরোহণ', 'পুঞ্জিত ক্ষয়', 'আরোহণ', 'নগ্নীভবন'], correct: 0 },
+    { q: 'পৃথিবীর বৃহত্তম নদী মধ্যস্থ দ্বীপ কোনটি?', options: ['ভবানী দ্বীপ', 'মারাজো দ্বীপ', 'সাগর দ্বীপ', 'মাজুলি দ্বীপ'], correct: 1 },
+    { q: 'ভারতের বৃহত্তম নদী দ্বীপ মাজুলি কোন নদীতে অবস্থিত?', options: ['সিন্ধু', 'গোদাবরী', 'ব্রহ্মপুত্র', 'গঙ্গা'], correct: 2 },
+    { q: 'ঝুলন্ত উপত্যকা (Hanging Valley) কোন প্রাকৃতিক শক্তির ক্ষয়কার্যের ফলে গঠিত হয়?', options: ['বায়ু', 'নদী', 'সমুদ্রতরঙ্গ', 'হিমবাহ'], correct: 3 },
+    { q: 'হিমবাহের সঞ্চয়কার্যের ফলে গঠিত উল্টানো নৌকার মতো ভূমিরূপকে কী বলে?', options: ['কেম', 'গ্রাবরেখা', 'এসকার', 'ড্রামলিন'], correct: 3 },
+    { q: 'গৌর (Mushroom Rock) ও ইয়ারদাং কোন শক্তির ক্ষয়কার্যের ফলে গঠিত হয়?', options: ['বায়ু', 'হিমবাহ', 'ভৌমজল', 'নদী'], correct: 0 },
+    { q: 'মরু অঞ্চলে বায়ুর সঞ্চয়কার্যের ফলে গঠিত অর্ধচন্দ্রাকার বালিয়াড়িকে কী বলে?', options: ['ওয়াদি', 'বারখান', 'সিফ বালিয়াড়ি', 'লোয়েস'], correct: 1 },
+    { q: 'মরুভূমির শুষ্ক নদীখাতকে কী বলা হয়?', options: ['বাজাদা', 'পেডিমেন্ট', 'ওয়াদি', 'প্লায়া'], correct: 2 },
+    { q: 'পৃথিবীর বৃহত্তম উপত্যকা হিমবাহ কোনটি?', options: ['হুবার্ড (আলাস্কা)', 'গঙ্গোত্রী', 'ল্যামবার্ট', 'সিয়াচেন'], correct: 0 },
+  ],
+  'history': [
+    { q: 'জীবনস্মৃতি কার আত্মজীবনী?', options: ['সরলাদেবী চৌধুরানী', 'সত্যজিৎ রায়', 'বিপিনচন্দ্র পাল', 'রবীন্দ্রনাথ ঠাকুর'], correct: 3 },
+    { q: 'সত্তর বৎসর কার আত্মজীবনী?', options: ['বিপিনচন্দ্র পাল', 'রবীন্দ্রনাথ ঠাকুর', 'সুভাষচন্দ্র বসু', 'সুরেন্দ্রনাথ বন্দ্যোপাধ্যায়'], correct: 0 },
+    { q: 'জীবনের ঝরাপাতা গ্রন্থটির রচয়িতা কে?', options: ['রাসসুন্দরী দেবী', 'কাদম্বিনী গঙ্গোপাধ্যায়', 'সরলাদেবী চৌধুরানী', 'স্বর্ণকুমারী দেবী'], correct: 2 },
+    { q: 'ভারতের নিম্নবর্গের ইতিহাস চর্চার জনক কাকে বলা হয়?', options: ['সুমিত সরকার', 'রণজিৎ গুহ', 'যদুনাথ সরকার', 'রমেশচন্দ্র মজুমদার'], correct: 1 },
+    { q: 'সোমপ্রকাশ পত্রিকার সম্পাদক কে ছিলেন?', options: ['হরিশচন্দ্র মুখোপাধ্যায়', 'উমেশচন্দ্র দত্ত', 'ঈশ্বরচন্দ্র বিদ্যাসাগর', 'দ্বারকানাথ বিদ্যাভূষণ'], correct: 3 },
+    { q: 'বাংলা ভাষায় প্রকাশিত প্রথম সংবাদপত্র কোনটি?', options: ['সমাচার দর্পণ', 'সংবাদ প্রভাকর', 'সোমপ্রকাশ', 'বামাবোধিনী'], correct: 0 },
+    { q: 'বামাবোধিনী পত্রিকার সম্পাদক কে ছিলেন?', options: ['কেশবচন্দ্র সেন', 'বিদ্যাসাগর', 'উমেশচন্দ্র দত্ত', 'দ্বারকানাথ বিদ্যাভূষণ'], correct: 2 },
+    { q: 'হিন্দু প্যাট্রিয়ট পত্রিকার বিখ্যাত সম্পাদক কে ছিলেন?', options: ['সুরেন্দ্রনাথ বন্দ্যোপাধ্যায়', 'হরিশচন্দ্র মুখোপাধ্যায়', 'গিরিশচন্দ্র ঘোষ', 'শিশিরকুমার ঘোষ'], correct: 1 },
+    { q: 'নীলদর্পণ নাটকটির রচয়িতা কে?', options: ['বঙ্কিমচন্দ্র চট্টোপাধ্যায়', 'মাইকেল মধুসূদন দত্ত', 'দীনবন্ধু মিত্র', 'গিরিশচন্দ্র ঘোষ'], correct: 2 },
+    { q: 'নীলদর্পণ নাটকের ইংরেজি অনুবাদ কে করেছিলেন?', options: ['কালীপ্রসন্ন সিংহ', 'জেমস লং', 'উইলিয়াম কেরি', 'মাইকেল মধুসূদন দত্ত'], correct: 3 },
+  ]
+};
+
+const SUBJECT_NAMES = {
+  'bengali': 'বাংলা', 'english': 'ইংরেজি', 'mathematics': 'গণিত',
+  'physical_science': 'ভৌতবিজ্ঞান', 'life_science': 'জীবনবিজ্ঞান',
+  'geography': 'ভূগোল', 'history': 'ইতিহাস'
+};
+
+const SUBJECT_ICONS = {
+  'bengali': 'fa-feather-pointed', 'english': 'fa-language', 'mathematics': 'fa-calculator',
+  'physical_science': 'fa-flask', 'life_science': 'fa-leaf',
+  'geography': 'fa-earth-asia', 'history': 'fa-landmark'
+};
+
+// Routine: 0=Sunday, 1=Monday...
+const WEEKLY_ROUTINE = {
+  0: 'bengali', 1: 'english', 2: 'mathematics', 3: 'physical_science', 
+  4: 'life_science', 5: 'geography', 6: 'history'
+};
+const DAY_NAMES = ['রবিবার', 'সোমবার', 'মঙ্গলবার', 'বুধবার', 'বৃহস্পতিবার', 'শুক্রবার', 'শনিবার'];
+
+/* ═══════════════════════════════════════════════════════════
+   ২. HELPERS & STATE
+   ═══════════════════════════════════════════════════════════ */
+let currentQuestions = [];
+let currentIndex = 0;
+let score = 0;
+let answered = false;
+let activeSubject = '';
+let timerInterval;
+
+const BN = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+const bn = n => String(n).replace(/\d/g, d => BN[+d]);
+const LETTERS = ['ক', 'খ', 'গ', 'ঘ'];
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ৩. TIME LOCK & COUNTDOWN LOGIC (সন্ধ্যা ৭টা থেকে রাত ১০টা)
+   ═══════════════════════════════════════════════════════════ */
+function updateQuizTimer() {
+  const now = new Date();
+  const currentHour = now.getHours();
+  const currentMinute = now.getMinutes();
+  const currentSecond = now.getSeconds();
+
+  const START_HOUR = 19; // সন্ধ্যা ৭টা
+  const END_HOUR = 22;   // রাত ১০টা
+
+  const todayIdx = now.getDay();
+  const todaySubj = WEEKLY_ROUTINE[todayIdx];
+  
+  // UI Elements
+  const card = document.getElementById('today-card');
+  const icon = document.getElementById('today-icon');
+  const title = document.getElementById('today-subject');
+  const status = document.getElementById('today-status');
+  const countdownBox = document.getElementById('countdown-box');
+  const countdownText = document.getElementById('countdown-text');
+  const btn = document.getElementById('today-btn');
+
+  // Set Title
+  title.textContent = SUBJECT_NAMES[todaySubj] + ' কুইজ';
+
+  if (currentHour < START_HOUR) {
+    // ---- লকড স্টেট (৭টার আগে) ----
+    card.className = 'today-card locked';
+    icon.innerHTML = `<i class="fa-solid fa-lock"></i>`;
+    status.textContent = 'কুইজ শুরু হতে বাকি:';
+    countdownBox.style.display = 'flex';
+    btn.className = 'today-btn btn-disabled';
+    btn.innerHTML = '<i class="fa-solid fa-lock"></i> কুইজ লকড';
+
+    // Countdown Calculation
+    const startTime = new Date();
+    startTime.setHours(START_HOUR, 0, 0, 0);
+    const diff = startTime - now;
+
+    const h = Math.floor(diff / (1000 * 60 * 60));
+    const m = Math.floor((diff / (1000 * 60)) % 60);
+    const s = Math.floor((diff / 1000) % 60);
+    
+    countdownText.textContent = `${bn(String(h).padStart(2,'0'))} : ${bn(String(m).padStart(2,'0'))} : ${bn(String(s).padStart(2,'0'))}`;
+  
+  } else if (currentHour >= START_HOUR && currentHour < END_HOUR) {
+    // ---- লাইভ স্টেট (৭টা থেকে ১০টা) ----
+    card.className = 'today-card live';
+    icon.innerHTML = `<i class="fa-solid fa-bolt"></i>`;
+    status.textContent = 'কুইজ এখন লাইভ! শান্ত ভাবে খেলুন।';
+    countdownBox.style.display = 'none';
+    btn.className = 'today-btn btn-start';
+    btn.innerHTML = '<i class="fa-solid fa-play"></i> কুইজ শুরু করুন';
+    
+  } else {
+    // ---- ক্লোজড স্টেট (১০টার পর) ----
+    card.className = 'today-card closed';
+    icon.innerHTML = `<i class="fa-solid fa-moon"></i>`;
+    status.textContent = 'আজকের কুইজ শেষ। আগামীকাল সন্ধ্যা ৭টায় আবার আসুন।';
+    countdownBox.style.display = 'none';
+    btn.className = 'today-btn btn-closed';
+    btn.innerHTML = '<i class="fa-solid fa-lock"></i> কুইজ শেষ';
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ৪. ROUTINE RENDERING
+   ═══════════════════════════════════════════════════════════ */
+function initRoutine() {
+  const todayIndex = new Date().getDay();
+  const grid = document.getElementById('routine-grid');
+  let html = '';
+
+  // Monday to Sunday order
+  const order = [1, 2, 3, 4, 5, 6, 0]; 
+  
+  order.forEach(dayIdx => {
+    const subj = WEEKLY_ROUTINE[dayIdx];
+    const isToday = (dayIdx === todayIndex);
+    
+    html += `
+      <div class="routine-item ${isToday ? 'active-routine' : ''}">
+        <span class="routine-day">${DAY_NAMES[dayIdx]}</span>
+        <span class="routine-subj"><i class="fa-solid ${SUBJECT_ICONS[subj]}"></i> ${SUBJECT_NAMES[subj]}</span>
+      </div>
+    `;
+  });
+
+  grid.innerHTML = html;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ৫. QUIZ START LOGIC (টাইম চেক করে)
+   ═══════════════════════════════════════════════════════════ */
+document.getElementById('today-btn').addEventListener('click', () => {
+  const now = new Date();
+  const currentHour = now.getHours();
+  
+  if (currentHour < 19) {
+    alert('কুইজ এখনো শুরু হয়নি। সন্ধ্যা ৭টায় শুরু হবে।');
+    return;
+  }
+  
+  if (currentHour >= 22) {
+    alert('আজকের কুইজ শেষ হয়ে গেছে। আগামীকাল সন্ধ্যা ৭টায় আসুন।');
+    return;
+  }
+
+  // Time is valid, start quiz
+  const todayIndex = now.getDay();
+  const todaySubj = WEEKLY_ROUTINE[todayIndex];
+  
+  activeSubject = todaySubj;
+  document.getElementById('start-subj-name').textContent = SUBJECT_NAMES[todaySubj] + ' কুইজ';
+  showScreen('screen-start');
+});
+
+document.getElementById('btn-begin-quiz').addEventListener('click', () => {
+  const allQs = QUIZ_DATA[activeSubject];
+  const count = Math.min(25, allQs.length);
+  currentQuestions = shuffle(allQs).slice(0, count);
+  
+  currentIndex = 0;
+  score = 0;
+  
+  document.getElementById('quiz-total').textContent = bn(count);
+  document.getElementById('ad-mid-quiz').style.display = 'none';
+  document.getElementById('ad-mid-quiz').dataset.loaded = '';
+  
+  showScreen('screen-quiz');
+  renderQuestion();
+});
+
+/* ═══════════════════════════════════════════════════════════
+   ৬. QUIZ ENGINE
+   ═══════════════════════════════════════════════════════════ */
+function renderQuestion() {
+  const q = currentQuestions[currentIndex];
+  answered = false;
+
+  document.getElementById('quiz-cur').textContent = bn(currentIndex + 1);
+  document.getElementById('quiz-score').textContent = bn(score);
+  document.getElementById('quiz-progress').style.width = (currentIndex / currentQuestions.length) * 100 + '%';
+
+  document.getElementById('quiz-q-num').textContent = 'প্রশ্ন ' + bn(currentIndex + 1);
+  document.getElementById('quiz-q-text').textContent = q.q;
+
+  const optsBox = document.getElementById('quiz-options');
+  optsBox.innerHTML = '';
+  
+  q.options.forEach((optText, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.innerHTML = `<span class="opt-ltr">${LETTERS[idx]}</span><span>${optText}</span>`;
+    btn.addEventListener('click', () => handleAnswer(idx, btn));
+    optsBox.appendChild(btn);
+  });
+
+  document.getElementById('btn-next-q').classList.remove('show');
+  const isLast = currentIndex === currentQuestions.length - 1;
+  document.getElementById('btn-next-q').innerHTML = isLast 
+    ? 'ফলাফল দেখুন <i class="fa-solid fa-flag-checkered"></i>' 
+    : 'পরবর্তী প্রশ্ন <i class="fa-solid fa-arrow-right"></i>';
+
+  // Show Mid-Quiz Ad
+  if (currentIndex === 12) {
+    const midAd = document.getElementById('ad-mid-quiz');
+    midAd.style.display = 'flex';
+    if (!midAd.dataset.loaded) {
+      loadAd('ad-mid-quiz', getAd300x250(), '300px', '250px');
+      midAd.dataset.loaded = 'true';
+    }
+  }
+}
+
+function handleAnswer(selectedIdx, selectedBtn) {
+  if (answered) return;
+  answered = true;
+
+  const correctIdx = currentQuestions[currentIndex].correct;
+  const allOpts = document.querySelectorAll('.opt-btn');
+
+  allOpts.forEach((btn, idx) => {
+    btn.disabled = true;
+    if (idx === correctIdx) btn.classList.add('correct');
+    if (idx === selectedIdx && idx !== correctIdx) btn.classList.add('wrong');
+  });
+
+  if (selectedIdx === correctIdx) {
+    score++;
+    document.getElementById('quiz-score').textContent = bn(score);
+  }
+
+  document.getElementById('btn-next-q').classList.add('show');
+}
+
+document.getElementById('btn-next-q').addEventListener('click', () => {
+  currentIndex++;
+  if (currentIndex >= currentQuestions.length) {
+    showResult();
+  } else {
+    renderQuestion();
+  }
+});
+
+function showResult() {
+  showScreen('screen-result');
+  
+  const total = currentQuestions.length;
+  const percent = (score / total) * 100;
+
+  document.getElementById('res-score').textContent = bn(score);
+  document.getElementById('res-correct').textContent = bn(score);
+  document.getElementById('res-wrong').textContent = bn(total - score);
+
+  let title = 'অভিনন্দন!';
+  let msg = 'আপনি চমৎকার করেছেন।';
+  let icon = 'fa-trophy';
+
+  if (percent >= 80) {
+    title = 'অসাধারণ!';
+    msg = 'আপনার প্রস্তুতি দুর্দান্ত। এভাবেই এগিয়ে চলুন!';
+    icon = 'fa-medal';
+  } else if (percent >= 50) {
+    title = 'ভালো করেছেন!';
+    msg = 'আরও একটু অনুশীলন করলেই পারফেক্ট হয়ে যাবেন।';
+    icon = 'fa-thumbs-up';
+  } else {
+    title = 'আরও চেষ্টা করুন';
+    msg = 'চিন্তা নেই! সাবজেক্ট পেজে গিয়ে প্রশ্নগুলো আরও একবার পড়ে আসুন।';
+    icon = 'fa-book-open';
+  }
+
+  document.getElementById('res-title').textContent = title;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('res-emoji').innerHTML = `<i class="fa-solid ${icon}"></i>`;
+  document.getElementById('res-score-box').innerHTML = `<span id="res-score">${bn(score)}</span> <span>/ ${bn(total)}</span>`;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ৭. SHARE LOGIC
+   ═══════════════════════════════════════════════════════════ */
+function shareResult() {
+  const text = `আমি ${SUBJECT_NAMES[activeSubject]} কুইজে ${bn(score)}/${bn(currentQuestions.length)} পেয়েছি! তুমিও খেলে দেখো।`;
+  const url = window.location.origin;
+
+  if (navigator.share) {
+    navigator.share({ title: 'Madhyamik Sokha Web', text: text, url: url }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(text + ' ' + url).then(() => {
+      alert('লিংক কপি হয়েছে! বন্ধুদের সাথে শেয়ার করুন।');
+    }).catch(() => {
+      alert('শেয়ার করতে সমস্যা হচ্ছে।');
+    });
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ৮. ADSTERRA ADS
+   ═══════════════════════════════════════════════════════════ */
+function getAd320x50() {
+  return `
+    <script type="text/javascript">
+      atOptions = {'key' : '7e2bfecea97b8d1c4d46994c09686617','format' : 'iframe','height' : 50,'width' : 320,'params' : {}};
+    <\/script>
+    <script type="text/javascript" src="https://bauval.org/22/7e2bfecea97b8d1c4d46994c09686617"><\/script>
+  `;
+}
+function getAd300x250() {
+  return `
+    <script type="text/javascript">
+      atOptions = {'key' : '8c14f11bb2637107aa1a4f5781c7195d','format' : 'iframe','height' : 250,'width' : 300,'params' : {}};
+    <\/script>
+    <script type="text/javascript" src="https://bauval.org/22/8c14f11bb2637107aa1a4f5781c7195d"><\/script>
+  `;
+}
+function getAdNative() {
+  return `
+    <script async="async" data-cfasync="false" src="https://bauval.org/21/f34bb8b6c4aa493eb66251b630110542"><\/script>
+    <div id="container-f34bb8b6c4aa493eb66251b630110542"></div>
+  `;
+}
+
+function loadAd(containerId, adCode, width, height) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  if (container.querySelector('iframe')) return;
+
+  const iframe = document.createElement('iframe');
+  iframe.style.width = width;
+  iframe.style.height = height;
+  iframe.style.border = 'none';
+  iframe.style.overflow = 'hidden';
+  iframe.setAttribute('scrolling', 'no');
+  
+  container.appendChild(iframe);
+
+  const doc = iframe.contentWindow.document;
+  doc.open();
+  doc.write(`
+    <html>
+      <head><style>body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; background: transparent; }</style></head>
+      <body>${adCode}</body>
+    </html>
+  `);
+  doc.close();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ৯. INITIALIZATION
+   ═══════════════════════════════════════════════════════════ */
+document.addEventListener("DOMContentLoaded", () => {
+  initRoutine();
+  
+  // Start Countdown
+  updateQuizTimer();
+  timerInterval = setInterval(updateQuizTimer, 1000);
+
+  // Load Ads
+  loadAd('ad-top-banner', getAd320x50(), '320px', '50px');
+  loadAd('ad-native-banner', getAdNative(), '100%', '250px');
+  loadAd('ad-quiz-result', getAd300x250(), '300px', '250px');
+});
+</script>
+
+</body>
+</html>

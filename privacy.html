@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0A2547">
+<title>Privacy Policy | Madhyamik Sokha Web</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* ═══════════════════════════════════════════════════════════
+   VARIABLES & RESET
+   ═══════════════════════════════════════════════════════════ */
+:root{
+  --primary:        #12386E; 
+  --primary-dark:   #0A2547;
+  --primary-light:  #2B6CB0;
+  --accent:         #F59E0B;
+  
+  --bg:             #F4F7FC;
+  --card:           #FFFFFF;
+  --text:           #1E293B;
+  --text-soft:      #475569;
+  --muted:          #94A3B8;
+  --line:           #E2E8F0;
+  
+  --radius:         24px;
+  --radius-sm:      16px;
+  --shadow-sm:      0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  --shadow-md:      0 10px 25px -3px rgba(0, 0, 0, 0.08);
+  --shadow-lg:      0 20px 40px -5px rgba(26, 54, 93, 0.15);
+  --maxw:           720px;
+}
+
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+body{
+  font-family:'Noto Sans Bengali', system-ui, -apple-system, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  font-size:16px;
+  line-height:1.8;
+  min-height:100vh;
+  padding-bottom:calc(30px + env(safe-area-inset-bottom));
+}
+a{ text-decoration:none; color:inherit; }
+button{ font-family:inherit; cursor:pointer; border:none; background:none; }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+.animate-up { animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+/* ═══════════════════════════════════════════════════════════
+   HEADER
+   ═══════════════════════════════════════════════════════════ */
+.app-header {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+  color: #fff;
+  padding: 16px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: var(--shadow-sm);
+}
+.hdr-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.back-btn {
+  width: 38px; height: 38px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.back-btn:hover { background: rgba(255,255,255,0.25); }
+.hdr-text h1 { font-size: 17px; font-weight: 700; }
+.hdr-text p { font-size: 12px; color: #A0AEC0; }
+
+/* ═══════════════════════════════════════════════════════════
+   MAIN CONTENT
+   ═══════════════════════════════════════════════════════════ */
+main {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 20px 16px;
+}
+
+/* Info Banner */
+.info-banner {
+  background: linear-gradient(135deg, #EAF1FB, #DCE8F8);
+  border: 1px solid #C9D9EE;
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  display: flex; gap: 12px; align-items: flex-start;
+  font-size: 14px; color: var(--primary); line-height: 1.6;
+  margin-bottom: 24px;
+}
+.info-banner i { font-size: 20px; margin-top: 2px; }
+.info-banner strong { font-weight: 800; }
+
+/* Content Card */
+.content-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--line);
+  margin-bottom: 20px;
+}
+
+.last-updated {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #FEF3C7; color: #B45309;
+  font-size: 12px; font-weight: 700;
+  padding: 6px 14px; border-radius: 999px;
+  margin-bottom: 20px;
+}
+
+.content-card h2 {
+  font-size: 18px; font-weight: 800; color: var(--primary-dark);
+  margin-bottom: 12px; display: flex; align-items: center; gap: 10px;
+  line-height: 1.4;
+}
+.content-card h2 i { color: var(--accent); font-size: 20px; }
+.content-card h3 {
+  font-size: 16px; font-weight: 700; color: var(--primary-dark);
+  margin: 20px 0 8px;
+}
+.content-card p {
+  font-size: 15px; color: var(--text-soft); margin-bottom: 14px;
+}
+.content-card p:last-child { margin-bottom: 0; }
+
+.content-card ul {
+  list-style: none; margin: 10px 0 16px; padding: 0;
+}
+.content-card ul li {
+  position: relative; padding-left: 24px;
+  font-size: 15px; color: var(--text-soft);
+  margin-bottom: 10px; line-height: 1.7;
+}
+.content-card ul li::before {
+  content: '\f00c'; /* FontAwesome Check */
+  font-family: 'Font Awesome 6 Free'; font-weight: 900;
+  position: absolute; left: 0; top: 2px;
+  color: var(--primary-light); font-size: 14px;
+}
+
+/* Highlight Box */
+.highlight-box {
+  background: #F8FAFD;
+  border-left: 4px solid var(--primary);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin: 16px 0;
+  font-size: 14.5px; color: var(--primary-dark); font-weight: 500;
+}
+
+/* Contact Box */
+.contact-box {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  text-align: center; color: #fff;
+  box-shadow: var(--shadow-md);
+  margin-top: 24px;
+}
+.contact-box i.main-icon {
+  font-size: 32px; margin-bottom: 12px; color: var(--accent);
+}
+.contact-box h2 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+.contact-box p { font-size: 14px; color: #A0AEC0; margin-bottom: 16px; }
+.email-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 12px 24px; border-radius: 999px;
+  font-size: 15px; font-weight: 700; color: #fff;
+  transition: background 0.2s;
+}
+.email-btn:hover { background: rgba(255,255,255,0.25); }
+
+/* Ad Slots */
+.ad-container {
+  width: 100%;
+  display: flex; justify-content: center; align-items: center;
+  margin: 20px 0;
+  min-height: 50px;
+  overflow: hidden;
+}
+.ad-container iframe { border: none; }
+
+/* Footer Links */
+.footer-links {
+  display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;
+  margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--line);
+}
+.footer-links a {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 600; color: var(--text-soft);
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--primary); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     ★ ADSTERRA POPUNDER ★ 
+     ═══════════════════════════════════════════════════════════ -->
+<script data-cfasync="false" src="https://abscloud.org/1/4d482fd3597918ddb54ba328e416dee0"></script>
+
+
+<header class="app-header">
+  <div class="hdr-inner">
+    <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+    <div class="hdr-text">
+      <h1>Privacy Policy</h1>
+      <p>গোপনীয়তা নীতি</p>
+    </div>
+  </div>
+</header>
+
+<main class="animate-up">
+
+  <!-- Info Banner -->
+  <div class="info-banner">
+    <i class="fa-solid fa-shield-halved"></i>
+    <div>
+      <strong>আপনার গোপনীয়তা আমাদের কাছে অত্যন্ত গুরুত্বপূর্ণ।</strong> এই নীতিমালায় আমরা স্পষ্টভাবে জানাচ্ছি যে, আমরা কীভাবে তথ্য সংগ্রহ করি এবং সুরক্ষিত রাখি।
+    </div>
+  </div>
+
+  <!-- Ad 1 (Top Banner) -->
+  <div class="ad-container" id="ad-privacy-top"></div>
+
+  <!-- Main Policy Content -->
+  <div class="content-card">
+    <span class="last-updated"><i class="fa-solid fa-calendar-check"></i> সর্বশেষ আপডেট: ৩ নভেম্বর, ২০২৬</span>
+
+    <p>
+      <strong>Madhyamik Sokha Web</strong> (যার ঠিকানা: <em>madhyamiksokha</em>) একটি বিনামূল্যে শিক্ষামূলক ওয়েবসাইট। এই পেজে আমরা আমাদের ওয়েবসাইটের গোপনীয়তা নীতি (Privacy Policy) সম্পর্কে বিস্তারিত জানাচ্ছি। এই ওয়েবসাইট ব্যবহার করার মাধ্যমে আপনি এই নীতিমালার সাথে সম্মতি জ্ঞাপন করছেন।
+    </p>
+
+    <h2><i class="fa-solid fa-database"></i> ১. আমরা কী তথ্য সংগ্রহ করি</h2>
+    <p>আমরা সরাসরি আপনার কাছ থেকে কোনো ব্যক্তিগত তথ্য (যেমন নাম, ফোন নম্বর, ঠিকানা) চাই না। তবে সাইট ব্যবহারের সময় কিছু অটোমেটিক তথ্য সংগ্রহ হতে পারে:</p>
+    <ul>
+      <li><strong>ডিভাইস ও ব্রাউজার তথ্য:</strong> আপনি মোবাইল না ডেস্কটপ ব্যবহার করছেন, স্ক্রিন সাইজ ইত্যাদি।</li>
+      <li><strong>লগ ডেটা:</strong> আপনার IP অ্যাড্রেস, ভিজিটের সময় এবং কোন পেজে কতক্ষণ ছিলেন।</li>
+      <li><strong>কুকিজ:</strong> ওয়েবসাইটের অভিজ্ঞতা উন্নত করতে এবং বিজ্ঞাপন দেখানোর জন্য কুকিজ ব্যবহার করা হয়।</li>
+    </ul>
+    <div class="highlight-box">
+      আমরা কখনোই আপনার নাম, ফোন নম্বর বা পাসওয়ার্ড সংগ্রহ করি না। কুইজ খেলতে কোনো রেজিস্ট্রেশন বা লগইনের প্রয়োজন নেই।
+    </div>
+
+    <h2><i class="fa-solid fa-bullseye"></i> ২. তথ্য কীভাবে ব্যবহার করা হয়</h2>
+    <p>সংগৃহীত তথ্যগুলো শুধুমাত্র নিম্নলিখিত কাজে ব্যবহার করা হয়:</p>
+    <ul>
+      <li>ওয়েবসাইটের গতি ও কার্যকারিতা উন্নত করতে।</li>
+      <li>আপনার জন্য প্রাসঙ্গিক শিক্ষামূলক কনটেন্ট ও কুইজ দেখাতে।</li>
+      <li>সাইটে বিজ্ঞাপন দেখানোর মাধ্যমে সাইটটিকে বিনামূল্যে চালু রাখতে।</li>
+      <li>সাইটের ট্রাফিক অ্যানালাইসিস করতে।</li>
+    </ul>
+
+    <h2><i class="fa-solid fa-rectangle-ad"></i> ৩. তৃতীয় পক্ষের বিজ্ঞাপন (Adsterra)</h2>
+    <p>
+      এই ওয়েবসাইটে <strong>Adsterra</strong> এবং অন্যান্য তৃতীয় পক্ষের বিজ্ঞাপন নেটওয়ার্কের বিজ্ঞাপন দেখানো হয়। এই নেটওয়ার্কগুলো সাইট চালু রাখতে আর্থিক সহায়তা করে।
+    </p>
+    <p>তারা নিম্নলিখিত তথ্য সংগ্রহ করতে পারে:</p>
+    <ul>
+      <li>কুকিজ এবং অনুরূপ ট্র্যাকিং প্রযুক্তি।</li>
+      <li>আপনার ব্রাউজারের তথ্য এবং IP অ্যাড্রেস।</li>
+      <li>আপনি কোন বিজ্ঞাপনে ক্লিক করেছেন বা কতক্ষণ দেখেছেন।</li>
+    </ul>
+    <div class="highlight-box">
+      বিজ্ঞাপনদাতারা তাদের নিজস্ব গোপনীয়তা নীতি অনুসরণ করে। আপনি চাইলে ব্রাউজারের সেটিংস থেকে কুকিজ বন্ধ করতে পারেন। Adsterra-র গোপনীয়তা নীতি সম্পর্কে জানতে <strong>adsterra.com</strong> ভিজিট করুন।
+    </div>
+
+    <!-- Ad 2 (Mid Content) -->
+    <div class="ad-container" id="ad-privacy-mid" style="margin: 24px 0;"></div>
+
+    <h2><i class="fa-solid fa-cookie-bite"></i> ৪. কুকিজ (Cookies) নীতি</h2>
+    <p>
+      কুকিজ হলো ছোট টেক্সট ফাইল যা আপনার ব্রাউজারে সেভ হয়। আমরা সাইটের কার্যকারিতা বজায় রাখতে এবং বিজ্ঞাপনদাতাদের প্রাসঙ্গিক বিজ্ঞাপন দেখাতে কুকিজ ব্যবহার করি। আপনি চাইলে ব্রাউজারের সেটিংস থেকে কুকিজ ব্লক করতে পারেন, তবে তাতে সাইটের কিছু ফিচার ঠিকমতো কাজ নাও করতে পারে।
+    </p>
+
+    <h2><i class="fa-solid fa-child"></i> ৫. শিশুদের গোপনীয়তা</h2>
+    <p>
+      এই ওয়েবসাইটটি মূলত মাধ্যমিক পরীক্ষার্থীদের (সাধারণত ১৪-১৬ বছর বয়সী) জন্য তৈরি। আমরা জেনেশুনে কোনো শিশুর কাছ থেকে ব্যক্তিগত তথ্য সংগ্রহ করি না। যেহেতু সাইটে কোনো রেজিস্ট্রেশন বা অ্যাকাউন্ট তৈরির ব্যবস্থা নেই, তাই ব্যক্তিগত তথ্য সংগ্রহের কোনো সুযোগই নেই।
+    </p>
+
+    <h2><i class="fa-solid fa-lock"></i> ৬. ডেটা সুরক্ষা</h2>
+    <p>
+      আমরা আপনার তথ্যের নিরাপত্তাকে গুরুত্ব দিই। এই সাইট <strong>HTTPS</strong>-এর মাধ্যমে পরিবেশন করা হয়, যা আপনার ব্রাউজার ও সার্ভারের মধ্যে ডেটা এনক্রিপ্ট করে। তবে ইন্টারনেটে কোনো পদ্ধতিই ১০০% নিরাপদ নয়, তাই আমরা সর্বোচ্চ চেষ্টা করি।
+    </p>
+
+    <h2><i class="fa-solid fa-link"></i> ৭. বাহ্যিক লিংক</h2>
+    <p>
+      আমাদের সাইটে বিজ্ঞাপন বা অন্যান্য কারণে বাহ্যিক ওয়েবসাইটের লিংক থাকতে পারে। সেই বাহ্যিক সাইটগুলোর কনটেন্ট বা গোপনীয়তা নীতির জন্য আমরা দায়ী নই। কোনো বাহ্যিক সাইটে যাওয়ার আগে তাদের নীতিমালা পড়ে নেওয়ার অনুরোধ করি।
+    </p>
+
+    <h2><i class="fa-solid fa-pen-to-square"></i> ৮. নীতিমালার পরিবর্তন</h2>
+    <p>
+      আমরা সময়ে সময়ে এই গোপনীয়তা নীতি আপডেট করতে পারি। বড় ধরনের পরিবর্তন হলে এই পেজে স্পষ্টভাবে জানানো হবে। তাই নিয়মিত এই পেজটি চেক করার অনুরোধ করি।
+    </p>
+  </div>
+
+  <!-- Contact Box (Email Updated) -->
+  <div class="contact-box">
+    <i class="fa-solid fa-envelope main-icon"></i>
+    <h2>যোগাযোগ করুন</h2>
+    <p>গোপনীয়তা সম্পর্কে কোনো প্রশ্ন বা অভিযোগ থাকলে আমাদের ইমেইল করুন</p>
+    <a href="mailto:sibnathbairagi94@gmail.com" class="email-btn">
+      <i class="fa-solid fa-paper-plane"></i> sibnathbairagi94@gmail.com
+    </a>
+  </div>
+
+  <!-- Footer Links (Social & Email) -->
+  <div class="footer-links">
+    <a href="mailto:sibnathbairagi94@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
+    <a href="https://www.instagram.com/madhyamik_sokha/" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a>
+    <a href="https://www.youtube.com/@madhyamik_sokha" target="_blank"><i class="fa-brands fa-youtube"></i> YouTube</a>
+    <a href="index.html"><i class="fa-solid fa-house"></i> হোম</a>
+  </div>
+
+</main>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   ADSTERRA SAFE AD LOADING
+   ═══════════════════════════════════════════════════════════ */
+function getAd320x50() {
+  return `
+    <script type="text/javascript">
+      atOptions = {'key' : '7e2bfecea97b8d1c4d46994c09686617','format' : 'iframe','height' : 50,'width' : 320,'params' : {}};
+    <\/script>
+    <script type="text/javascript" src="https://bauval.org/22/7e2bfecea97b8d1c4d46994c09686617"><\/script>
+  `;
+}
+
+function getAd300x250() {
+  return `
+    <script type="text/javascript">
+      atOptions = {'key' : '8c14f11bb2637107aa1a4f5781c7195d','format' : 'iframe','height' : 250,'width' : 300,'params' : {}};
+    <\/script>
+    <script type="text/javascript" src="https://bauval.org/22/8c14f11bb2637107aa1a4f5781c7195d"><\/script>
+  `;
+}
+
+function loadAd(containerId, adCode, width, height) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  if (container.querySelector('iframe')) return;
+
+  const iframe = document.createElement('iframe');
+  iframe.style.width = width;
+  iframe.style.height = height;
+  iframe.style.border = 'none';
+  iframe.style.overflow = 'hidden';
+  iframe.setAttribute('scrolling', 'no');
+  
+  container.appendChild(iframe);
+
+  const doc = iframe.contentWindow.document;
+  doc.open();
+  doc.write(`
+    <html>
+      <head><style>body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; background: transparent; }</style></head>
+      <body>${adCode}</body>
+    </html>
+  `);
+  doc.close();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadAd('ad-privacy-top', getAd320x50(), '320px', '50px');
+  loadAd('ad-privacy-mid', getAd300x250(), '300px', '250px');
+});
+</script>
+
+</body>
+</html>

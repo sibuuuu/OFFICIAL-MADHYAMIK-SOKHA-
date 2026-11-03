@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0A2547">
+<title>ভূগোল সাজেশন | Madhyamik Sokha Web</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* ═══════════════════════════════════════════════════════════
+   VARIABLES & RESET
+   ═══════════════════════════════════════════════════════════ */
+:root{
+  --primary:        #12386E; 
+  --primary-dark:   #0A2547;
+  --primary-light:  #2B6CB0;
+  --accent:         #F59E0B;
+  --accent-hover:   #D97706;
+  
+  --bg:             #F4F7FC;
+  --card:           #FFFFFF;
+  --text:           #1E293B;
+  --text-soft:      #475569;
+  --muted:          #94A3B8;
+  --line:           #E2E8F0;
+  
+  --success:        #10B981;
+  --success-bg:     #ECFDF5;
+  --danger:         #EF4444;
+  --danger-bg:      #FEF2F2;
+  
+  --radius:         24px;
+  --radius-sm:      16px;
+  --shadow-sm:      0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  --shadow-md:      0 10px 25px -3px rgba(0, 0, 0, 0.08);
+  --shadow-lg:      0 20px 40px -5px rgba(26, 54, 93, 0.15);
+  --maxw:           820px;
+}
+
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+body{
+  font-family:'Noto Sans Bengali', system-ui, -apple-system, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  font-size:16px;
+  line-height:1.7;
+  padding-bottom:calc(30px + env(safe-area-inset-bottom));
+}
+a{ text-decoration:none; color:inherit; }
+button{ font-family:inherit; cursor:pointer; border:none; background:none; }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+.animate-up { animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+/* ═══════════════════════════════════════════════════════════
+   HEADER
+   ═══════════════════════════════════════════════════════════ */
+.app-header {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+  color: #fff;
+  padding: 16px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: var(--shadow-sm);
+}
+.hdr-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.back-btn {
+  width: 38px; height: 38px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.back-btn:hover { background: rgba(255,255,255,0.25); }
+.hdr-icon {
+  width: 38px; height: 38px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.hdr-text h1 { font-size: 17px; font-weight: 700; }
+.hdr-text p { font-size: 12px; color: #A0AEC0; }
+
+/* ═══════════════════════════════════════════════════════════
+   MAIN LAYOUT
+   ═══════════════════════════════════════════════════════════ */
+main {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 20px 16px;
+}
+
+/* Ad Slots */
+.ad-container {
+  width: 100%;
+  display: flex; justify-content: center; align-items: center;
+  margin: 16px 0;
+  min-height: 50px;
+  overflow: hidden;
+}
+.ad-container iframe { border: none; }
+
+/* Section Titles */
+.section-title {
+  font-size: 18px; font-weight: 800; color: var(--primary-dark);
+  margin: 24px 0 16px; display: flex; align-items: center; gap: 10px;
+  background: #EAF1FB; padding: 12px 16px; border-radius: var(--radius-sm);
+  border-left: 4px solid var(--primary);
+}
+.section-title i { color: var(--primary); font-size: 20px; }
+
+/* ═══════════════════════════════════════════════════════════
+   ACCORDION
+   ═══════════════════════════════════════════════════════════ */
+.chapter-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.chapter-header {
+  width: 100%;
+  padding: 16px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: #fff; text-align: left;
+  font-size: 16px; font-weight: 700; color: var(--primary-dark);
+  transition: background 0.2s;
+}
+.chapter-header:hover { background: #F8FAFD; }
+.chapter-header.active { background: #F0F4FA; color: var(--primary); border-bottom: 1px solid var(--line); }
+.chapter-header i { color: var(--accent); transition: transform 0.3s; font-size: 14px; }
+.chapter-header.active i { transform: rotate(180deg); }
+
+.chapter-body {
+  display: none;
+  padding: 20px;
+  background: #FCFDFF;
+}
+.chapter-body.active { display: block; animation: fadeUp 0.3s ease; }
+
+/* ── LONG QUESTIONS ── */
+.long-q {
+  margin-bottom: 24px;
+  border-bottom: 1px dashed var(--line);
+  padding-bottom: 20px;
+}
+.long-q:last-child { margin-bottom: 0; border-bottom: none; padding-bottom: 0; }
+.long-q .q-text {
+  font-size: 15.5px; font-weight: 600; color: var(--text); margin-bottom: 12px;
+  line-height: 1.6;
+}
+.write-area {
+  background: repeating-linear-gradient(to bottom, transparent 0, transparent 28px, #E2E8F0 28px, #E2E8F0 29px);
+  min-height: 120px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px;
+}
+.write-area span {
+  font-size: 12px; color: var(--muted); font-style: italic;
+}
+
+/* ── SHORT QUESTIONS (MCQ) ── */
+.short-q {
+  margin-bottom: 20px;
+  border-bottom: 1px dashed var(--line);
+  padding-bottom: 20px;
+}
+.short-q:last-child { margin-bottom: 0; border-bottom: none; padding-bottom: 0; }
+.short-q .q-text {
+  font-size: 15.5px; font-weight: 600; color: var(--text); margin-bottom: 12px;
+  line-height: 1.6;
+}
+.opts {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.opt-btn {
+  background: #fff;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex; align-items: center; gap: 10px;
+  font-size: 14.5px; color: var(--text-soft); text-align: left;
+  transition: all 0.2s;
+}
+.opt-btn:hover { border-color: var(--primary-light); background: #F8FAFD; }
+.opt-btn:disabled { cursor: not-allowed; }
+.opt-ltr {
+  width: 24px; height: 24px;
+  border-radius: 6px; background: #EAF1FB; color: var(--primary);
+  font-size: 12px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+/* Answer States */
+.opt-btn.correct { border-color: var(--success); background: var(--success-bg); color: #065F46; }
+.opt-btn.correct .opt-ltr { background: var(--success); color: #fff; }
+.opt-btn.wrong { border-color: var(--danger); background: var(--danger-bg); color: #991B1B; }
+.opt-btn.wrong .opt-ltr { background: var(--danger); color: #fff; }
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     ★ ADSTERRA POPUNDER & SOCIAL BAR ★
+     ═══════════════════════════════════════════════════════════ -->
+<script data-cfasync="false" src="https://abscloud.org/1/4d482fd3597918ddb54ba328e416dee0"></script>
+<script data-cfasync="false" src="https://bauval.org/14/15746e84cd36001e9d3e4ac7c874823d"></script>
+
+<header class="app-header">
+  <div class="hdr-inner">
+    <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+    <div class="hdr-icon"><i class="fa-solid fa-earth-asia"></i></div>
+    <div class="hdr-text">
+      <h1>ভূগোল সাজেশন</h1>
+      <p>Madhyamik Sokha Web</p>
+    </div>
+  </div>
+</header>
+
+<main class="animate-up">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       ★ ADSTERRA BANNER (Top) ★
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="ad-container" id="ad-geo-top"></div>
+
+  <!-- ═══════════ BORO PROSHNO (LONG QUESTIONS) ═══════════ -->
+  <h2 class="section-title"><i class="fa-solid fa-pen-nib"></i> বড় প্রশ্ন (২, ৩ ও ৫ নম্বর)</h2>
+  <div id="long-container"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       ★ ADSTERRA NATIVE (Mid Transition) ★
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="ad-container" id="ad-geo-mid" style="min-height:250px;"></div>
+
+  <!-- ═══════════ CHOTO PROSHNO (SHORT QUESTIONS) ═══════════ -->
+  <h2 class="section-title"><i class="fa-solid fa-check-square"></i> ছোট প্রশ্ন ও উত্তর (MCQ / VSAQ)</h2>
+  <div id="short-container"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       ★ ADSTERRA BANNER (Bottom) ★
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="ad-container" id="ad-geo-bottom" style="margin-top:30px;"></div>
+
+</main>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   ১. ভূগোল ডেটা (Long & Short Questions)
+   ═══════════════════════════════════════════════════════════ */
+const geographyData = {
+  long: [
+    {
+      chapter: 'অধ্যায় ১: বহির্জাত প্রক্রিয়া ও ভূমিরূপ',
+      questions: [
+        'নদীর ক্ষয়কার্যের ফলে সৃষ্ট তিনটি প্রধান ভূমিরূপের সচিত্র বিবরণ দাও। (৫)',
+        'হিমবাহের সঞ্চয় কার্যের ফলে সৃষ্ট তিনটি প্রধান ভূমিরূপ সচিত্র আলোচনা করো। (৫)',
+        'বায়ু ও জলধারার মিলিত কার্যের ফলে সৃষ্ট ভূমিরূপগুলির সচিত্র বর্ণনা দাও। (৫)',
+        'বদ্বীপ (Delta) গঠনের অনুকূল ভৌগোলিক শর্তগুলি কী কী? (৩)',
+        'রশে মতানে ও ড্রামলিন-এর মধ্যে পার্থক্য লেখো। (৩)',
+        'ইয়ারদাং ও জিউগেন-এর মধ্যে তিনটি পার্থক্য লেখো। (৩)',
+        'নদী উপত্যকা ও হিমবাহ উপত্যকার (V আকৃতি ও U আকৃতি) পার্থক্য লেখো। (৩)',
+        'পর্যায়ণ (Gradation) কাকে বলে? (২)',
+        'ষষ্ঠ ঘাতের সূত্র (Law of Sixth Power) কী? (২)',
+        'ধারণ অববাহিকা (Catchment Area) বলতে কী বোঝো? (২)',
+        'হিমশৈল (Iceberg) কী? (২)',
+        'বারখান (Barchan) ও লোয়েস (Loess) কী? (২)',
+        'ওয়াদি (Wadi) ও প্লায়া (Playa) বলতে কী বোঝো? (২)'
+      ]
+    },
+    {
+      chapter: 'অধ্যায় ২: বায়ুমণ্ডল',
+      questions: [
+        'বায়ুমণ্ডলের উষ্ণতার তারতম্যের প্রধান তিনটি কারণ আলোচনা করো। (৫)',
+        'বিশ্ব উষ্ণায়নের (Global Warming) প্রধান পাঁচটি প্রভাব আলোচনা করো। (৫)',
+        'পৃথিবীর নিয়ত বায়ুপ্রবাহগুলির সঙ্গে বায়ুচাপ বলয়গুলির সম্পর্ক চিত্রসহ আলোচনা করো। (৫)',
+        'ট্রপোস্ফিয়ারকে ক্ষুব্ধমণ্ডল এবং স্ট্র্যাটোস্ফিয়ারকে শান্তমণ্ডল বলা হয় কেন? (৩)',
+        'সমুদ্রবায়ু ও স্থলবায়ুর মধ্যে পার্থক্য লেখো। (৩)',
+        'ঘূর্ণবাত ও প্রতীপ ঘূর্ণবাতের মধ্যে পার্থক্য লেখো। (৩)',
+        'ওজোন স্তর বিনাশের প্রধান কারণগুলি সংক্ষেপে লেখো। (৩)',
+        'অ্যারোসল (Aerosol) কী? (২)',
+        'অ্যালবেডো (Albedo) কাকে বলে? (২)',
+        'বৈপরীত্য উত্তাপ (Inversion of Temperature) বলতে কী বোঝো? (২)',
+        'ফেরেলের সূত্রটি (Ferrel\'s Law) লেখো। (২)',
+        'গর্জনশীল চল্লিশা (Roaring Forties) কী? (২)',
+        'আপেক্ষিক আর্দ্রতা (Relative Humidity) কী? (২)'
+      ]
+    },
+    {
+      chapter: 'অধ্যায় ৩: বারিমণ্ডল',
+      questions: [
+        'সমুদ্রস্রোত সৃষ্টির প্রধান কারণগুলি আলোচনা করো। (৫)',
+        'পৃথিবীতে জোয়ার-ভাটা সৃষ্টির কারণগুলি সচিত্র আলোচনা করো। (৫)',
+        'সমুদ্রস্রোত ও সমুদ্রতরঙ্গের মধ্যে পার্থক্য লেখো। (৩)',
+        'ভরা কটাল ও মরা কটালের মধ্যে পার্থক্য নির্দেশ করো। (৩)',
+        'নিউফাউন্ডল্যান্ড উপকূলে সারা বছর কুয়াশা ও ঝড়বৃষ্টি দেখা যায় কেন? (৩)',
+        'শৈবাল সাগর (Sargasso Sea) কী? (২)',
+        'মগ্নচড়া (Continental Shelf) কাকে বলে? এর অর্থনৈতিক গুরুত্ব কী? (২)',
+        'সিজিগি (Syzygy) বলতে কী বোঝো? (২)',
+        'বানডাকা (Tidal Bore) কী? (২)'
+      ]
+    },
+    {
+      chapter: 'অধ্যায় ৪: বর্জ্য ব্যবস্থাপনা',
+      questions: [
+        'জৈব ভঙ্গুর ও জৈব অভঙ্গুর বর্জ্যের মধ্যে পার্থক্য লেখো। (৩)',
+        'বর্জ্য ব্যবস্থাপনায় \'4R\'-এর (Reduce, Reuse, Recycle, Refuse) ভূমিকা আলোচনা করো। (৩)',
+        'বর্জ্য ব্যবস্থাপনায় শিক্ষার্থীদের ভূমিকা আলোচনা করো। (৩)',
+        'ভাগীরথী-হুগলী নদীর ওপর বর্জ্যের প্রভাব আলোচনা করো। (৩)',
+        'জৈব ভঙ্গুর (Biodegradable) এবং জৈব অভঙ্গুর (Non-biodegradable) বর্জ্য কাকে বলে? (২)',
+        'ই-বর্জ্য (E-Waste) বা বৈদ্যুতিন বর্জ্য কী? (২)',
+        'স্ক্রাবার (Scrubber) কী? (২)',
+        'ল্যান্ডফিল (Landfill) বা ভরাটকরণ বলতে কী বোঝো? (২)'
+      ]
+    },
+    {
+      chapter: 'অধ্যায় ৫: ভারত (প্রাকৃতিক ও অর্থনৈতিক পরিবেশ)',
+      questions: [
+        'উত্তর ভারত ও দক্ষিণ ভারতের নদনদীর তুলনামূলক আলোচনা করো। (৫)',
+        'ভারতের পূর্ব উপকূল ও পশ্চিম উপকূলের সমভূমির প্রাকৃতিক বৈশিষ্ট্যের পার্থক্য লেখো। (৫)',
+        'ভারতে চা, কফি অথবা ইক্ষু (আখ) চাষের অনুকূল ভৌগোলিক পরিবেশ বর্ণনা করো। (৫)',
+        'ভারতে গম অথবা ধান চাষের অনুকূল ভৌগোলিক পরিবেশ আলোচনা করো। (৫)',
+        'পূর্ব ও মধ্য ভারতে লৌহ-ইস্পাত শিল্পের কেন্দ্রীভবনের কারণগুলি ব্যাখ্যা করো। (৫)',
+        'পশ্চিম ভারতে কার্পাস বয়ন শিল্পের উন্নতির কারণগুলি আলোচনা করো। (৫)',
+        'ভারতে অসম জনবণ্টনের প্রধান পাঁচটি কারণ আলোচনা করো। (৫)',
+        'পূর্বঘাট ও পশ্চিমঘাট পর্বতমালার মধ্যে পার্থক্য লেখো। (৩)',
+        'ভাঙ্গর ও খাদার মৃত্তিকার মধ্যে পার্থক্য লেখো। (৩)',
+        'ভারতের জলবায়ুতে মৌসুমী বায়ুর প্রভাব আলোচনা করো। (৩)',
+        'করমণ্ডল উপকূলে বছরে দু\'বার বৃষ্টিপাত হয় কেন? (৩)',
+        'ধাপ চাষ ও ফালি চাষের পার্থক্য কী? (৩)',
+        'ভারতে কৃষির প্রধান সমস্যাগুলি আলোচনা করো। (৩)',
+        'দুর্গাপুরকে \'ভারতের রূঢ়\' বলা হয় কেন? (৩)',
+        'ভারতের নগরায়ণের প্রধান তিনটি সমস্যা লেখো। (৩)',
+        'দুন (Doon) কী? (২)',
+        'কয়াল (Kayal) কী? (২)',
+        'ভাবর (Bhabar) ও তরাই (Terai) বলতে কী বোঝো? (২)',
+        'বহুমুখী নদী উপত্যকা পরিকল্পনা (Multipurpose River Valley Project) কাকে বলে? (২)',
+        'মৌসুমী বিস্ফোরণ (Burst of Monsoon) বলতে কী বোঝো? (২)',
+        'খারিফ শস্য ও রবি শস্য কাকে বলে? (২)',
+        'সোনালী চতুর্ভুজ (Golden Quadrilateral) কী? (২)',
+        'তথ্যপ্রযুক্তি শিল্প (IT Industry) কাকে বলে? (২)',
+        'জনঘনত্ব (Population Density) বলতে কী বোঝো? (২)'
+      ]
+    },
+    {
+      chapter: 'অধ্যায় ৬: উপগ্রহ চিত্র ও ভূ-বৈচিত্র্যসূচক মানচিত্র',
+      questions: [
+        'উপগ্রহ চিত্র ও ভূ-বৈচিত্র্যসূচক মানচিত্রের (Topographical Map) মধ্যে পার্থক্য লেখো। (৩)',
+        'উপগ্রহ চিত্রের প্রধান তিনটি ব্যবহার বা গুরুত্ব আলোচনা করো। (৩)',
+        'ভূ-বৈচিত্র্যসূচক মানচিত্রে ব্যবহৃত বিভিন্ন রঙের তাৎপর্যগুলি লেখো। (৩)',
+        'উপগ্রহ চিত্র (Satellite Imagery) কাকে বলে? (২)',
+        'সেন্সর (Sensor) কী? (২)',
+        'পিক্সেল (Pixel) বলতে কী বোঝো? (২)',
+        'ভূ-সমলয় উপগ্রহ (Geostationary Satellite) কী? (২)',
+        'দূর সংবেদন (Remote Sensing) কী? (২)'
+      ]
+    }
+  ],
+  
+  short: [
+    {
+      chapter: '১. বহির্জাত প্রক্রিয়া (MCQ/VSAQ)',
+      questions: [
+        { q: 'বহির্জাত শক্তির মূল উৎস কী?', options: ['সূর্য', 'চাঁদ', 'পৃথিবীর অভ্যন্তরীণ তাপ', 'বায়ু'], correct: 0 },
+        { q: 'যে প্রক্রিয়ায় ভূপৃষ্ঠের উঁচু স্থানগুলি ক্ষয়প্রাপ্ত হয়ে ক্রমশ নিচু হয়, তাকে কী বলে?', options: ['আরোহণ', 'অবরোহণ', 'পর্যায়ন', 'নগ্নীভবন'], correct: 1 },
+        { q: 'যে প্রক্রিয়ায় সঞ্চয়কার্যের ফলে ভূপৃষ্ঠের নিচু স্থানগুলি ভরাট হয়ে উচ্চতা বৃদ্ধি পায়, তাকে কী বলে?', options: ['আরোহণ', 'অবরোহণ', 'পর্যায়ন', 'ক্ষয়ীভবন'], correct: 0 },
+        { q: 'অবরোহণ ও আরোহণের সম্মিলিত ফলকে কী বলে?', options: ['পর্যায়ন', 'অবঘর্ষণ', 'নগ্নীভবন', 'বহন'], correct: 0 },
+        { q: '\'পর্যায়ন\' (Grade) শব্দটি প্রথম ব্যবহার করেন কে?', options: ['জি. কে. গিলবার্ট', 'ডব্লিউ. হপকিন্স', 'জে. ডব্লিউ. পাওয়েল', 'ডেভিস'], correct: 0 },
+        { q: 'আবহবিকার, পুঞ্জিত ক্ষয় এবং ক্ষয়ীভবনের সম্মিলিত রূপকে কী বলে?', options: ['নগ্নীভবন', 'পর্যায়ন', 'অবরোহণ', 'আরোহণ'], correct: 0 },
+        { q: 'ক্ষয়ের শেষ সীমা (Base level of erosion) হিসেবে কী ধরা হয়?', options: ['সমুদ্রতল', 'মেঘমুক্ত আকাশ', 'পাহাড়ের চূড়া', 'নদীর উৎস'], correct: 0 },
+        { q: 'ক্ষয়সীমা ধারণার প্রবর্তক কে?', options: ['জে. ডব্লিউ. পাওয়েল', 'জি. কে. গিলবার্ট', 'ডব্লিউ. এম. ডেভিস', 'হপকিন্স'], correct: 0 },
+        { q: 'পৃথিবীর দীর্ঘতম নদী কোনটি?', options: ['নীল নদ', 'আমাজন', 'গঙ্গা', 'ব্রহ্মপুত্র'], correct: 0 },
+        { q: 'জলপ্রবাহের ভিত্তিতে পৃথিবীর বৃহত্তম নদী কোনটি?', options: ['আমাজন', 'নীল নদ', 'মিসিসিপি', 'ইয়াংসি'], correct: 0 },
+        { q: 'ভারতের বৃহত্তম নদী অববাহিকা কোনটি?', options: ['গঙ্গা নদী অববাহিকা', 'ব্রহ্মপুত্র', 'গোদাবরী', 'নর্মদা'], correct: 0 },
+        { q: 'একটি আদর্শ নদীর কয়টি গতি দেখা যায়?', options: ['৩টি', '২টি', '৪টি', '৫টি'], correct: 0 },
+        { q: 'যে উঁচু ভূমি নিচু বা তার বেশি নদী অববাহিকাকে পৃথক করে, তাকে কী বলে?', options: ['জলবিভাজিকা', 'জলপ্রপাত', 'গিরিখাত', 'বদ্বীপ'], correct: 0 },
+        { q: 'নদীর \'ষষ্ঠ ঘাতের সূত্র\' (Law of Sixth Power) কে আবিষ্কার করেন?', options: ['ডব্লিউ. হপকিন্স', 'জি. কে. গিলবার্ট', 'জে. ডব্লিউ. পাওয়েল', 'ডেভিস'], correct: 0 },
+        { q: 'ষষ্ঠ ঘাতের সূত্র অনুযায়ী নদীর জলতলের বেগ দ্বিগুণ হলে নদীর বহন ক্ষমতা কত গুণ বৃদ্ধি পায়?', options: ['৬৪ গুণ', '৩২ গুণ', '১৬ গুণ', '৮ গুণ'], correct: 0 }
+      ]
+    },
+    {
+      chapter: '২. নদী ও হিমবাহ (MCQ/VSAQ)',
+      questions: [
+        { q: 'নদীর ক্ষয়কার্যের ফলে সৃষ্ট \'V\' আকৃতির উপত্যকাকে কী বলে?', options: ['গিরিখাত', 'ক্যানিয়ন', 'ইয়ারদাং', 'অশ্বক্ষুরাকৃতি হ্রদ'], correct: 0 },
+        { q: 'বৃষ্টিহীন শুষ্ক অঞ্চলে নদীর অবগভীর \'V\' আকৃতির উপত্যকাকে কী বলে?', options: ['ক্যানিয়ন', 'গিরিখাত', 'উপত্যকা', 'মন্থকূপ'], correct: 0 },
+        { q: 'পৃথিবীর গভীরতম গিরিখাত কোনটি?', options: ['নেপালের কালীগণ্ডকী নদীর গিরিখাত', 'গ্র্যান্ড ক্যানিয়ন', 'কোলারাডো', 'সুন্দরবন'], correct: 0 },
+        { q: 'পৃথিবীর বৃহত্তম ক্যানিয়ন কোনটি?', options: ['কোলারাডো নদীর গ্র্যান্ড ক্যানিয়ন', 'কালীগণ্ডকী', 'আমাজন', 'নীলনদ'], correct: 0 },
+        { q: 'নদীর জোতোর সাথে বাহিত শিলাখণ্ডের আঘাতে নদীর তলদেশে সৃষ্ট ছোট গোলাকার গর্তগুলিকে কী বলে?', options: ['মন্থকূপ', 'প্লাঞ্জ পুল', 'গিরিখাত', 'ক্যানিয়ন'], correct: 0 },
+        { q: 'অসংখ্য মন্থকূপ একসাথে অবস্থান করলে তাকে কী বলে?', options: ['মন্থকূপ কলোনি', 'প্লাঞ্জ পুল', 'ক্যানিয়ন', 'গিরিখাত'], correct: 0 },
+        { q: 'খাড়া ঢালে সৃষ্টি হওয়া পরস্পর ছেদকারী স্পার (Interlocking spur) নদীর কোন গতিতে দেখা যায়?', options: ['উচ্চগতি', 'মধ্যগতি', 'নিম্নগতি', 'সবগুলোতে'], correct: 0 },
+        { q: 'পৃথিবীর উচ্চতম জলপ্রপাত কোনটি?', options: ['অ্যাঞ্জেল জলপ্রপাত', 'নায়াগ্রা', 'ভিক্টোরিয়া', 'কুঞ্চিকল'], correct: 0 },
+        { q: 'ভারতের উচ্চতম জলপ্রপাত কোনটি?', options: ['কুঞ্চিকল', 'জগ', 'শিবসমুদ্রম', 'ধুন্ধার'], correct: 0 },
+        { q: 'নায়াগ্রা জলপ্রপাত কোন নদীর ওপর অবস্থিত?', options: ['সেন্ট লরেন্স নদী', 'নীলনদ', 'আমাজন', 'মিসিসিপি'], correct: 0 },
+        { q: 'নদীর পুনর্যৌবন লাভের ফলে পুরোনো ও নতুন চ্যানেলের সংযোগস্থলে কী সৃষ্টি হয়?', options: ['নিক পয়েন্ট', 'জলপ্রপাত', 'মন্থকূপ', 'বদ্বীপ'], correct: 0 },
+        { q: 'নিক পয়েন্টে সাধারণত কোন ভূমিরূপ সৃষ্টি হয়?', options: ['জলপ্রপাত', 'বদ্বীপ', 'গিরিখাত', 'প্লায়া'], correct: 0 },
+        { q: 'পৃথিবীর বৃহত্তম মহাদেশীয় হিমবাহ কোনটি?', options: ['আন্টার্কটিকার ল্যাম্বার্ট', 'হুবার্ড', 'সিয়াচেন', 'গঙ্গোত্রী'], correct: 0 },
+        { q: 'পৃথিবীর দীর্ঘতম উপত্যকা বা পার্বত্য হিমবাহ কোনটি?', options: ['হুবার্ড', 'ল্যাম্বার্ট', 'সিয়াচেন', 'গঙ্গোত্রী'], correct: 0 },
+        { q: 'ভারতের দীর্ঘতম হিমবাহ কোনটি?', options: ['সিয়াচেন', 'গঙ্গোত্রী', 'জেমু', 'মিলাম'], correct: 0 }
+      ]
+    },
+    {
+      chapter: '৩. বায়ুমণ্ডল (MCQ/VSAQ)',
+      questions: [
+        { q: 'বায়ুমণ্ডলে কোন গ্যাসের পরিমাণ সবচেয়ে বেশি?', options: ['নাইট্রোজেন', 'অক্সিজেন', 'কার্বন ডাইঅক্সাইড', 'আর্গন'], correct: 0 },
+        { q: 'বায়ুমণ্ডলে অক্সিজেনের পরিমাণ কত?', options: ['২০.৯৪%', '৭৮.০৮%', '০.০৩%', '০.৯৩%'], correct: 0 },
+        { q: 'বায়ুমণ্ডলের সর্বনিম্ন স্তরের নাম কী?', options: ['ট্রপোস্ফিয়ার', 'স্ট্র্যাটোস্ফিয়ার', 'মেসোস্ফিয়ার', 'থার্মোস্ফিয়ার'], correct: 0 },
+        { q: '\'ক্ষুব্ধমণ্ডল\' কাকে বলা হয়?', options: ['ট্রপোস্ফিয়ার', 'স্ট্র্যাটোস্ফিয়ার', 'মেসোস্ফিয়ার', 'আয়নোস্ফিয়ার'], correct: 0 },
+        { q: '\'শান্তমণ্ডল\' কাকে বলা হয়?', options: ['স্ট্র্যাটোস্ফিয়ার', 'ট্রপোস্ফিয়ার', 'মেসোস্ফিয়ার', 'এক্সোস্ফিয়ার'], correct: 0 },
+        { q: 'যাত্রীবাহী জেট বিমানগুলি বায়ুমণ্ডলের কোন স্তর দিয়ে চলাচল করে?', options: ['স্ট্র্যাটোস্ফিয়ার', 'ট্রপোস্ফিয়ার', 'মেসোস্ফিয়ার', 'থার্মোস্ফিয়ার'], correct: 0 },
+        { q: 'উষ্ণতা হ্রাসের স্বাভাবিক হার (Normal Lapse Rate) কত?', options: ['প্রতি ১০০০ মিটারে ৬.৪°C', 'প্রতি ১০০০ মিটারে ১০°C', 'প্রতি ১০০ মিটারে ৬.৪°C', 'প্রতি ১০০০ মিটারে ৩.২°C'], correct: 0 },
+        { q: 'বৈপরীত উষ্ণতা (Inversion of Temperature) কাকে বলে?', options: ['উচ্চতা বৃদ্ধির সাথে উষ্ণতা হ্রাস না পেয়ে বৃদ্ধি পাওয়া', 'উচ্চতা বৃদ্ধির সাথে উষ্ণতা হ্রাস পাওয়া', 'উষ্ণতা স্থির থাকা', 'কোনোটিই নয়'], correct: 0 },
+        { q: 'ওজোন (O3) স্তর বায়ুমণ্ডলের কোন স্তরে অবস্থিত?', options: ['স্ট্র্যাটোস্ফিয়ার', 'ট্রপোস্ফিয়ার', 'মেসোস্ফিয়ার', 'থার্মোস্ফিয়ার'], correct: 0 },
+        { q: 'ওজোন স্তরের প্রধান কাজ কী?', options: ['সূর্যের ক্ষতিকারক অতিবেগুনি রশ্মি শোষণ করা', 'অক্সিজেন সরবরাহ করা', 'বৃষ্টিপাত ঘটানো', 'মেঘ সৃষ্টি করা'], correct: 0 },
+        { q: 'ওজোন স্তরের ঘনত্ব পরিমাপের একক কী?', options: ['ডবসন একক', 'মিলিবার', 'নট', 'মিমি'], correct: 0 },
+        { q: 'বেতার তরঙ্গ কোন স্তর থেকে প্রতিফলিত হয়ে পৃথিবীতে ফিরে আসে?', options: ['আয়নোস্ফিয়ার', 'ট্রপোস্ফিয়ার', 'স্ট্র্যাটোস্ফিয়ার', 'মেসোস্ফিয়ার'], correct: 0 },
+        { q: 'সূর্য থেকে আগত মোট সৌরবিজ্ঞানের পৃথিবীতে পৌঁছানো অংশকে কী বলে?', options: ['ইনসোলেশন', 'অ্যালবেডো', 'আপেক্ষিক আর্দ্রতা', 'তাপমাত্রা'], correct: 0 },
+        { q: 'পৃথিবীর কার্যকরী সৌরবিকিরণ কত শতাংশ?', options: ['৬৬%', '১০০%', '৩৪%', '৫০%'], correct: 0 },
+        { q: 'বায়ুর চাপ মাপার যন্ত্রের নাম কী?', options: ['ব্যারোমিটার', 'থার্মোমিটার', 'হাইগ্রোমিটার', 'অ্যানিমোমিটার'], correct: 0 }
+      ]
+    },
+    {
+      chapter: '৪. বারিমণ্ডল (MCQ/VSAQ)',
+      questions: [
+        { q: 'পৃথিবীর মোট আয়তনের কত ভাগ জল?', options: ['প্রায় ৭১ ভাগ', 'প্রায় ২৯ ভাগ', 'প্রায় ৫০ ভাগ', 'প্রায় ৬০ ভাগ'], correct: 0 },
+        { q: 'সমুদ্রস্রোত সৃষ্টির প্রধান কারণ কী?', options: ['নিয়ত বায়ুপ্রবাহ', 'জোয়ার-ভাটা', 'উষ্ণতার পার্থক্য', 'সমুদ্রতরঙ্গ'], correct: 0 },
+        { q: 'উষ্ণতার ভিত্তিতে সমুদ্রস্রোত কয় প্রকার?', options: ['২ প্রকার', '৩ প্রকার', '৪ প্রকার', '৫ প্রকার'], correct: 0 },
+        { q: 'নিরক্ষীয় অঞ্চলে কী ধরনের স্রোত দেখা যায়?', options: ['উষ্ণ স্রোত', 'শীতল স্রোত', 'মিশ্র স্রোত', 'কোনোটিই নয়'], correct: 0 },
+        { q: 'ফেরেলের সূত্র অনুযায়ী উত্তর গোলার্ধে সমুদ্রস্রোত কোন দিকে বেঁকে যায়?', options: ['ডানদিকে', 'বাঁদিকে', 'সোজা চলে', 'উপরের দিকে'], correct: 0 },
+        { q: 'গালফ স্ট্রিম (Gulf Stream) কোন মহাসাগরে দেখা যায়?', options: ['উত্তর আটলান্টিক', 'প্রশান্ত', 'ভারত', 'দক্ষিণ আটলান্টিক'], correct: 0 },
+        { q: 'গ্র্যান্ড ব্যাংকস (Grand Banks) মগ্নচড়া কীভাবে সৃষ্টি হয়েছে?', options: ['উষ্ণ গালফ স্ট্রিম ও শীতল ল্যাব্রাডর স্রোতের মিলনে', 'শুধু উষ্ণ স্রোতের প্রভাবে', 'নদীর পলি জমে', 'জোয়ার-ভাটার প্রভাবে'], correct: 0 },
+        { q: 'শৈবাল সাগর (Sargasso Sea) কোন মহাসাগরে সৃষ্টি হয়েছে?', options: ['উত্তর আটলান্টিক মহাসাগর', 'প্রশান্ত', 'ভারত', 'দক্ষিণ আটলান্টিক'], correct: 0 },
+        { q: 'জোয়ার-ভাটা সৃষ্টির প্রধান দুটি কারণ কী কী?', options: ['চাঁদ-সূর্যের আকর্ষণ এবং পৃথিবীর আবর্তন', 'বায়ুপ্রবাহ ও উষ্ণতা', 'সমুদ্রস্রোত ও তরঙ্গ', 'বৃষ্টিপাত ও বাষ্পীভবন'], correct: 0 },
+        { q: 'সিজিগি (Syzygy) অবস্থান কাকে বলে?', options: ['চাঁদ, সূর্য ও পৃথিবীর একই সরলরেখায় অবস্থান', 'চাঁদ ও সূর্যের সমকোণে অবস্থান', 'চাঁদের পৃথিবীর সবচেয়ে কাছে আসা', 'চাঁদের সবচেয়ে দূরে যাওয়া'], correct: 0 },
+        { q: 'ভরা কটাল বা তেজ কটাল কবে হয়?', options: ['অমাবস্যা ও পূর্ণিমা তিথিতে', 'শুক্লপক্ষ ও কৃষ্ণপক্ষে', 'সন্ধ্যাবেলা', 'সকালবেলা'], correct: 0 },
+        { q: 'মরা কটাল কবে হয়?', options: ['শুক্লপক্ষ ও কৃষ্ণপক্ষের অষ্টমী তিথিতে', 'অমাবস্যা ও পূর্ণিমায়', 'প্রতিদিন', 'মাসে একবার'], correct: 0 },
+        { q: 'দুটি মুখ্য জোয়ারের মধ্যে সময়ের ব্যবধান কত?', options: ['২৪ ঘণ্টা ৫২ মিনিট', '১২ ঘণ্টা ২৬ মিনিট', '৬ ঘণ্টা ১৩ মিনিট', '২৪ ঘণ্টা'], correct: 0 }
+      ]
+    },
+    {
+      chapter: '৫. ভারত (প্রাকৃতিক ও অর্থনৈতিক)',
+      questions: [
+        { q: 'আয়তনের বিচারে পৃথিবীতে ভারতের স্থান কততম?', options: ['সপ্তম', 'পঞ্চম', 'ষষ্ঠ', 'অষ্টম'], correct: 0 },
+        { q: 'ভারতের মূল ভূখণ্ডের দক্ষিণতম বিন্দুর নাম কী?', options: ['কন্যাকুমারী', 'ইন্দিরা পয়েন্ট', 'ইন্দিরা কোল', 'কিবিথু'], correct: 0 },
+        { q: 'ভারত ও চীনের সীমারেখাকে কী বলা হয়?', options: ['ম্যাকমোহন লাইন', 'র্যাডক্লিফ লাইন', 'ডুরান্ড লাইন', 'লাইন অব কন্ট্রোল'], correct: 0 },
+        { q: 'ভারত ও পাকিস্তানের সীমারেখাকে কী বলা হয়?', options: ['র্যাডক্লিফ লাইন', 'ম্যাকমোহন লাইন', 'ডুরান্ড লাইন', 'লাইন অব কন্ট্রোল'], correct: 0 },
+        { q: 'ভারতের নবীনতম রাজ্য কোনটি?', options: ['তেলেঙ্গানা', 'উত্তরাখণ্ড', 'ছত্তিশগড়', 'ঝাড়খণ্ড'], correct: 0 },
+        { q: 'ভারতের উচ্চতম শৃঙ্গ কোনটি?', options: ['গডউইন অস্টিন (K2)', 'কাঞ্চনজঙ্ঘা', 'নন্দাদেবী', 'কামেত'], correct: 0 },
+        { q: 'পশ্চিমঘাট পর্বতের সর্বোচ্চ শৃঙ্গের নাম কী?', options: ['আনাইমুদি', 'দোদাবেতা', 'মহেন্দ্রগিরি', 'গুরুশিখর'], correct: 0 },
+        { q: 'ভারতের দীর্ঘতম নদীর নাম কী?', options: ['গঙ্গা', 'ব্রহ্মপুত্র', 'গোদাবরী', 'নর্মদা'], correct: 0 },
+        { q: 'ভারতের একমাত্র সক্রিয় আগ্নেয়গিরির নাম কী?', options: ['ব্যারেন দ্বীপ', 'নারকোন্ডাম', 'আন্দামান', 'লাক্ষাদ্বীপ'], correct: 0 },
+        { q: 'ভারতের জলবায়ু প্রধানত কী প্রকৃতির?', options: ['ক্রান্তীয় মৌসুমী', 'নাতিশীতোষ্ণ', 'মরু', 'আর্দ্র'], correct: 0 },
+        { q: 'ভারতে সবচেয়ে বেশি বৃষ্টিপাত হয় কোথায়?', options: ['মেঘালয়ের মৌসিনরাম', 'চেরাপুঞ্জি', 'শিলং', 'দার্জিলিং'], correct: 0 },
+        { q: 'কোন বায়ুর প্রভাবে ভারতে বৃষ্টিপাত হয়?', options: ['দক্ষিণ-পশ্চিম মৌসুমী বায়ু', 'উত্তর-পূর্ব মৌসুমী বায়ু', 'পশ্চিমী ঝঞ্ঝা', 'লু'], correct: 0 },
+        { q: 'ভারতের সবচেয়ে উর্বর মাটি কোনটি?', options: ['পলি মাটি', 'কৃষ্ণ মাটি', 'লাল মাটি', 'ল্যাটেরাইট মাটি'], correct: 0 },
+        { q: 'ভারতের কেন্দ্রীয় ধান গবেষণাগার কোথায় অবস্থিত?', options: ['কটকে', 'পুসা', 'নাগপুর', 'জোরহাট'], correct: 0 },
+        { q: 'ভারতের ম্যানচেস্টার কাকে বলা হয়?', options: ['আমেদাবাদ', 'কানপুর', 'কোয়েম্বাটুর', 'মুম্বাই'], correct: 0 }
+      ]
+    },
+    {
+      chapter: '৬. উপগ্রহ চিত্র ও মানচিত্র',
+      questions: [
+        { q: '\'দূর সংবেদন\' (Remote Sensing) শব্দটি প্রথম কে ব্যবহার করেন?', options: ['এভলিন এল প্রুইট', 'জি. কে. গিলবার্ট', 'হপকিন্স', 'পাওয়েল'], correct: 0 },
+        { q: 'উপগ্রহ চিত্র তৈরির জন্য কোন তরঙ্গ ব্যবহার করা হয়?', options: ['তড়িৎচুম্বকীয় তরঙ্গ', 'শব্দ তরঙ্গ', 'জল তরঙ্গ', 'মাধ্যাকর্ষণ তরঙ্গ'], correct: 0 },
+        { q: 'কাজের ভিত্তিতে কৃত্রিম উপগ্রহ কয় প্রকার?', options: ['২ প্রকার', '৩ প্রকার', '৪ প্রকার', '৫ প্রকার'], correct: 0 },
+        { q: 'ভূ-সমলয় উপগ্রহ কত উচ্চতায় স্থাপন করা হয়?', options: ['প্রায় ৩৬,০০০ কিমি', 'প্রায় ৭০০-৯০০ কিমি', 'প্রায় ১০,০০০ কিমি', 'প্রায় ৫০,০০০ কিমি'], correct: 0 },
+        { q: 'উপগ্রহ চিত্রের ক্ষুদ্রতম একককে কী বলে?', options: ['পিক্সেল', 'বিট', 'বাইট', 'সেন্সর'], correct: 0 },
+        { q: 'সাবর্ভ অফ ইন্ডিয়া (SOI) কত সালে প্রতিষ্ঠিত হয়?', options: ['১৭৬৭ সালে', '১৮৫৭ সালে', '১৯৪৭ সালে', '১৭৫৭ সালে'], correct: 0 },
+        { q: 'সাবর্ভ অফ ইন্ডিয়ার সদর দপ্তর কোথায় অবস্থিত?', options: ['দেরাদুন', 'দিল্লি', 'কলকাতা', 'মুম্বাই'], correct: 0 },
+        { q: 'ভূ-বৈচিত্র্যসূচক মানচিত্রে নদী, হ্রদ বা জলভাগ কোন রঙে দেখানো হয়?', options: ['নীল', 'বাদামি', 'সবুজ', 'লাল'], correct: 0 },
+        { q: 'টোপো ম্যাপে স্বাভাবিক উদ্ভিদ বা বনভূমি কোন রঙে দেখানো হয়?', options: ['সবুজ', 'নীল', 'লাল', 'হলুদ'], correct: 0 },
+        { q: 'টোপো ম্যাপে জনবসতি বা পাকা রাস্তা কোন রঙে দেখানো হয়?', options: ['লাল', 'সবুজ', 'নীল', 'কালো'], correct: 0 }
+      ]
+    }
+  ]
+};
+
+
+/* ═══════════════════════════════════════════════════════════
+   ২. রেন্ডারিং লজিক
+   ═══════════════════════════════════════════════════════════ */
+const longContainer = document.getElementById('long-container');
+const shortContainer = document.getElementById('short-container');
+const LETTERS = ['ক', 'খ', 'গ', 'ঘ'];
+let adCounter = 0;
+
+// Function to generate Long Questions HTML
+function renderLong() {
+  let html = '';
+  geographyData.long.forEach((chap, idx) => {
+    const isFirst = idx === 0 ? 'active' : '';
+    
+    let questionsHtml = '';
+    chap.questions.forEach((q, qIdx) => {
+      questionsHtml += `
+        <div class="long-q">
+          <div class="q-text">${qIdx + 1}. ${q}</div>
+          <div class="write-area"><span>এখানে উত্তর লিখুন...</span></div>
+        </div>
+      `;
+    });
+
+    html += `
+      <div class="chapter-card">
+        <button class="chapter-header ${isFirst}" onclick="toggleChapter(this)">
+          <span>${chap.chapter}</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="chapter-body ${isFirst}">
+          ${questionsHtml}
+        </div>
+      </div>
+    `;
+  });
+  longContainer.innerHTML = html;
+}
+
+// Function to generate Short Questions (MCQ) HTML
+function renderShort() {
+  let html = '';
+  geographyData.short.forEach((chap, idx) => {
+    const isFirst = idx === 0 ? 'active' : '';
+    
+    let questionsHtml = '';
+    chap.questions.forEach((item, qIdx) => {
+      const opts = item.options.map((opt, oIdx) => `
+        <button class="opt-btn" onclick="checkAnswer(this, ${item.correct}, ${oIdx})">
+          <span class="opt-ltr">${LETTERS[oIdx]}</span>
+          <span>${opt}</span>
+        </button>
+      `).join('');
+
+      questionsHtml += `
+        <div class="short-q">
+          <div class="q-text">${qIdx + 1}. ${item.q}</div>
+          <div class="opts">${opts}</div>
+        </div>
+      `;
+
+      // Insert an ad every 4 questions
+      if ((qIdx + 1) % 4 === 0) {
+        questionsHtml += `
+          <!-- ADSTERRA INLINE AD (${chap.chapter} - Q${qIdx+1}) -->
+          <div class="ad-container" id="ad-inline-${adCounter}"></div>
+        `;
+        adCounter++;
+      }
+    });
+
+    html += `
+      <div class="chapter-card">
+        <button class="chapter-header ${isFirst}" onclick="toggleChapter(this)">
+          <span>${chap.chapter}</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="chapter-body ${isFirst}">
+          ${questionsHtml}
+        </div>
+      </div>
+    `;
+  });
+  shortContainer.innerHTML = html;
+
+  // Load inline ads after HTML is injected
+  for (let i = 0; i < adCounter; i++) {
+    loadAd(`ad-inline-${i}`, getAd300x250(), '300px', '250px');
+  }
+}
+
+// Accordion Toggle
+function toggleChapter(btn) {
+  const body = btn.nextElementSibling;
+  const isActive = btn.classList.contains('active');
+  
+  // Close all open chapters in the same container for cleaner UI
+  const allHeaders = btn.closest('div[id]').querySelectorAll('.chapter-header');
+  const allBodies = btn.closest('div[id]').querySelectorAll('.chapter-body');
+  
+  allHeaders.forEach(h => h.classList.remove('active'));
+  allBodies.forEach(b => b.classList.remove('active'));
+
+  // Open clicked one
+  if (!isActive) {
+    btn.classList.add('active');
+    body.classList.add('active');
+  }
+}
+
+// MCQ Check Answer
+function checkAnswer(clickedBtn, correctIdx, selectedIdx) {
+  const parent = clickedBtn.closest('.opts');
+  const allBtns = parent.querySelectorAll('.opt-btn');
+  
+  // Disable all
+  allBtns.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === correctIdx) btn.classList.add('correct');
+  });
+
+  if (selectedIdx !== correctIdx) {
+    clickedBtn.classList.add('wrong');
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   ৩. অ্যাড লোডিং (Safe Iframe Method)
+   ═══════════════════════════════════════════════════════════ */
+function getAd320x50() {
+  return `
+    <script type="text/javascript">
+      atOptions = {'key' : '7e2bfecea97b8d1c4d46994c09686617','format' : 'iframe','height' : 50,'width' : 320,'params' : {}};
+    <\/script>
+    <script type="text/javascript" src="https://bauval.org/22/7e2bfecea97b8d1c4d46994c09686617"><\/script>
+  `;
+}
+function getAd300x250() {
+  return `
+    <script type="text/javascript">
+      atOptions = {'key' : '8c14f11bb2637107aa1a4f5781c7195d','format' : 'iframe','height' : 250,'width' : 300,'params' : {}};
+    <\/script>
+    <script type="text/javascript" src="https://bauval.org/22/8c14f11bb2637107aa1a4f5781c7195d"><\/script>
+  `;
+}
+function getAdNative() {
+  return `
+    <script async="async" data-cfasync="false" src="https://bauval.org/21/f34bb8b6c4aa493eb66251b630110542"><\/script>
+    <div id="container-f34bb8b6c4aa493eb66251b630110542"></div>
+  `;
+}
+
+function loadAd(containerId, adCode, width, height) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  if (container.querySelector('iframe')) return;
+
+  const iframe = document.createElement('iframe');
+  iframe.style.width = width;
+  iframe.style.height = height;
+  iframe.style.border = 'none';
+  iframe.style.overflow = 'hidden';
+  iframe.setAttribute('scrolling', 'no');
+  
+  container.appendChild(iframe);
+
+  const doc = iframe.contentWindow.document;
+  doc.open();
+  doc.write(`
+    <html>
+      <head><style>body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; background: transparent; }</style></head>
+      <body>${adCode}</body>
+    </html>
+  `);
+  doc.close();
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   ৪. ইনিশিয়ালাইজেশন
+   ═══════════════════════════════════════════════════════════ */
+document.addEventListener("DOMContentLoaded", () => {
+  // Render HTML
+  renderLong();
+  renderShort();
+
+  // Load Main Ads
+  loadAd('ad-geo-top', getAd320x50(), '320px', '50px');
+  loadAd('ad-geo-mid', getAdNative(), '100%', '250px');
+  loadAd('ad-geo-bottom', getAd300x250(), '300px', '250px');
+});
+</script>
+
+</body>
+</html>

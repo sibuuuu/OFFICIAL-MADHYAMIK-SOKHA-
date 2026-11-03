@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0A2547">
+<title>ইংরেজি সাজেশন | Madhyamik Sokha Web</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* ═══════════════════════════════════════════════════════════
+   VARIABLES & RESET
+   ═══════════════════════════════════════════════════════════ */
+:root{
+  --primary:        #12386E; 
+  --primary-dark:   #0A2547;
+  --primary-light:  #2B6CB0;
+  --accent:         #F59E0B;
+  --accent-hover:   #D97706;
+  
+  --bg:             #F4F7FC;
+  --card:           #FFFFFF;
+  --text:           #1E293B;
+  --text-soft:      #475569;
+  --muted:          #94A3B8;
+  --line:           #E2E8F0;
+  
+  --success:        #10B981;
+  --success-bg:     #ECFDF5;
+  --danger:         #EF4444;
+  --danger-bg:      #FEF2F2;
+  
+  --radius:         24px;
+  --radius-sm:      16px;
+  --shadow-sm:      0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  --shadow-md:      0 10px 25px -3px rgba(0, 0, 0, 0.08);
+  --shadow-lg:      0 20px 40px -5px rgba(26, 54, 93, 0.15);
+  --maxw:           820px;
+}
+
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+body{
+  font-family:'Noto Sans Bengali', system-ui, -apple-system, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  font-size:16px;
+  line-height:1.7;
+  padding-bottom:calc(30px + env(safe-area-inset-bottom));
+}
+a{ text-decoration:none; color:inherit; }
+button{ font-family:inherit; cursor:pointer; border:none; background:none; }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+.animate-up { animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+/* ═══════════════════════════════════════════════════════════
+   HEADER
+   ═══════════════════════════════════════════════════════════ */
+.app-header {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+  color: #fff;
+  padding: 16px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: var(--shadow-sm);
+}
+.hdr-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.back-btn {
+  width: 38px; height: 38px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.back-btn:hover { background: rgba(255,255,255,0.25); }
+.hdr-icon {
+  width: 38px; height: 38px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.hdr-text h1 { font-size: 17px; font-weight: 700; }
+.hdr-text p { font-size: 12px; color: #A0AEC0; }
+
+/* ═══════════════════════════════════════════════════════════
+   MAIN LAYOUT
+   ═══════════════════════════════════════════════════════════ */
+main {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 20px 16px;
+}
+
+/* Ad Slots */
+.ad-container {
+  width: 100%;
+  display: flex; justify-content: center; align-items: center;
+  margin: 16px 0;
+  min-height: 50px;
+  overflow: hidden;
+}
+.ad-container iframe { border: none; }
+
+/* Section Titles */
+.section-title {
+  font-size: 18px; font-weight: 800; color: var(--primary-dark);
+  margin: 24px 0 16px; display: flex; align-items: center; gap: 10px;
+  background: #EAF1FB; padding: 12px 16px; border-radius: var(--radius-sm);
+  border-left: 4px solid var(--primary);
+}
+.section-title i { color: var(--primary); font-size: 20px; }
+
+/* Chapter Accordion */
+.chapter-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.chapter-header {
+  width: 100%;
+  padding: 16px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: #fff; text-align: left;
+  font-size: 16px; font-weight: 700; color: var(--primary-dark);
+  transition: background 0.2s;
+}
+.chapter-header:hover { background: #F8FAFD; }
+.chapter-header.active { background: #F0F4FA; color: var(--primary); border-bottom: 1px solid var(--line); }
+.chapter-header i { color: var(--accent); transition: transform 0.3s; font-size: 14px; }
+.chapter-header.active i { transform: rotate(180deg); }
+
+.chapter-body {
+  display: none;
+  padding: 20px;
+  background: #FCFDFF;
+}
+.chapter-body.active { display: block; animation: fadeUp 0.3s ease; }
+
+/* ── LONG QUESTIONS ── */
+.long-q {
+  margin-bottom: 24px;
+  border-bottom: 1px dashed var(--line);
+  padding-bottom: 20px;
+}
+.long-q:last-child { margin-bottom: 0; border-bottom: none; padding-bottom: 0; }
+.long-q .q-text {
+  font-size: 15.5px; font-weight: 600; color: var(--text); margin-bottom: 12px;
+  line-height: 1.6;
+}
+.write-area {
+  background: repeating-linear-gradient(to bottom, transparent 0, transparent 28px, #E2E8F0 28px, #E2E8F0 29px);
+  min-height: 120px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px;
+}
+.write-area span {
+  font-size: 12px; color: var(--muted); font-style: italic;
+}
+
+/* ── SHORT QUESTIONS (MCQ) ── */
+.short-q {
+  margin-bottom: 20px;
+  border-bottom: 1px dashed var(--line);
+  padding-bottom: 20px;
+}
+.short-q:last-child { margin-bottom: 0; border-bottom: none; padding-bottom: 0; }
+.short-q .q-text {
+  font-size: 15.5px; font-weight: 600; color: var(--text); margin-bottom: 12px;
+  line-height: 1.6;
+}
+.opts {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.opt-btn {
+  background: #fff;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex; align-items: center; gap: 10px;
+  font-size: 14.5px; color: var(--text-soft); text-align: left;
+  transition: all 0.2s;
+}
+.opt-btn:hover { border-color: var(--primary-light); background: #F8FAFD; }
+.opt-btn:disabled { cursor: not-allowed; }
+.opt-ltr {
+  width: 24px; height: 24px;
+  border-radius: 6px; background: #EAF1FB; color: var(--primary);
+  font-size: 12px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+/* Answer States */
+.opt-btn.correct { border-color: var(--success); background: var(--success-bg); color: #065F46; }
+.opt-btn.correct .opt-ltr { background: var(--success); color: #fff; }
+.opt-btn.wrong { border-color: var(--danger); background: var(--danger-bg); color: #991B1B; }
+.opt-btn.wrong .opt-ltr { background: var(--danger); color: #fff; }
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     ★ ADSTERRA POPUNDER & SOCIAL BAR ★
+     ═══════════════════════════════════════════════════════════ -->
+<script data-cfasync="false" src="https://abscloud.org/1/4d482fd3597918ddb54ba328e416dee0"></script>
+<script data-cfasync="false" src="https://bauval.org/14/15746e84cd36001e9d3e4ac7c874823d"></script>
+
+<header class="app-header">
+  <div class="hdr-inner">
+    <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+    <div class="hdr-icon"><i class="fa-solid fa-language"></i></div>
+    <div class="hdr-text">
+      <h1>ইংরেজি সাজেশন</h1>
+      <p>Madhyamik Sokha Web</p>
+    </div>
+  </div>
+</header>
+
+<main class="animate-up">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       ★ ADSTERRA BANNER (Top) ★
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="ad-container" id="ad-english-top"></div>
+
+  <!-- ═══════════ BORO PROSHNO (LONG QUESTIONS) ═══════════ -->
+  <h2 class="section-title"><i class="fa-solid fa-pen-nib"></i> বড় প্রশ্ন (Writing & Descriptive)</h2>
+  <div id="long-container"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       ★ ADSTERRA NATIVE (Mid Transition) ★
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="ad-container" id="ad-english-mid" style="min-height:250px;"></div>
+
+  <!-- ═══════════ CHOTO PROSHNO (SHORT QUESTIONS) ═══════════ -->
+  <h2 class="section-title"><i class="fa-solid fa-check-square"></i> ছোট প্রশ্ন ও উত্তর (MCQ)</h2>
+  <div id="short-container"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       ★ ADSTERRA BANNER (Bottom) ★
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="ad-container" id="ad-english-bottom" style="margin-top:30px;"></div>
+
+</main>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   ১. ইংরেজি ডেটা (Long & Short Questions)
+   ═══════════════════════════════════════════════════════════ */
+const englishData = {
+  long: [
+    {
+      chapter: '1. Prose (Short Answer Type)',
+      questions: [
+        'Why did Swami\'s conscience bother him on his way to school?',
+        'How did Samuel react when Swami reached school late?',
+        'What was the headmaster doing when Swami went to deliver the letter?',
+        '"You deserve your Samuel"—Why did Swami\'s father say this?',
+        'How did the people react immediately after they heard the news of Bapu\'s death?',
+        'What did walking with Bapu mean to the common people of India?',
+        'Why did the author feel that the \'magic circle\' had vanished?',
+        'Why did the narrator and Claude hurry to fix the kite?',
+        'How did the father find his long-lost brother and sister?',
+        'How does the cat appear to the rest of the world during the day?',
+        'What does the cat do when the family sits down to tea?'
+      ]
+    },
+    {
+      chapter: '2. Poetry (Short Answer Type)',
+      questions: [
+        'Why did the mountain call the squirrel a \'little prig\'?',
+        'How does the squirrel justify its small size?',
+        'What is the squirrel not denied by the mountain?',
+        'What happened to the poet when the old woman opened her little bag?',
+        'What promise did the oak trees force the poet to make?',
+        'What kind of ship and star does the poet ask for?',
+        'What does the phrase "call of the running tide" imply?',
+        'When does the snail shrink into his house with displeasure?',
+        'Why is the snail completely satisfied?'
+      ]
+    },
+    {
+      chapter: '3. Writing Skills (10 Marks)',
+      questions: [
+        'Write a notice for your school students requesting them to donate money/materials for flood victims.',
+        'Write a notice as the Cultural Secretary of your school inviting students to participate in an upcoming Cultural Programme.',
+        'Write a letter to the Editor of an English daily expressing concern over the reckless driving and frequent road accidents.',
+        'Write a letter to the Editor about the excessive use of plastic bags and its harmful effects.',
+        'Write a letter to your younger brother advising him to read English newspapers daily.',
+        'Write a report on the Annual Sports Day / Prize Distribution Ceremony of your school.',
+        'Write a report on a devastating train/bus accident you have recently witnessed.',
+        'Write a process on Preparation of ORS (Oral Rehydration Solution).',
+        'Write a story on: Two friends and a bear.',
+        'Write a paragraph on: Your Aim in Life.',
+        'Write a paragraph on: The Value of Sports and Games.'
+      ]
+    }
+  ],
+  
+  short: [
+    {
+      chapter: '1. Prose (MCQ)',
+      questions: [
+        { q: 'With a shudder Swami realized that it was:', options: ['Friday morning', 'Monday morning', 'Tuesday morning', 'Sunday morning'], correct: 1 },
+        { q: 'Swami hoped that the earthquake would reduce the school building to:', options: ['ashes', 'ruins', 'dust', 'pieces'], correct: 2 },
+        { q: 'Swami decided to deliver the letter to the headmaster at the:', options: ['end of the day', 'beginning of the day', 'tiffin break', 'prayer time'], correct: 0 },
+        { q: 'Samuel was teaching:', options: ['History', 'Geography', 'Arithmetic', 'Science'], correct: 2 },
+        { q: 'When Swami entered the class, Samuel was inspecting the:', options: ['home lessons', 'classwork', 'attendance', 'uniforms'], correct: 0 },
+        { q: 'Swami stopped on the roadside to:', options: ['make up his mind about Samuel', 'buy some snacks', 'wait for his friends', 'hide from his father'], correct: 0 },
+        { q: 'Samuel had a dark face, thin moustache, and wore a:', options: ['yellow coat', 'red coat', 'black coat', 'white coat'], correct: 0 },
+        { q: 'The peon told Swami that the headmaster had gone on a leave for:', options: ['a month', 'a week', 'a day', 'two days'], correct: 1 },
+        { q: 'Gandhiji was shot on his way to a:', options: ['prayer meeting', 'political rally', 'walk', 'friend\'s house'], correct: 0 },
+        { q: 'The author was having tea at home on the evening of:', options: ['26th January 1948', '30th January 1948', '15th August 1947', '2nd October 1948'], correct: 1 },
+        { q: 'Gandhiji\'s funeral was to take place:', options: ['the day after his death', 'two days after his death', 'on the same day', 'a week later'], correct: 0 },
+        { q: 'The ashes of Gandhiji were taken to:', options: ['Varanasi', 'Kolkata', 'Delhi', 'Allahabad'], correct: 3 },
+        { q: 'The keeper of the Big Half Moon lighthouse is:', options: ['the narrator', 'Claude', 'Aunt Esther', 'Father'], correct: 3 },
+        { q: 'The children pasted gold tinsel stars all over the:', options: ['lighthouse', 'boat', 'kite', 'letter'], correct: 2 },
+        { q: 'To patch the kite, they used an old:', options: ['newspaper', 'letter', 'cloth', 'cardboard'], correct: 1 },
+        { q: 'A cat has more character than most:', options: ['dogs', 'human beings', 'wild animals', 'pets'], correct: 1 },
+        { q: 'When the family sits down to tea, the cat puts in an appearance to get his:', options: ['share', 'milk', 'fish', 'toy'], correct: 0 }
+      ]
+    },
+    {
+      chapter: '2. Poetry (MCQ)',
+      questions: [
+        { q: 'The quarrel was between the mountain and the:', options: ['rabbit', 'rat', 'squirrel', 'fox'], correct: 2 },
+        { q: 'The mountain called the squirrel:', options: ['Little thing', 'Little prig', 'Tiny creature', 'Small rat'], correct: 1 },
+        { q: 'The mountain cannot crack a:', options: ['joke', 'stone', 'nut', 'tree'], correct: 2 },
+        { q: 'The poet was looking for a:', options: ['rabbit', 'deer', 'male deer (stag)', 'bird'], correct: 2 },
+        { q: 'The poet met an old woman in the:', options: ['pine wood', 'oakwood', 'bamboo grove', 'mango orchard'], correct: 1 },
+        { q: 'Whenever the poet sees an oak tree felled, he must plant:', options: ['one', 'two', 'three', 'ten'], correct: 1 },
+        { q: 'The poet asks for a tall ship and a:', options: ['compass', 'star to steer her by', 'map', 'sailor'], correct: 1 },
+        { q: 'The poet wants to hear the crying of the:', options: ['eagle', 'sea-gulls', 'parrots', 'albatross'], correct: 1 },
+        { q: 'The wind on the sea is as sharp as a whetted:', options: ['sword', 'axe', 'knife', 'spear'], correct: 2 },
+        { q: 'When danger threatens, the snail shrinks into his house with much:', options: ['fear', 'displeasure', 'speed', 'joy'], correct: 1 },
+        { q: 'The snail is well satisfied to be his own whole:', options: ['master', 'friend', 'treasure', 'guard'], correct: 2 }
+      ]
+    },
+    {
+      chapter: '3. Grammar (MCQ)',
+      questions: [
+        { q: 'The patient will RECOVER soon. (Choose the correct phrasal verb)', options: ['come round', 'come across', 'come down', 'come of'], correct: 0 },
+        { q: 'The strike was CANCELLED. (Choose the correct phrasal verb)', options: ['called in', 'called out', 'called off', 'called up'], correct: 2 },
+        { q: 'Do not DESPISE the poor. (Choose the correct phrasal verb)', options: ['look into', 'look down upon', 'look for', 'look after'], correct: 1 },
+        { q: 'She RESEMBLES her mother. (Choose the correct phrasal verb)', options: ['takes after', 'takes off', 'takes down', 'takes over'], correct: 0 },
+        { q: 'You must SURRENDER to the police. (Choose the correct phrasal verb)', options: ['give away', 'give up', 'give in', 'give out'], correct: 2 },
+        { q: 'He ABANDONED his bad habits. (Choose the correct phrasal verb)', options: ['gave in', 'gave up', 'gave away', 'gave out'], correct: 1 },
+        { q: 'The police are INVESTIGATING the case. (Choose the correct phrasal verb)', options: ['looking for', 'looking up', 'looking into', 'looking after'], correct: 2 },
+        { q: 'Please EXTINGUISH the lamp. (Choose the correct phrasal verb)', options: ['put off', 'put out', 'put down', 'put up'], correct: 1 },
+        { q: 'I cannot TOLERATE such insult. (Choose the correct phrasal verb)', options: ['put up with', 'put out', 'put off', 'put down'], correct: 0 },
+        { q: 'The publisher PUBLISHED a new book. (Choose the correct phrasal verb)', options: ['brought up', 'brought about', 'brought down', 'brought out'], correct: 3 },
+        { q: 'The child was REARED by his aunt. (Choose the correct phrasal verb)', options: ['brought out', 'brought up', 'brought in', 'brought off'], correct: 1 },
+        { q: 'Cholera has SPREAD in the village. (Choose the correct phrasal verb)', options: ['broken down', 'broken up', 'broken into', 'broken out'], correct: 3 },
+        { q: 'The chief guest DISTRIBUTED the prizes. (Choose the correct phrasal verb)', options: ['gave up', 'gave in', 'gave away', 'gave off'], correct: 2 },
+        { q: 'I cannot UNDERSTAND what you are saying. (Choose the correct phrasal verb)', options: ['make out', 'make up', 'make off', 'make for'], correct: 0 },
+        { q: 'He died _____ cholera.', options: ['from', 'by', 'of', 'in'], correct: 2 },
+        { q: 'He died _____ overeating.', options: ['of', 'by', 'in', 'from'], correct: 3 },
+        { q: 'I prefer tea _____ coffee.', options: ['to', 'than', 'over', 'from'], correct: 0 },
+        { q: 'He is senior _____ me by two years.', options: ['than', 'to', 'from', 'with'], correct: 1 },
+        { q: 'She is fond _____ music.', options: ['in', 'with', 'for', 'of'], correct: 3 },
+        { q: 'Divide the sweets _____ the two brothers.', options: ['among', 'in', 'between', 'to'], correct: 2 },
+        { q: 'He is blind _____ one eye.', options: ['of', 'in', 'to', 'with'], correct: 0 },
+        { q: 'A father should not be blind _____ his son\'s faults.', options: ['in', 'of', 'to', 'at'], correct: 2 },
+        { q: 'The book consists _____ ten chapters.', options: ['of', 'in', 'with', 'from'], correct: 0 },
+        { q: 'Change the voice: Open the door.', options: ['Let the door be opened.', 'The door should be opened.', 'Let the door open.', 'You are asked to open the door.'], correct: 0 },
+        { q: 'Change the voice: I know him.', options: ['He is known by me.', 'He is known with me.', 'He is known to me.', 'He was known to me.'], correct: 2 },
+        { q: 'Change the narration: The teacher said, "The earth moves round the sun."', options: ['The teacher said that the earth moved round the sun.', 'The teacher asked if the earth moves round the sun.', 'The teacher told that the earth is moving round the sun.', 'The teacher said that the earth moves round the sun.'], correct: 3 },
+        { q: 'Transform into negative: Man is mortal.', options: ['Man is not mortal.', 'Man is never mortal.', 'Man is not immortal.', 'No man is mortal.'], correct: 2 }
+      ]
+    }
+  ]
+};
+
+
+/* ═══════════════════════════════════════════════════════════
+   ২. রেন্ডারিং লজিক
+   ═══════════════════════════════════════════════════════════ */
+const longContainer = document.getElementById('long-container');
+const shortContainer = document.getElementById('short-container');
+const LETTERS = ['A', 'B', 'C', 'D']; // English letters for English MCQs
+let adCounter = 0;
+
+// Function to generate Long Questions HTML
+function renderLong() {
+  let html = '';
+  englishData.long.forEach((chap, idx) => {
+    const isFirst = idx === 0 ? 'active' : '';
+    
+    let questionsHtml = '';
+    chap.questions.forEach((q, qIdx) => {
+      questionsHtml += `
+        <div class="long-q">
+          <div class="q-text">${qIdx + 1}. ${q}</div>
+          <div class="write-area"><span>Write your answer here...</span></div>
+        </div>
+      `;
+    });
+
+    html += `
+      <div class="chapter-card">
+        <button class="chapter-header ${isFirst}" onclick="toggleChapter(this)">
+          <span>${chap.chapter}</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="chapter-body ${isFirst}">
+          ${questionsHtml}
+        </div>
+      </div>
+    `;
+  });
+  longContainer.innerHTML = html;
+}
+
+// Function to generate Short Questions (MCQ) HTML
+function renderShort() {
+  let html = '';
+  englishData.short.forEach((chap, idx) => {
+    const isFirst = idx === 0 ? 'active' : '';
+    
+    let questionsHtml = '';
+    chap.questions.forEach((item, qIdx) => {
+      const opts = item.options.map((opt, oIdx) => `
+        <button class="opt-btn" onclick="checkAnswer(this, ${item.correct}, ${oIdx})">
+          <span class="opt-ltr">${LETTERS[oIdx]}</span>
+          <span>${opt}</span>
+        </button>
+      `).join('');
+
+      questionsHtml += `
+        <div class="short-q">
+          <div class="q-text">${qIdx + 1}. ${item.q}</div>
+          <div class="opts">${opts}</div>
+        </div>
+      `;
+
+      // Insert an ad every 4 questions
+      if ((qIdx + 1) % 4 === 0) {
+        questionsHtml += `
+          <!-- ADSTERRA INLINE AD (${chap.chapter} - Q${qIdx+1}) -->
+          <div class="ad-container" id="ad-inline-${adCounter}"></div>
+        `;
+        adCounter++;
+      }
+    });
+
+    html += `
+      <div class="chapter-card">
+        <button class="chapter-header ${isFirst}" onclick="toggleChapter(this)">
+          <span>${chap.chapter}</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="chapter-body ${isFirst}">
+          ${questionsHtml}
+        </div>
+      </div>
+    `;
+  });
+  shortContainer.innerHTML = html;
+
+  // Load inline ads after HTML is injected
+  for (let i = 0; i < adCounter; i++) {
+    loadAd(`ad-inline-${i}`, getAd300x250(), '300px', '250px');
+  }
+}
+
+// Accordion Toggle
+function toggleChapter(btn) {
+  const body = btn.nextElementSibling;
+  const isActive = btn.classList.contains('active');
+  
+  // Close all open chapters in the same container for cleaner UI
+  const allHeaders = btn.closest('div[id]').querySelectorAll('.chapter-header');
+  const allBodies = btn.closest('div[id]').querySelectorAll('.chapter-body');
+  
+  allHeaders.forEach(h => h.classList.remove('active'));
+  allBodies.forEach(b => b.classList.remove('active'));
+
+  // Open clicked one
+  if (!isActive) {
+    btn.classList.add('active');
+    body.classList.add('active');
+  }
+}
+
+// MCQ Check Answer
+function checkAnswer(clickedBtn, correctIdx, selectedIdx) {
+  const parent = clickedBtn.closest('.opts');
+  const allBtns = parent.querySelectorAll('.opt-btn');
+  
+  // Disable all
+  allBtns.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === correctIdx) btn.classList.add('correct');
+  });
+
+  if (selectedIdx !== correctIdx) {
+    clickedBtn.classList.add('wrong');
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   ৩. অ্যাড লোডিং (Safe Iframe Method)
+   ═══════════════════════════════════════════════════════════ */
+function getAd320x50() {
+  return `
+    <script type="text/javascript">
+      atOptions = {'key' : '7e2bfecea97b8d1c4d46994c09686617','format' : 'iframe','height' : 50,'width' : 320,'params' : {}};
+    <\/script>
+    <script type="text/javascript" src="https://bauval.org/22/7e2bfecea97b8d1c4d46994c09686617"><\/script>
+  `;
+}
+function getAd300x250() {
+  return `
+    <script type="text/javascript">
+      atOptions = {'key' : '8c14f11bb2637107aa1a4f5781c7195d','format' : 'iframe','height' : 250,'width' : 300,'params' : {}};
+    <\/script>
+    <script type="text/javascript" src="https://bauval.org/22/8c14f11bb2637107aa1a4f5781c7195d"><\/script>
+  `;
+}
+function getAdNative() {
+  return `
+    <script async="async" data-cfasync="false" src="https://bauval.org/21/f34bb8b6c4aa493eb66251b630110542"><\/script>
+    <div id="container-f34bb8b6c4aa493eb66251b630110542"></div>
+  `;
+}
+
+function loadAd(containerId, adCode, width, height) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  if (container.querySelector('iframe')) return;
+
+  const iframe = document.createElement('iframe');
+  iframe.style.width = width;
+  iframe.style.height = height;
+  iframe.style.border = 'none';
+  iframe.style.overflow = 'hidden';
+  iframe.setAttribute('scrolling', 'no');
+  
+  container.appendChild(iframe);
+
+  const doc = iframe.contentWindow.document;
+  doc.open();
+  doc.write(`
+    <html>
+      <head><style>body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; background: transparent; }</style></head>
+      <body>${adCode}</body>
+    </html>
+  `);
+  doc.close();
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   ৪. ইনিশিয়ালাইজেশন
+   ═══════════════════════════════════════════════════════════ */
+document.addEventListener("DOMContentLoaded", () => {
+  // Render HTML
+  renderLong();
+  renderShort();
+
+  // Load Main Ads
+  loadAd('ad-english-top', getAd320x50(), '320px', '50px');
+  loadAd('ad-english-mid', getAdNative(), '100%', '250px');
+  loadAd('ad-english-bottom', getAd300x250(), '300px', '250px');
+});
+</script>
+
+</body>
+</html>

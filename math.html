@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0A2547">
+<title>গণিত সাজেশন | Madhyamik Sokha Web</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* ═══════════════════════════════════════════════════════════
+   VARIABLES & RESET
+   ═══════════════════════════════════════════════════════════ */
+:root{
+  --primary:        #12386E; 
+  --primary-dark:   #0A2547;
+  --primary-light:  #2B6CB0;
+  --accent:         #F59E0B;
+  --accent-hover:   #D97706;
+  
+  --bg:             #F4F7FC;
+  --card:           #FFFFFF;
+  --text:           #1E293B;
+  --text-soft:      #475569;
+  --muted:          #94A3B8;
+  --line:           #E2E8F0;
+  
+  --success:        #10B981;
+  --success-bg:     #ECFDF5;
+  --danger:         #EF4444;
+  --danger-bg:      #FEF2F2;
+  
+  --radius:         24px;
+  --radius-sm:      16px;
+  --shadow-sm:      0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  --shadow-md:      0 10px 25px -3px rgba(0, 0, 0, 0.08);
+  --shadow-lg:      0 20px 40px -5px rgba(26, 54, 93, 0.15);
+  --maxw:           820px;
+}
+
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+body{
+  font-family:'Noto Sans Bengali', system-ui, -apple-system, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  font-size:16px;
+  line-height:1.7;
+  padding-bottom:calc(30px + env(safe-area-inset-bottom));
+}
+a{ text-decoration:none; color:inherit; }
+button{ font-family:inherit; cursor:pointer; border:none; background:none; }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+.animate-up { animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+/* ═══════════════════════════════════════════════════════════
+   HEADER & BANNER
+   ═══════════════════════════════════════════════════════════ */
+.app-header {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+  color: #fff;
+  padding: 16px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: var(--shadow-sm);
+}
+.hdr-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.back-btn {
+  width: 38px; height: 38px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.back-btn:hover { background: rgba(255,255,255,0.25); }
+.hdr-icon {
+  width: 38px; height: 38px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.hdr-text h1 { font-size: 17px; font-weight: 700; }
+.hdr-text p { font-size: 12px; color: #A0AEC0; }
+
+/* Motivational Banner */
+.motivation-banner {
+  background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+  border: 1px solid #F59E0B;
+  border-radius: var(--radius-sm);
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  display: flex; gap: 14px; align-items: center;
+  color: #78350F; font-weight: 600; font-size: 14.5px; line-height: 1.6;
+  box-shadow: 0 4px 10px rgba(245,158,11,0.15);
+}
+.motivation-banner i { font-size: 28px; color: #D97706; flex-shrink: 0; }
+
+/* ═══════════════════════════════════════════════════════════
+   MAIN LAYOUT
+   ═══════════════════════════════════════════════════════════ */
+main {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 20px 16px;
+}
+
+/* Ad Slots */
+.ad-container {
+  width: 100%;
+  display: flex; justify-content: center; align-items: center;
+  margin: 16px 0;
+  min-height: 50px;
+  overflow: hidden;
+}
+.ad-container iframe { border: none; }
+
+/* Section Titles */
+.section-title {
+  font-size: 18px; font-weight: 800; color: var(--primary-dark);
+  margin: 24px 0 16px; display: flex; align-items: center; gap: 10px;
+  background: #EAF1FB; padding: 12px 16px; border-radius: var(--radius-sm);
+  border-left: 4px solid var(--primary);
+}
+.section-title i { color: var(--primary); font-size: 20px; }
+
+/* ═══════════════════════════════════════════════════════════
+   BOOK REFERENCE SECTION (NEW)
+   ═══════════════════════════════════════════════════════════ */
+.book-reference {
+  background: #F0FDF4;
+  border: 1px solid #BBF7D0;
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+}
+.book-reference h3 {
+  font-size: 16px; font-weight: 800; color: #166534;
+  margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+}
+.book-reference h3 i { color: #15803D; }
+.book-list {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.book-list li {
+  font-size: 14.5px; color: #334155; line-height: 1.6;
+  padding-left: 16px; position: relative;
+  border-bottom: 1px dashed #D1FAE5; padding-bottom: 10px;
+}
+.book-list li:last-child { border-bottom: none; padding-bottom: 0; }
+.book-list li::before {
+  content: '\f0da'; /* fa-caret-right */
+  font-family: 'Font Awesome 6 Free'; font-weight: 900;
+  position: absolute; left: 0; top: 2px; color: #16A34A;
+}
+.book-list strong { color: #0F172A; font-weight: 700; }
+.book-list span { color: #475569; display: block; font-size: 13px; margin-top: 4px;}
+
+/* ═══════════════════════════════════════════════════════════
+   ACCORDION
+   ═══════════════════════════════════════════════════════════ */
+.chapter-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.chapter-header {
+  width: 100%;
+  padding: 16px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: #fff; text-align: left;
+  font-size: 16px; font-weight: 700; color: var(--primary-dark);
+  transition: background 0.2s;
+}
+.chapter-header:hover { background: #F8FAFD; }
+.chapter-header.active { background: #F0F4FA; color: var(--primary); border-bottom: 1px solid var(--line); }
+.chapter-header i { color: var(--accent); transition: transform 0.3s; font-size: 14px; }
+.chapter-header.active i { transform: rotate(180deg); }
+
+.chapter-body {
+  display: none;
+  padding: 20px;
+  background: #FCFDFF;
+}
+.chapter-body.active { display: block; animation: fadeUp 0.3s ease; }
+
+/* ── LONG QUESTIONS ── */
+.long-q {
+  margin-bottom: 24px;
+  border-bottom: 1px dashed var(--line);
+  padding-bottom: 20px;
+}
+.long-q:last-child { margin-bottom: 0; border-bottom: none; padding-bottom: 0; }
+.long-q .q-text {
+  font-size: 15.5px; font-weight: 600; color: var(--text); margin-bottom: 12px;
+  line-height: 1.6;
+}
+.write-area {
+  background: repeating-linear-gradient(to bottom, transparent 0, transparent 28px, #E2E8F0 28px, #E2E8F0 29px);
+  min-height: 120px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px;
+}
+.write-area span {
+  font-size: 12px; color: var(--muted); font-style: italic;
+}
+
+/* ── SHORT QUESTIONS (MCQ) ── */
+.short-q {
+  margin-bottom: 20px;
+  border-bottom: 1px dashed var(--line);
+  padding-bottom: 20px;
+}
+.short-q:last-child { margin-bottom: 0; border-bottom: none; padding-bottom: 0; }
+.short-q .q-text {
+  font-size: 15.5px; font-weight: 600; color: var(--text); margin-bottom: 12px;
+  line-height: 1.6;
+}
+.opts {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.opt-btn {
+  background: #fff;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex; align-items: center; gap: 10px;
+  font-size: 14.5px; color: var(--text-soft); text-align: left;
+  transition: all 0.2s;
+}
+.opt-btn:hover { border-color: var(--primary-light); background: #F8FAFD; }
+.opt-btn:disabled { cursor: not-allowed; }
+.opt-ltr {
+  width: 24px; height: 24px;
+  border-radius: 6px; background: #EAF1FB; color: var(--primary);
+  font-size: 12px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+/* Answer States */
+.opt-btn.correct { border-color: var(--success); background: var(--success-bg); color: #065F46; }
+.opt-btn.correct .opt-ltr { background: var(--success); color: #fff; }
+.opt-btn.wrong { border-color: var(--danger); background: var(--danger-bg); color: #991B1B; }
+.opt-btn.wrong .opt-ltr { background: var(--danger); color: #fff; }
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     ★ ADSTERRA POPUNDER & SOCIAL BAR ★
+     ═══════════════════════════════════════════════════════════ -->
+<script data-cfasync="false" src="https://abscloud.org/1/4d482fd3597918ddb54ba328e416dee0"></script>
+<script data-cfasync="false" src="https://bauval.org/14/15746e84cd36001e9d3e4ac7c874823d"></script>
+
+<header class="app-header">
+  <div class="hdr-inner">
+    <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+    <div class="hdr-icon"><i class="fa-solid fa-calculator"></i></div>
+    <div class="hdr-text">
+      <h1>গণিত সাজেশন</h1>
+      <p>Madhyamik Sokha Web</p>
+    </div>
+  </div>
+</header>
+
+<main class="animate-up">
+
+  <!-- Motivational Banner -->
+  <div class="motivation-banner">
+    <i class="fa-solid fa-bolt"></i>
+    <div>
+      অঙ্ক দেখে ভয় পাও? ভয় পাওয়ার দিন শেষ! এই মেগা এমসিকিউ (MCQ) সেটে বসে বসে প্র্যাকটিস করো। ঠিক এই প্যাটার্ন আর লজিকের অঙ্কগুলোই তোমাদের টেস্ট এবং ফাইনালে ঘুরিয়ে-ফিরিয়ে আসবে। রোজ প্র্যাকটিস করো, স্পিড বাড়াও আর কনফিডেন্স বিল্ড করো!
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       ★ ADSTERRA BANNER (Top) ★
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="ad-container" id="ad-math-top"></div>
+
+  <!-- ═══════════ BOOK REFERENCE SECTION (NEW) ═══════════ -->
+  <div class="book-reference">
+    <h3><i class="fa-solid fa-book"></i> পর্ষদের "গণিত প্রকাশ" বই থেকে পেজ নম্বর অনুযায়ী সাজেশন</h3>
+    <ul class="book-list">
+      <li>
+        <strong>১. পাটিগণিত (৫ নম্বর):</strong>
+        <span>সরল সুদকষা (কষে দেখি ২): পেজ ৪৬, ৪৭ (প্রশ্ন: ১৩, ১৪, ১৬, ১৮, ১৯, ২০)</span>
+        <span>চক্রবৃদ্ধি সুদ ও সমহার বৃদ্ধি (কষে দেখি ৬.১ ও ৬.২): পেজ ১১২, ১১৩ (প্রশ্ন: ১২, ১৩, ১৭, ২৪, ২৫) এবং পেজ ১১৭, ১১৮ (প্রশ্ন: ৭, ৯, ১০, ১৫)</span>
+        <span>অংশীদারি কারবার (কষে দেখি ১৪): পেজ ২০৩, ২০৪ (প্রশ্ন: ৮, ৯, ১০, ১১, ১৪)</span>
+      </li>
+      <li>
+        <strong>২. বীজগণিত (৩ নম্বর):</strong>
+        <span>একচলবিশিষ্ট দ্বিঘাত সমীকরণ (কষে দেখি ১.২): পেজ ১১ (৪-এর দাগের: viii, x, xiii, xv, xvi, xix)</span>
+        <span>ভেদের অঙ্ক (কষে দেখি ১৩): পেজ ১৯৬, ১৯৭ (প্রশ্ন: ৪, ৬, ৮-এর সবকটি)</span>
+        <span>অনুপাত ও সমানুপাত (কষে দেখি ৫.৩): পেজ ৯৭, ৯৮ (প্রশ্ন: ৪, ৬, ৮-এর দাগের অঙ্কগুলো)</span>
+        <span>দ্বিঘাত করণী (কষে দেখি ৯.৩): পেজ ১৬১, ১৬২ (প্রশ্ন: ২, ৬, ৮)</span>
+      </li>
+      <li>
+        <strong>৩. উপপাদ্য (৫ নম্বর):</strong>
+        <span>পিথাগোরাসের উপপাদ্য: পেজ ২৮৫ (উপপাদ্য ৪৯) | বিপরীত উপপাদ্য: পেজ ২৮৬ (উপপাদ্য ৫০)</span>
+        <span>বৃত্তের বহিঃস্থ বিন্দু থেকে স্পর্শক: পেজ ২১১ (উপপাদ্য ৪১) | বৃত্তস্থ চতুর্ভুজ: পেজ ১৬৪ (উপপাদ্য ৩৮)</span>
+        <span>সদৃশতা সংক্রান্ত উপপাদ্য: পেজ ২৫৫ (উপপাদ্য ৪৮)</span>
+      </li>
+      <li>
+        <strong>৪. সম্পাদ্য (৫ নম্বর):</strong>
+        <span>পরিবৃত্ত (কষে দেখি ১১.১, পেজ ১৭৬) | অন্তর্বৃত্ত (কষে দেখি ১১.২, পেজ ১৭৮)</span>
+        <span>স্পর্শক অঙ্কন (কষে দেখি ১৭, পেজ ২৩২) | মধ্যসমানুপাতী (কষে দেখি ২১, পেজ ২৮৩)</span>
+      </li>
+      <li>
+        <strong>৫. পরিমিতি (৪ নম্বর):</strong>
+        <span>আয়তঘন (পেজ ৭৪: প্রশ্ন ১০, ১৫, ১৭, ১৯) | চোঙ (পেজ ১৪৬: প্রশ্ন ৯, ১১, ১৪, ১৫)</span>
+        <span>গোলক (পেজ ১৮৩, ১৮৪: প্রশ্ন ৮, ৯, ১২, ১৪) | শঙ্কু (পেজ ২২৭: প্রশ্ন ৮, ১০, ১১, ১২)</span>
+      </li>
+      <li>
+        <strong>৬. ত্রিকোণমিতি (উচ্চতা ও দূরত্ব - ৫ নম্বর):</strong>
+        <span>কষে দেখি ২৫: পেজ ৩২৬, ৩২৭ (প্রশ্ন: ১১, ১৩, ১৪, ১৫, ১৬, ১৯, ২০)</span>
+      </li>
+      <li>
+        <strong>৭. রাশিবিজ্ঞান (৪ নম্বর):</strong>
+        <span>কষে দেখি ২৬.১ থেকে ২৬.৪: পেজ ৩৪০ (গড়), ৩৪৯ (মধ্যমা), ৩৫৮ (ওজাইভ), ৩৬৪ (সংখ্যাগুরু মান)</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       ★ ADSTERRA BANNER (Book Reference Section) ★
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="ad-container" id="ad-math-book" style="margin-bottom: 24px;"></div>
+
+  <!-- ═══════════ BORO PROSHNO (LONG QUESTIONS) ═══════════ -->
+  <h2 class="section-title"><i class="fa-solid fa-pen-nib"></i> বড় প্রশ্ন (সাজেশন)</h2>
+  <div id="long-container"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       ★ ADSTERRA NATIVE (Mid Transition) ★
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="ad-container" id="ad-math-mid" style="min-height:250px;"></div>
+
+  <!-- ═══════════ CHOTO PROSHNO (SHORT QUESTIONS) ═══════════ -->
+  <h2 class="section-title"><i class="fa-solid fa-check-square"></i> ছোট প্রশ্ন ও উত্তর (MCQ)</h2>
+  <div id="short-container"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       ★ ADSTERRA BANNER (Bottom) ★
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="ad-container" id="ad-math-bottom" style="margin-top:30px;"></div>
+
+</main>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   ১. গণিত ডেটা (Long & Short Questions)
+   ═══════════════════════════════════════════════════════════ */
+const mathData = {
+  long: [
+    {
+      chapter: '১. পাটিগণিত (৫ নম্বর)',
+      questions: [
+        'কোনো আসল ও তার বার্ষিক সবৃদ্ধিমূলের অনুপাত ২৫ : ২৮ হলে, বার্ষিক সুদের হার কত?',
+        'কোনো মূলধন একই বার্ষিক শতকরা সরল সুদের হারে ৭ বছরে সুদে-আসলে ৭১০০ টাকা এবং ৪ বছরে সুদে-আসলে ৬২০০ টাকা হলে, মূলধন ও বার্ষিক শতকরা সরল সুদের হার নির্ণয় করো।',
+        'তিন বন্ধু যথাক্রমে ১২০০০০ টাকা, ১৫০০০০ টাকা ও ১১০০০০ টাকা মূলধন নিয়ে একটি বাস ক্রয় করেন। প্রথম জন ড্রাইভার ও বাকি দুজন কন্ডাক্টরের কাজ করেন। তাঁরা ঠিক করেন যে মোট আয়ের ২/৫ অংশ কাজের জন্য ৩:২:২ অনুপাতে ভাগ করবেন এবং বাকি টাকা মূলধনের অনুপাতে ভাগ করবেন। কোনো এক মাসে যদি ২৯২৬০ টাকা আয় হয়, তবে কে কত টাকা পাবেন?',
+        'বার্ষিক ৫% চক্রবৃদ্ধি সুদের হারে কত টাকার ২ বছরের চক্রবৃদ্ধি সুদ ও সরল সুদের অন্তর ১৬ টাকা হবে তা হিসাব করে লেখো।',
+        'নিয়ামতচাচার কারখানায় একটি মেশিনের মূল্য প্রতি বছর ১০% হারে হ্রাস পায়। মেশিনটির বর্তমান মূল্য ১,০০,০০০ টাকা হলে ৩ বছর পর মেশিনটির মূল্য কত হবে?'
+      ]
+    },
+    {
+      chapter: '২. বীজগণিত (৩ নম্বর)',
+      questions: [
+        'সমাধান করো: (x-3)/(x+3) - (x+3)/(x-3) + 6(6/7) = 0 (x ≠ 3, -3)',
+        'সমাধান করো: 1/(x-3) - 1/(x+5) = 1/6 (x ≠ 3, -5)',
+        'সমাধান করো: x/(x+1) + (x+1)/x = 2(1/12) (x ≠ 0, -1)',
+        'কলমের মূল্য প্রতি ডজনে ৬ টাকা কমলে ৩০ টাকায় আরও ৩টি বেশি কলম পাওয়া যায়। কমার পূর্বে প্রতি ডজন কলমের মূল্য কত ছিল?',
+        'যদি x = (4ab)/(a+b) হয়, তবে দেখাও যে (x+2a)/(x-2a) + (x+2b)/(x-2b) = 2 (a ≠ b)',
+        'a, b, c, d ক্রমিক সমানুপাতী হলে প্রমাণ করো যে, (a^2+b^2+c^2)(b^2+c^2+d^2) = (ab+bc+cd)^2',
+        'যদি a/b+c = b/c+a = c/a+b হয়, তবে প্রমাণ করো যে প্রতিটি অনুপাতের মান ১ অথবা -১/২।',
+        'গোলকের আয়তন তার ব্যাসার্ধের ত্রিঘাতের সঙ্গে সরলভেদে পরিবর্তিত হয় এবং গোলকের পৃষ্ঠতলের ক্ষেত্রফল তার ব্যাসার্ধের বর্গের সঙ্গে সরলভেদে পরিবর্তিত হয়। প্রমাণ করো যে, গোলকের আয়তনের বর্গ তার পৃষ্ঠতলের ক্ষেত্রফলের ঘনের সঙ্গে সরলভেদে থাকবে।',
+        'x ∝ y এবং y ∝ z হলে প্রমাণ করো যে, (x^2 + y^2 + z^2) ∝ (xy + yz + zx)',
+        'সরল করো: [√7 / (√5 + √2)] - [5√5 / (√2 + √7)] + [2√2 / (√7 + √5)]',
+        'x = (√5 + 1)/(√5 - 1) এবং xy = 1 হলে প্রমাণ করো যে, (x^2 + xy + y^2) / (x^2 - xy + y^2) = 43/41',
+        'x = 2 + √3 হলে x + 1/x এবং x^2 + 1/x^2 -এর মান নির্ণয় করো।'
+      ]
+    },
+    {
+      chapter: '৩. জ্যামিতি - উপপাদ্য (৫ নম্বর)',
+      questions: [
+        'প্রমাণ করো যে, ব্যাস নয় এরূপ কোনো জ্যা-কে যদি বৃত্তের কেন্দ্রগামী কোনো সরলরেখা সমদ্বিখণ্ডিত করে, তাহলে ওই সরলরেখা ওই জ্যা-এর ওপর লম্ব হবে।',
+        'প্রমাণ করো যে, বৃত্তস্থ চতুর্ভুজের বিপরীত কোণগুলি পরস্পর সম্পূরক।',
+        'প্রমাণ করো যে, বৃত্তের বহিঃস্থ কোনো বিন্দু থেকে যে দুটি স্পর্শক অঙ্কন করা যায়, তাদের স্পর্শবিন্দু দুটির সঙ্গে বহিঃস্থ বিন্দুর সংযোজক সরলরেখাংশ দুটির দৈর্ঘ্য সমান এবং তারা কেন্দ্রে সমান কোণ উৎপন্ন করে।',
+        'পিথাগোরাসের উপপাদ্যটি বিবৃত করো এবং প্রমাণ করো।',
+        'পিথাগোরাসের উপপাদ্যের বিপরীত উপপাদ্যটি বিবৃত করো এবং প্রমাণ করো।',
+        'প্রমাণ করো যে, কোনো সমকোণী ত্রিভুজের সমকৌণিক বিন্দু থেকে অতিভুজের ওপর লম্ব অঙ্কন করলে ওই লম্বের উভয় পার্শ্বস্থিত ত্রিভুজদ্বয় সদৃশ এবং ওই ত্রিভুজগুলির প্রত্যেকে মূল ত্রিভুজের সঙ্গে সদৃশ।'
+      ]
+    },
+    {
+      chapter: '৪. জ্যামিতি - সম্পাদ্য (৫ নম্বর)',
+      questions: [
+        '৫ সেমি, ৬ সেমি ও ৭ সেমি বাহুবিশিষ্ট একটি ত্রিভুজ অঙ্কন করো এবং ওই ত্রিভুজের পরিবৃত্ত অঙ্কন করো।',
+        'একটি সমকোণী ত্রিভুজ অঙ্কন করো যার অতিভুজের দৈর্ঘ্য ৯ সেমি এবং অপর একটি বাহুর দৈর্ঘ্য ৫.৫ সেমি। ওই ত্রিভুজটির অন্তর্বৃত্ত অঙ্কন করো।',
+        '২.৮ সেমি ব্যাসার্ধবিশিষ্ট একটি বৃত্ত অঙ্কন করো। বৃত্তের কেন্দ্র থেকে ৭.৫ সেমি দূরে একটি বিন্দু নাও। ওই বহিঃস্থ বিন্দু থেকে বৃত্তটিতে দুটি স্পর্শক অঙ্কন করো।',
+        'জ্যামিতিক উপায়ে √21 বা √35 -এর মান নির্ণয় করো (মধ্যসমানুপাতী পদ্ধতি)।'
+      ]
+    },
+    {
+      chapter: '৫. পরিমিতি (৪ নম্বর)',
+      questions: [
+        'একটি ঘনকের প্রতিটি ধারের দৈর্ঘ্য ৫০% বৃদ্ধি পেলে, ঘনকটির সমগ্রতলের ক্ষেত্রফল শতকরা কত বৃদ্ধি পাবে?',
+        '৯ মিটার উচ্চতাবিশিষ্ট একটি লম্ব বৃত্তাকার চোঙাকৃতির জলের ট্যাঙ্ক জলপূর্ণ আছে। ৬ সেমি ব্যাসের একটি পাইপ দিয়ে মিনিটে ২২৫ মিটার বেগে জল বের করা হলে ৩৬ মিনিটে ট্যাঙ্কটির সমস্ত জল বেরিয়ে যায়। ট্যাঙ্কটির ব্যাস কত?',
+        '৮ সেমি দৈর্ঘ্যের ব্যাসার্ধের একটি নিরেট লোহার গোলককে গলিয়ে ১ সেমি দৈর্ঘ্যের ব্যাসার্ধের কয়টি নিরেট গুলি তৈরি করা যাবে?',
+        'একটি লম্ব বৃত্তাকার শঙ্কুর উচ্চতা তার ব্যাসার্ধের দ্বিগুণ। যদি উচ্চতা ভূমির ব্যাসের ৭ গুণ হত, তবে শঙ্কুটির আয়তন ৫৩৯ ঘন সেমি বেশি হত। শঙ্কুটির উচ্চতা কত?',
+        'একটি ফাঁপা লম্ব বৃত্তাকার চোঙাকৃতির লোহার নলের বহির্ব্যাসার্ধের দৈর্ঘ্য ৫ সেমি এবং অন্তর্ব্যাসার্ধের দৈর্ঘ্য ৪ সেমি। নলটির সমগ্রতলের ক্ষেত্রফল ১১৮৮ বর্গ সেমি হলে নলটির দৈর্ঘ্য কত?'
+      ]
+    },
+    {
+      chapter: '৬. ত্রিকোণমিতি (উচ্চতা ও দূরত্ব - ৫ নম্বর)',
+      questions: [
+        'একটি চিমনির সঙ্গে একই সমতলে অবস্থিত অণুভূমিক সরলরেখায় কোনো এক বিন্দু থেকে চিমনির চূড়ার উন্নতি কোণ ৬০° এবং সেই বিন্দু থেকে একই সরলরেখায় আরও ২৪ মিটার পিছিয়ে গেলে উন্নতি কোণ হয় ৩০°। চিমনির উচ্চতা নির্ণয় করো।',
+        'মাঠের মাঝখানে দাঁড়িয়ে মোহনা একটি উড়ন্ত পাখিকে প্রথমে উত্তর দিকে ৩০° উন্নতি কোণে এবং ২ মিনিট পরে দক্ষিণ দিকে ৬০° উন্নতি কোণে দেখতে পেল। পাখিটি যদি একই সরলরেখায় ৫০√৩ মিটার উঁচুতে উড়ে থাকে, তবে তার গতিবেগ কিমি/ঘণ্টায় নির্ণয় করো।',
+        'একটি বাড়ির ছাদ থেকে একটি লাইটহাউসের চূড়ার উন্নতি কোণ ৬০° এবং বাতিঘরটির গোড়ার অবনতি কোণ ৩০°। যদি বাড়িটির উচ্চতা ১৫ মিটার হয়, তবে লাইটহাউসটির উচ্চতা নির্ণয় করো।',
+        'দুটি স্তম্ভের উচ্চতা যথাক্রমে ১৮০ মিটার এবং ৬০ মিটার। দ্বিতীয় স্তম্ভটির গোড়া থেকে প্রথমটির চূড়ার উন্নতি কোণ ৬০° হলে, প্রথমটির গোড়া থেকে দ্বিতীয়টির চূড়ার উন্নতি কোণ কত?'
+      ]
+    },
+    {
+      chapter: '৭. রাশিবিজ্ঞান (৪ নম্বর)',
+      questions: [
+        'নিচের পরিসংখ্যা বিভাজন ছক থেকে ছাত্রীদের প্রাপ্ত নম্বরের গাণিতিক গড় নির্ণয় করো: শ্রেণি সীমানা: ০-১০, ১০-২০, ২০-৩০, ৩০-৪০, ৪০-৫০; পরিসংখ্যা: ৪, ৬, ১০, ৬, ৪ (প্রত্যক্ষ পদ্ধতি বা কল্পিত গড় পদ্ধতিতে)',
+        'নিচের তথ্যের মধ্যমা নির্ণয় করো: শ্রেণি সীমানা: ১-১০, ১১-২০, ২১-৩০, ৩১-৪০, ৪১-৫০; পরিসংখ্যা: ৫, ৬, ১০, ৭, ২ (খেয়াল রাখবে, শ্রেণি সীমানা অবিচ্ছিন্ন করতে হবে)',
+        'নিচের তথ্যের সংখ্যাগুরু মান (Mode) নির্ণয় করো: শ্রেণি সীমানা: ৫-১৪, ১৫-২৪, ২৫-৩৪, ৩৫-৪৪, ৪৫-৫৪, ৫৫-৬৪; পরিসংখ্যা: ৩, ৬, ১৮, ২০, ১০'
+      ]
+    }
+  ],
+  
+  short: [
+    {
+      chapter: '১. সরল সুদকষা',
+      questions: [
+        { q: 'বার্ষিক r% সরল সুদের হারে p টাকার t বছরের সুদ I টাকা হলে, কোনটি সঠিক?', options: ['I = prt', 'I = prt/100', 'prt = 100 * I', 'p = 100 * I * r * t'], correct: 1 },
+        { q: 'কোনো মূলধন ১০ বছরে দ্বিগুণ হলে, বার্ষিক সরল সুদের হার কত?', options: ['১৫%', '২০%', '৫%', '১০%'], correct: 3 },
+        { q: 'বার্ষিক ৫% সরল সুদের হারে ৫০০ টাকার ৬ বছরের সুদ কত?', options: ['১২০ টাকা', '১৫০ টাকা', '২৫০ টাকা', '১০০ টাকা'], correct: 1 },
+        { q: 'কত বছরে কোনো আসল বার্ষিক ৬.২/৪% (৬.২৫%) সরল সুদে দ্বিগুণ হবে?', options: ['১৬ বছর', '৮ বছর', '১০ বছর', '১২ বছর'], correct: 0 },
+        { q: 'সুদের হার এবং সময় সমান হলে, ২২৫ টাকার সুদ ১৬ টাকা হয়। সুদের হার কত?', options: ['৪%', '২.৬৬%', '৩%', '৫%'], correct: 1 },
+        { q: '৪০০ টাকার ৫ বছরের সুদ ১০০ টাকা হলে, সুদের হার কত?', options: ['৬%', '৪%', '৮%', '৫%'], correct: 3 },
+        { q: 'কোনো মূলধনের বার্ষিক শতকরা একই সরল সুদের হারে ৩ বছরের সবৃদ্ধিমূল ৫৬০ টাকা এবং ৫ বছরের সবৃদ্ধিমূল ৬০০ টাকা হলে, মূলধন কত?', options: ['৪৫০ টাকা', '৫৫০ টাকা', '৫০০ টাকা', '৪০০ টাকা'], correct: 2 },
+        { q: 'এক ব্যক্তি ব্যাংকে ১০০ টাকা জমা রেখে ২ বছর পর ১২০ টাকা ফেরত পেলেন। সুদের হার কত?', options: ['১০%', '২০%', '১৫%', '৫%'], correct: 0 },
+        { q: 'p টাকার বার্ষিক r/2 % সরল সুদের হারে 2t বছরের সুদ কত?', options: ['2prt/100', 'prt/200', 'prt/50', 'prt/100'], correct: 1 },
+        { q: 'কিছু পরিমাণ টাকার নির্দিষ্ট সুদের হারে ৩ বছরের সুদ আসলের ৩/৮ অংশ। সুদের হার কত?', options: ['১২.৫%', '৮%', '১৫%', '১০%'], correct: 0 },
+        { q: '৬০০ টাকার বার্ষিক ৫% সরল সুদের হারে কত বছরের সুদ ৯০ টাকা হবে?', options: ['৫ বছর', '৩ বছর', '৪ বছর', '২ বছর'], correct: 1 },
+        { q: 'কোনো আসল ও তার ৫ বছরের সবৃদ্ধিমূলের অনুপাত ৫ : ৬ হলে, সুদের হার কত?', options: ['৫%', '৪%', '৮%', '৬%'], correct: 1 },
+        { q: 'সুদ-আসল (সবৃদ্ধিমূল) বলতে কী বোঝায়?', options: ['আসল - সুদ', 'আসল * সুদ', 'সুদ / আসল', 'আসল + সুদ'], correct: 3 },
+        { q: 'যদি আসল ও বার্ষিক সুদের হার স্থির থাকে, তবে সময় ও মোট সুদের মধ্যে কী সম্পর্ক?', options: ['ব্যস্ত সম্পর্ক', 'বর্গের সম্পর্ক', 'সরল সম্পর্ক', 'কোনো সম্পর্ক নেই'], correct: 2 },
+        { q: 'যদি কোনো মূলধন নির্দিষ্ট সরল সুদের হারে ২০ বছরে ৩ গুণ হয়, তবে একই সুদের হারে কত বছরে দ্বিগুণ হবে?', options: ['৫ বছর', '১০ বছর', '২০ বছর', '১৫ বছর'], correct: 1 }
+      ]
+    },
+    {
+      chapter: '২. দ্বিঘাত সমীকরণ',
+      questions: [
+        { q: 'ax^2 + bx + c = 0 (a ≠ 0) সমীকরণের বীজদ্বয় বাস্তব ও অসমান হওয়ার শর্ত কী?', options: ['b^2 = 4ac', 'b^2 - 4ac = 0', 'b^2 - 4ac > 0', 'b^2 - 4ac < 0'], correct: 2 },
+        { q: 'x^2 - 5x + 6 = 0 সমীকরণের বীজদ্বয় কী কী?', options: ['২, ৩', '১, ৬', '–১, –৬', '–২, –৩'], correct: 0 },
+        { q: 'একটি দ্বিঘাত সমীকরণের সর্বাধিক কয়টি বীজ থাকতে পারে?', options: ['২টি', '৩টি', 'অসংখ্য', '১টি'], correct: 0 },
+        { q: 'x^2 + px + q = 0 সমীকরণের বীজদ্বয় সমান হলে, কোনটি সঠিক?', options: ['p = 4q^2', 'p^2 = q', 'p^2 = 4q', 'q^2 = 4p'], correct: 2 },
+        { q: 'যদি x^2 - kx + 4 = 0 সমীকরণের বীজদ্বয় বাস্তব ও সমান হয়, তবে k এর মান কত?', options: ['±১৬', '±২', '±৪', '±৮'], correct: 2 },
+        { q: '2x^2 - 7x + 3 = 0 সমীকরণের বীজদ্বয়ের সমষ্টি কত?', options: ['-৭/২', '৩/২', '-৩/২', '৭/২'], correct: 3 },
+        { q: '3x^2 - 5x + 2 = 0 সমীকরণের বীজদ্বয়ের গুণফল কত?', options: ['২/৩', '-২/৩', '৫/৩', '-৫/৩'], correct: 0 },
+        { q: 'যদি কোনো দ্বিঘাত সমীকরণের বীজদ্বয় 2 এবং -3 হয়, তবে সমীকরণটি কী?', options: ['x^2 + x + 6 = 0', 'x^2 - x - 6 = 0', 'x^2 - x + 6 = 0', 'x^2 + x - 6 = 0'], correct: 3 },
+        { q: 'x^2 - 4 = 0 সমীকরণের বীজদ্বয় কী?', options: ['+২, -২', '+৪, -৪', 'শুধুমাত্র ২', 'শুধুমাত্র -২'], correct: 0 },
+        { q: 'ax^2 + bx + c = 0 সমীকরণের একটি বীজ শূন্য হওয়ার শর্ত কী?', options: ['a = 0', 'a = c', 'b = 0', 'c = 0'], correct: 3 },
+        { q: 'যদি ax^2 + bx + c = 0 সমীকরণের বীজদ্বয় পরস্পর অনন্যক হয়, তবে কোনটি সঠিক?', options: ['c = a', 'a = -c', 'a = b', 'b = c'], correct: 0 },
+        { q: 'যদি ax^2 + bx + c = 0 সমীকরণের বীজদ্বয় সমান ও বিপরীত চিহ্নযুক্ত হয়, তবে কোনটি সঠিক?', options: ['c = 0', 'a = c', 'a = 0', 'b = 0'], correct: 3 },
+        { q: 'x^2 = 6x সমীকরণের বীজগুলি কী কী?', options: ['০, ৬', '±৬', 'শুধুমাত্র ৬', '০, -৬'], correct: 0 },
+        { q: 'ax^2 + bx + c = 0 সমীকরণের নিরূপক (Discriminant) কোনটি?', options: ['b^2 - 4ac', '√(b^2 - 4ac)', 'b^2 + 4ac', '4ac - b^2'], correct: 0 },
+        { q: '2x^2 + kx + 8 = 0 সমীকরণের বীজদ্বয় সমান হলে k-এর ধনাত্মক মান কত?', options: ['১৬', '২', '৮', '৪'], correct: 2 }
+      ]
+    },
+    {
+      chapter: '৩. লম্ব বৃত্তাকার চোঙ',
+      questions: [
+        { q: 'r ব্যাসার্ধ এবং h উচ্চতাবিশিষ্ট নিরেট লম্ব বৃত্তাকার চোঙের আয়তন কত?', options: ['2πr(r+h)', '2πrh', 'πr^2h', '1/3 πr^2h'], correct: 2 },
+        { q: 'একটি লম্ব বৃত্তাকার চোঙের বক্রতলের ক্ষেত্রফল কোনটি?', options: ['πrh', 'πr^2h', '2πr(r+h)', '2πrh'], correct: 3 },
+        { q: 'একটি নিরেট লম্ব বৃত্তাকার চোঙের সমগ্রতলের ক্ষেত্রফলের সূত্র কী?', options: ['πr(r+h)', '2πrh', 'πr^2h', '2πr(r+h)'], correct: 3 },
+        { q: 'যদি একটি চোঙের ব্যাসার্ধ দ্বিগুণ করা হয় এবং উচ্চতা একই থাকে, তবে আয়তন কত গুণ হবে?', options: ['৮ গুণ', '৩ গুণ', '৪ গুণ', '২ গুণ'], correct: 2 },
+        { q: 'যদি চোঙের উচ্চতা অর্ধেক করা হয় এবং ব্যাসার্ধ একই থাকে, তবে আয়তন কত হবে?', options: ['এক-চতুর্থাংশ', 'দ্বিগুণ', 'সমান থাকবে', 'অর্ধেক'], correct: 3 },
+        { q: 'একটি লম্ব বৃত্তাকার চোঙের ব্যাস ১৪ সেমি এবং উচ্চতা ১০ সেমি হলে, তার আয়তন কত? (π=22/7)', options: ['৬১৬০ ঘন সেমি', '৭৭০ ঘন সেমি', '৪৪০ ঘন সেমি', '১৫৪০ ঘন সেমি'], correct: 3 },
+        { q: 'দুটি লম্ব বৃত্তাকার চোঙের ব্যাসার্ধের অনুপাত ২:৩ এবং উচ্চতার অনুপাত ৫:৩ হলে, তাদের আয়তনের অনুপাত কত?', options: ['২৭:২০', '২০:২৭', '৪:৯', '১০:৯'], correct: 1 },
+        { q: 'একটি ফাঁপা চোঙের বহির্ব্যাসার্ধ R এবং অন্তর্ব্যাসার্ধ r হলে, তার দেয়ালের আয়তন কত? (উচ্চতা h)', options: ['πh(R^2 - r^2)', 'πh(R^2 + r^2)', '2πh(R - r)', 'πh(R - r)^2'], correct: 0 },
+        { q: 'চোঙের বক্রতলের ক্ষেত্রফল এবং আয়তনের সাংখ্যমান সমান হলে (অর্থাৎ 2πrh = πr^2h), ব্যাসার্ধ r এর মান কত?', options: ['১ একক', 'π একক', '৩ একক', '২ একক'], correct: 3 },
+        { q: 'একটি চোঙের ভূমির ক্ষেত্রফল ১৫৪ বর্গ সেমি এবং আয়তন ৩০৮ ঘন সেমি। চোঙটির উচ্চতা কত?', options: ['২ সেমি', '১ সেমি', '৩ সেমি', '৪ সেমি'], correct: 0 },
+        { q: 'একটি চোঙের উচ্চতা ও ভূমির ব্যাসার্ধ সমান হলে, তার বক্রতল ও সমগ্রতলের ক্ষেত্রফলের অনুপাত কত?', options: ['৩:১', '২:১', '১:২', '১:৩'], correct: 2 },
+        { q: 'নিচের কোনটি চোঙের একটি উদাহরণ?', options: ['ফুটবল', 'জলের পাইপ', 'লুডোর ছক্কা', 'আইসক্রিম কোণ'], correct: 1 },
+        { q: 'একটি লম্ব বৃত্তাকার চোঙের ব্যাসার্ধ ২০% বৃদ্ধি পেলে, আয়তন কত শতাংশ বৃদ্ধি পাবে? (উচ্চতা অপরিবর্তিত)', options: ['৪০%', '২০%', '৪৪%', '২১%'], correct: 2 },
+        { q: 'চোঙের পার্শ্বতলের ক্ষেত্রফল ২৫২π বর্গ সেমি এবং উচ্চতা ১৪ সেমি হলে ভূমির ব্যাসার্ধ কত?', options: ['১৪ সেমি', '৭ সেমি', '১৮ সেমি', '৯ সেমি'], correct: 3 },
+        { q: 'একটি নিরেট চোঙকে গলিয়ে একই ব্যাসার্ধের একটি নিরেট শঙ্কু তৈরি করা হলে, শঙ্কুর উচ্চতা চোঙের উচ্চতার কত গুণ হবে?', options: ['২ গুণ', '১/৩ গুণ', '৩ গুণ', 'সমান'], correct: 2 }
+      ]
+    },
+    {
+      chapter: '৪. ত্রিকোণমিতি',
+      questions: [
+        { q: 'sin^2 θ + cos^2 θ = ?', options: ['১', '০', '২', '-১'], correct: 0 },
+        { q: 'sec^2 θ - tan^2 θ = ?', options: ['০', '১', '২', '-১'], correct: 1 },
+        { q: 'cosec^2 θ - cot^2 θ = ?', options: ['-১', '২', '০', '১'], correct: 3 },
+        { q: 'tan 45° এর মান কত?', options: ['০', '১', '১/√৩', '√৩'], correct: 1 },
+        { q: 'sin 30° এর মান কত?', options: ['১/√২', '১', '√৩/২', '১/২'], correct: 3 },
+        { q: 'cos 60° এর মান কত?', options: ['০', '১/২', '১/√২', '√৩/২'], correct: 1 },
+        { q: 'tan θ = 3/4 হলে, sin θ এর মান কত?', options: ['৪/৫', '৩/৫', '৩/৭', '৫/৩'], correct: 1 },
+        { q: 'sin θ = 1/√2 হলে, θ এর মান কত? (০° ≤ θ ≤ ৯০°)', options: ['৩০°', '৯০°', '৪৫°', '৬০°'], correct: 2 },
+        { q: 'sin(90° - θ) = ?', options: ['-sin θ', 'cosec θ', 'tan θ', 'cos θ'], correct: 3 },
+        { q: 'tan(90° - θ) = ?', options: ['cot θ', 'cosec θ', 'sec θ', 'sin θ'], correct: 0 },
+        { q: 'যদি x = a sin θ এবং y = a cos θ হয়, তবে x^2 + y^2 = ?', options: ['0', '1', 'a', 'a^2'], correct: 3 },
+        { q: 'একটি সমকোণী ত্রিভুজের লম্ব ও ভূমি সমান হলে, উন্নতি কোণ কত?', options: ['৩০°', '৯০°', '৪৫°', '৬০°'], correct: 2 },
+        { q: 'সর্বোচ্চ কত ডিগ্রির জন্য sin θ এবং cos θ এর মান সমান হয়? (০°-৯০° এর মধ্যে)', options: ['৩০°', '০°', '৬০°', '৪৫°'], correct: 3 },
+        { q: 'sin θ এর সর্বোচ্চ মান কত?', options: ['অসীম', '২', '০', '১'], correct: 3 },
+        { q: 'tan 60° * cot 60° = ?', options: ['√৩', '১', '০', '৩'], correct: 1 }
+      ]
+    }
+  ]
+};
+
+
+/* ═══════════════════════════════════════════════════════════
+   ২. রেন্ডারিং লজিক
+   ═══════════════════════════════════════════════════════════ */
+const longContainer = document.getElementById('long-container');
+const shortContainer = document.getElementById('short-container');
+const LETTERS = ['ক', 'খ', 'গ', 'ঘ'];
+let adCounter = 0;
+
+// Function to generate Long Questions HTML
+function renderLong() {
+  let html = '';
+  mathData.long.forEach((chap, idx) => {
+    const isFirst = idx === 0 ? 'active' : '';
+    
+    let questionsHtml = '';
+    chap.questions.forEach((q, qIdx) => {
+      questionsHtml += `
+        <div class="long-q">
+          <div class="q-text">${qIdx + 1}. ${q}</div>
+          <div class="write-area"><span>এখানে উত্তর লিখুন...</span></div>
+        </div>
+      `;
+    });
+
+    html += `
+      <div class="chapter-card">
+        <button class="chapter-header ${isFirst}" onclick="toggleChapter(this)">
+          <span>${chap.chapter}</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="chapter-body ${isFirst}">
+          ${questionsHtml}
+        </div>
+      </div>
+    `;
+  });
+  longContainer.innerHTML = html;
+}
+
+// Function to generate Short Questions (MCQ) HTML
+function renderShort() {
+  let html = '';
+  mathData.short.forEach((chap, idx) => {
+    const isFirst = idx === 0 ? 'active' : '';
+    
+    let questionsHtml = '';
+    chap.questions.forEach((item, qIdx) => {
+      const opts = item.options.map((opt, oIdx) => `
+        <button class="opt-btn" onclick="checkAnswer(this, ${item.correct}, ${oIdx})">
+          <span class="opt-ltr">${LETTERS[oIdx]}</span>
+          <span>${opt}</span>
+        </button>
+      `).join('');
+
+      questionsHtml += `
+        <div class="short-q">
+          <div class="q-text">${qIdx + 1}. ${item.q}</div>
+          <div class="opts">${opts}</div>
+        </div>
+      `;
+
+      // Insert an ad every 4 questions
+      if ((qIdx + 1) % 4 === 0) {
+        questionsHtml += `
+          <!-- ADSTERRA INLINE AD (${chap.chapter} - Q${qIdx+1}) -->
+          <div class="ad-container" id="ad-inline-${adCounter}"></div>
+        `;
+        adCounter++;
+      }
+    });
+
+    html += `
+      <div class="chapter-card">
+        <button class="chapter-header ${isFirst}" onclick="toggleChapter(this)">
+          <span>${chap.chapter}</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="chapter-body ${isFirst}">
+          ${questionsHtml}
+        </div>
+      </div>
+    `;
+  });
+  shortContainer.innerHTML = html;
+
+  // Load inline ads after HTML is injected
+  for (let i = 0; i < adCounter; i++) {
+    loadAd(`ad-inline-${i}`, getAd300x250(), '300px', '250px');
+  }
+}
+
+// Accordion Toggle
+function toggleChapter(btn) {
+  const body = btn.nextElementSibling;
+  const isActive = btn.classList.contains('active');
+  
+  // Close all open chapters in the same container for cleaner UI
+  const allHeaders = btn.closest('div[id]').querySelectorAll('.chapter-header');
+  const allBodies = btn.closest('div[id]').querySelectorAll('.chapter-body');
+  
+  allHeaders.forEach(h => h.classList.remove('active'));
+  allBodies.forEach(b => b.classList.remove('active'));
+
+  // Open clicked one
+  if (!isActive) {
+    btn.classList.add('active');
+    body.classList.add('active');
+  }
+}
+
+// MCQ Check Answer
+function checkAnswer(clickedBtn, correctIdx, selectedIdx) {
+  const parent = clickedBtn.closest('.opts');
+  const allBtns = parent.querySelectorAll('.opt-btn');
+  
+  // Disable all
+  allBtns.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === correctIdx) btn.classList.add('correct');
+  });
+
+  if (selectedIdx !== correctIdx) {
+    clickedBtn.classList.add('wrong');
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   ৩. অ্যাড লোডিং (Safe Iframe Method)
+   ═══════════════════════════════════════════════════════════ */
+function getAd320x50() {
+  return `
+    <script type="text/javascript">
+      atOptions = {'key' : '7e2bfecea97b8d1c4d46994c09686617','format' : 'iframe','height' : 50,'width' : 320,'params' : {}};
+    <\/script>
+    <script type="text/javascript" src="https://bauval.org/22/7e2bfecea97b8d1c4d46994c09686617"><\/script>
+  `;
+}
+function getAd300x250() {
+  return `
+    <script type="text/javascript">
+      atOptions = {'key' : '8c14f11bb2637107aa1a4f5781c7195d','format' : 'iframe','height' : 250,'width' : 300,'params' : {}};
+    <\/script>
+    <script type="text/javascript" src="https://bauval.org/22/8c14f11bb2637107aa1a4f5781c7195d"><\/script>
+  `;
+}
+function getAdNative() {
+  return `
+    <script async="async" data-cfasync="false" src="https://bauval.org/21/f34bb8b6c4aa493eb66251b630110542"><\/script>
+    <div id="container-f34bb8b6c4aa493eb66251b630110542"></div>
+  `;
+}
+
+function loadAd(containerId, adCode, width, height) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  if (container.querySelector('iframe')) return;
+
+  const iframe = document.createElement('iframe');
+  iframe.style.width = width;
+  iframe.style.height = height;
+  iframe.style.border = 'none';
+  iframe.style.overflow = 'hidden';
+  iframe.setAttribute('scrolling', 'no');
+  
+  container.appendChild(iframe);
+
+  const doc = iframe.contentWindow.document;
+  doc.open();
+  doc.write(`
+    <html>
+      <head><style>body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; background: transparent; }</style></head>
+      <body>${adCode}</body>
+    </html>
+  `);
+  doc.close();
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   ৪. ইনিশিয়ালাইজেশন
+   ═══════════════════════════════════════════════════════════ */
+document.addEventListener("DOMContentLoaded", () => {
+  // Render HTML
+  renderLong();
+  renderShort();
+
+  // Load Main Ads
+  loadAd('ad-math-top', getAd320x50(), '320px', '50px');
+  loadAd('ad-math-book', getAd300x250(), '300px', '250px'); // New ad for book section
+  loadAd('ad-math-mid', getAdNative(), '100%', '250px');
+  loadAd('ad-math-bottom', getAd300x250(), '300px', '250px');
+});
+</script>
+
+</body>
+</html>
