@@ -11,10 +11,17 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<!-- Font Awesome (সব আইকনের জন্য) -->
+<!-- Font Awesome (আইকনের জন্য) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
+/* ═══════════════════════════════════════════════════════════
+   MOBILE TOUCH FIX (ডাবল ক্লিক সমস্যা সমাধান)
+   ═══════════════════════════════════════════════════════════ */
+* {
+  touch-action: manipulation; /* মোবাইলে এক ক্লিকেই কাজ করবে */
+}
+
 /* ═══════════════════════════════════════════════════════════
    VARIABLES & RESET
    ═══════════════════════════════════════════════════════════ */
@@ -23,7 +30,6 @@
   --primary-dark:   #0A2547;
   --primary-light:  #2B6CB0;
   --accent:         #F59E0B;
-  --accent-hover:   #D97706;
   
   --bg:             #F4F7FC;
   --card:           #FFFFFF;
@@ -54,21 +60,16 @@ body{
 a{ text-decoration:none; color:inherit; }
 button{ font-family:inherit; cursor:pointer; border:none; background:none; }
 
-/* ═══════════════════════════════════════════════════════════
-   ANIMATIONS (FIXED)
-   ═══════════════════════════════════════════════════════════ */
 @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-@keyframes pulseBorder { 0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(245, 158, 11, 0); } 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); } }
-
-.animate-up { animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 1; }
+.animate-up { animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
 /* ═══════════════════════════════════════════════════════════
-   HEADER
+   HEADER & LOGO
    ═══════════════════════════════════════════════════════════ */
 .app-header {
   background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
   color: #fff;
-  padding: 24px 20px 30px;
+  padding: 20px 20px 24px;
   position: relative;
   border-bottom-left-radius: 30px;
   border-bottom-right-radius: 30px;
@@ -93,7 +94,7 @@ button{ font-family:inherit; cursor:pointer; border:none; background:none; }
   z-index: 1;
 }
 .brand-logo {
-  width: 54px; height: 54px;
+  width: 56px; height: 56px;
   background: #fff;
   border-radius: 14px;
   padding: 4px;
@@ -104,7 +105,7 @@ button{ font-family:inherit; cursor:pointer; border:none; background:none; }
   font-size: 22px;
   font-weight: 800;
   letter-spacing: 0.5px;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
 }
 .brand-text p {
   font-size: 13px;
@@ -125,145 +126,111 @@ main {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   QUIZ COUNTDOWN CARD
+   GUIDELINES CARD (গাইডলাইন্স)
    ═══════════════════════════════════════════════════════════ */
-.quiz-card {
-  background: linear-gradient(145deg, #ffffff, #f8fafc);
-  border: 2px solid var(--line);
-  border-radius: var(--radius);
-  padding: 24px 20px;
-  box-shadow: var(--shadow-md);
+.guidelines-card {
+  background: #FFFBEB;
+  border: 2px solid #F59E0B;
+  border-radius: var(--radius-sm);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-sm);
   position: relative;
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
 }
-.quiz-card.live {
-  border-color: var(--accent);
-  animation: pulseBorder 2s infinite;
-}
-.quiz-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.quiz-badge {
-  background: #FEF3C7;
-  color: #B45309;
-  padding: 6px 14px;
-  border-radius: 50px;
-  font-size: 12px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  letter-spacing: 0.5px;
-}
-.quiz-badge.live-badge {
-  background: #DEF7EC;
-  color: #03543F;
-}
-.quiz-icon-large {
-  font-size: 32px;
-  color: var(--primary);
-  opacity: 0.1;
+.guidelines-card::before {
+  content: '\f05a'; /* Info icon */
+  font-family: 'Font Awesome 6 Free'; font-weight: 900;
   position: absolute;
-  right: 20px;
-  bottom: 20px;
+  top: 15px; right: 20px;
+  font-size: 40px;
+  color: rgba(245, 158, 11, 0.15);
 }
-.quiz-content {
-  position: relative;
-  z-index: 1;
-}
-.quiz-content h2 {
-  font-size: 20px;
+.guidelines-card h2 {
+  font-size: 17px;
   font-weight: 800;
-  color: var(--primary);
-  margin-bottom: 8px;
-}
-.quiz-content p {
-  font-size: 14px;
-  color: var(--text-soft);
-  margin-bottom: 16px;
-}
-.countdown-container {
-  background: #F1F5F9;
-  padding: 12px 16px;
-  border-radius: var(--radius-sm);
+  color: #92400E;
+  margin-bottom: 12px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-.countdown-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-soft);
-}
-.countdown-timer {
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--accent-hover);
-  font-variant-numeric: tabular-nums;
-  display: flex;
-  gap: 4px;
-}
-.btn-start-quiz {
-  width: 100%;
-  background: var(--primary);
-  color: white;
-  padding: 14px;
-  border-radius: var(--radius-sm);
-  font-size: 16px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   gap: 8px;
-  transition: background 0.2s;
 }
-.btn-start-quiz:hover:not(:disabled) { background: var(--primary-light); }
-.btn-start-quiz:disabled {
-  background: #CBD5E1;
-  color: #64748B;
-  cursor: not-allowed;
+.guidelines-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.guidelines-card li {
+  font-size: 14.5px;
+  color: #78350F;
+  font-weight: 600;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-left: 24px;
+  position: relative;
+}
+.guidelines-card li:last-child { margin-bottom: 0; }
+.guidelines-card li::before {
+  content: '\f0da';
+  font-family: 'Font Awesome 6 Free'; font-weight: 900;
+  position: absolute;
+  left: 0; top: 2px;
+  color: #D97706;
+}
+.guidelines-card strong {
+  color: #B45309;
+  font-weight: 800;
 }
 
 /* ═══════════════════════════════════════════════════════════
-   AD SLOT STYLING
+   QUIZ BANNER
    ═══════════════════════════════════════════════════════════ */
-.ad-container {
-  width: 100%;
-  min-height: 60px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #fff;
-  border-radius: var(--radius-sm);
-  border: 1px dashed var(--line);
+.quiz-banner {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  color: #fff;
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: 0 10px 28px rgba(217,119,6,.28);
+  position: relative;
   overflow: hidden;
-  margin: 10px 0;
+  display: flex; align-items: center; gap: 16px;
+  transition: transform 0.2s;
 }
-.ad-container iframe {
-  border: none;
-  overflow: hidden;
+.quiz-banner:active { transform: scale(0.98); }
+.quiz-banner::before {
+  content: '';
+  position: absolute;
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.22), transparent 70%);
+  bottom: -70px; right: -40px;
 }
+.qb-icon {
+  width: 50px; height: 50px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+.qb-content { flex: 1; }
+.qb-title { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+.qb-desc { font-size: 13px; opacity: 0.9; }
+.qb-arrow { font-size: 20px; opacity: 0.8; }
 
 /* ═══════════════════════════════════════════════════════════
    SUBJECT GRID
    ═══════════════════════════════════════════════════════════ */
 .section-title {
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 800;
-  color: var(--primary);
+  color: var(--primary-dark);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   margin-bottom: 16px;
+  padding-left: 4px;
 }
-.section-title i { color: var(--accent); }
+.section-title i { color: var(--accent); font-size: 22px; }
 
 .subject-grid {
   display: grid;
@@ -273,6 +240,7 @@ main {
 @media(min-width: 600px) { .subject-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
 @media(min-width: 900px) { .subject-grid { grid-template-columns: repeat(4, 1fr); } }
 
+/* Subject Card Standard Link */
 .subject-card {
   background: var(--card);
   border: 1px solid var(--line);
@@ -282,7 +250,7 @@ main {
   flex-direction: column;
   gap: 12px;
   box-shadow: var(--shadow-sm);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
   position: relative;
   overflow: hidden;
 }
@@ -300,8 +268,8 @@ main {
   background: var(--icon-bg);
 }
 .subject-info h3 {
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 800;
   color: var(--text);
   line-height: 1.4;
 }
@@ -314,11 +282,22 @@ main {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   FOOTER & SETTINGS
+   AD CONTAINER
+   ═══════════════════════════════════════════════════════════ */
+.ad-container {
+  width: 100%;
+  display: flex; justify-content: center; align-items: center;
+  margin: 10px 0;
+  min-height: 50px;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FOOTER
    ═══════════════════════════════════════════════════════════ */
 .site-footer {
   max-width: var(--maxw);
-  margin: 30px auto 0;
+  margin: 20px auto 0;
   padding: 24px 20px;
   text-align: center;
   border-top: 1px solid var(--line);
@@ -354,10 +333,7 @@ main {
 }
 .footer-links a { display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
 .footer-links a:hover { color: var(--primary); }
-.copyright {
-  font-size: 12px;
-  color: var(--muted);
-}
+.copyright { font-size: 12px; color: var(--muted); }
 </style>
 </head>
 <body>
@@ -365,12 +341,8 @@ main {
 <!-- ═══════════════════════════════════════════════════════════
      ★ ADSTERRA POPUNDER & SOCIAL BAR ★
      ═══════════════════════════════════════════════════════════ -->
-<!-- Adsterra Popunder -->
 <script data-cfasync="false" src="https://abscloud.org/1/4d482fd3597918ddb54ba328e416dee0"></script>
-
-<!-- Adsterra Social Bar -->
 <script data-cfasync="false" src="https://bauval.org/14/15746e84cd36001e9d3e4ac7c874823d"></script>
-
 
 <header class="app-header animate-up">
   <div class="brand-container">
@@ -385,37 +357,33 @@ main {
 
 <main>
 
-  <!-- ════════════ QUIZ SECTION WITH LIVE COUNTDOWN ════════════ -->
-  <section class="quiz-card animate-up" id="quizCard">
-    <div class="quiz-card-header">
-      <span class="quiz-badge" id="quizBadge">
-        <i class="fa-solid fa-lock"></i> অপেক্ষা করুন
-      </span>
-    </div>
-    <i class="fa-solid fa-brain quiz-icon-large"></i>
-    
-    <div class="quiz-content">
-      <h2>আজকের কুইজ চ্যালেঞ্জ</h2>
-      <p>প্রতিদিন ২৫টি প্রশ্নের কুইজ। কোনো টাইম লিমিট নেই, শান্ত ভাবে উত্তর দিন।</p>
-      
-      <div class="countdown-container">
-        <span class="countdown-label" id="countdownLabel">কুইজ শুরু হতে বাকি:</span>
-        <div class="countdown-timer" id="countdownTimer">-- : -- : --</div>
-      </div>
+  <!-- ════════════ GUIDELINES (গাইডলাইন্স) ════════════ -->
+  <div class="guidelines-card animate-up">
+    <h2><i class="fa-solid fa-circle-exclamation"></i> ব্যবহারের নিয়ম (Guidelines)</h2>
+    <ul>
+      <li>পেজে মাঝে মাঝে <strong>অ্যাড (Ads)</strong> আসতে পারে। অ্যাডের উপরের ডানদিকের কোণায় <strong>'X' বা 'Skip'</strong> বাটনে ক্লিক করে অ্যাড কেটে ওয়েবসাইটে ঢুকে পড়বে।</li>
+      <li>যেকোনো সাবজেক্ট কার্ডে <strong>একবার ক্লিক করলেই</strong> সরাসরি সাবজেক্ট পেজে চলে যাবে।</li>
+      <li>সাবজেক্টের ভেতরে প্রশ্নের ওপর <strong>দুবার ক্লিক (Double Click)</strong> করলে উত্তর দেখতে পাবে।</li>
+    </ul>
+  </div>
 
-      <button class="btn-start-quiz" id="startQuizBtn" disabled>
-        <i class="fa-solid fa-lock"></i> কুইজ লকড
-      </button>
+  <!-- ════════════ QUIZ BANNER ════════════ -->
+  <a href="quiz.html" class="quiz-banner animate-up" style="animation-delay: 0.1s">
+    <div class="qb-icon"><i class="fa-solid fa-brain"></i></div>
+    <div class="qb-content">
+      <div class="qb-title">আজকের কুইজ চ্যালেঞ্জ</div>
+      <div class="qb-desc">প্রতিদিন নতুন প্রশ্ন — নিজেকে পরীক্ষা করুন!</div>
     </div>
-  </section>
+    <i class="fa-solid fa-arrow-right qb-arrow"></i>
+  </a>
 
   <!-- ═══════════════════════════════════════════════════════════
-       ★ ADSTERRA BANNER (320x50 Mobile) ★
+       ★ ADSTERRA BANNER (Top) ★
        ═══════════════════════════════════════════════════════════ -->
-  <div class="ad-container" id="ad-top-banner"></div>
+  <div class="ad-container" id="ad-home-top"></div>
 
-  <!-- ════════════ SUBJECTS ════════════ -->
-  <section class="animate-up">
+  <!-- ════════════ SUBJECT CARDS ════════════ -->
+  <section class="animate-up" style="animation-delay: 0.2s">
     <h2 class="section-title"><i class="fa-solid fa-book-open"></i> বিষয় নির্বাচন করুন</h2>
     <div class="subject-grid">
       
@@ -478,19 +446,12 @@ main {
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════════════════
-       ★ ADSTERRA NATIVE BANNER (Mid) ★
-       ═══════════════════════════════════════════════════════════ -->
-  <div class="ad-container" id="ad-native" style="min-height: 250px; padding: 10px;"></div>
-
 </main>
 
 <!-- ═══════════════════════════════════════════════════════════
      FOOTER & SETTINGS
      ═══════════════════════════════════════════════════════════ -->
-<footer class="site-footer animate-up">
-  
-  <!-- সোশ্যাল লিংক -->
+<footer class="site-footer animate-up" style="animation-delay: 0.3s">
   <div class="footer-socials">
     <a href="https://www.instagram.com/madhyamik_sokha/" target="_blank" class="social-btn insta" aria-label="Instagram">
       <i class="fa-brands fa-instagram"></i>
@@ -498,153 +459,73 @@ main {
     <a href="https://www.youtube.com/@madhyamik_sokha" target="_blank" class="social-btn yt" aria-label="YouTube">
       <i class="fa-brands fa-youtube"></i>
     </a>
-    <a href="mailto:madhyamiksokha@gmail.com" class="social-btn mail" aria-label="Email">
+    <a href="mailto:sibnathbairagi94@gmail.com" class="social-btn mail" aria-label="Email">
       <i class="fa-solid fa-envelope"></i>
     </a>
   </div>
 
-  <!-- পেজ লিংক (সেটিংস) -->
   <div class="footer-links">
     <a href="privacy.html"><i class="fa-solid fa-shield-halved"></i> Privacy Policy</a>
-    <a href="mailto:madhyamiksokha@gmail.com"><i class="fa-solid fa-headset"></i> Contact Us</a>
+    <a href="mailto:sibnathbairagi94@gmail.com"><i class="fa-solid fa-headset"></i> Contact Us</a>
   </div>
 
   <p class="copyright">© 2026 Madhyamik Sokha Web. All rights reserved.</p>
 </footer>
 
 <!-- ═══════════════════════════════════════════════════════════
-     ★ ADSTERRA BANNER (300x250 Bottom) ★
+     ★ ADSTERRA BANNER (Bottom) ★
      ═══════════════════════════════════════════════════════════ -->
-<div class="ad-container" id="ad-bottom-banner" style="margin-bottom: 20px; border: none;"></div>
+<div class="ad-container" id="ad-home-bottom" style="margin-bottom: 20px;"></div>
 
-
-<!-- ═══════════════════════════════════════════════════════════
-     JAVASCRIPT LOGIC (COUNTDOWN & SAFE AD LOADING)
-     ═══════════════════════════════════════════════════════════ -->
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-  
-  // ─── ১. কুইজ কাউন্টডাউন লজিক ───
-  const quizCard = document.getElementById('quizCard');
-  const quizBadge = document.getElementById('quizBadge');
-  const countdownLabel = document.getElementById('countdownLabel');
-  const countdownTimer = document.getElementById('countdownTimer');
-  const startQuizBtn = document.getElementById('startQuizBtn');
-
-  function updateCountdown() {
-    const now = new Date();
-    const currentHour = now.getHours();
-    
-    // কুইজের সময়সূচী: সন্ধ্যা ৭টা (১৯:০০) থেকে রাত ১০টা (২২:০০)
-    const startHour = 19; 
-    const endHour = 22;
-
-    let targetTime = new Date();
-
-    if (currentHour < startHour) {
-      targetTime.setHours(startHour, 0, 0, 0);
-      showCountdown(targetTime, "কুইজ শুরু হতে বাকি:");
-    } 
-    else if (currentHour >= startHour && currentHour < endHour) {
-      quizCard.classList.add('live');
-      quizBadge.classList.add('live-badge');
-      quizBadge.innerHTML = '<i class="fa-solid fa-tower-broadcast"></i> লাইভ কুইজ';
-      
-      targetTime.setHours(endHour, 0, 0, 0);
-      showCountdown(targetTime, "কুইজ শেষ হতে বাকি:");
-      
-      startQuizBtn.disabled = false;
-      startQuizBtn.innerHTML = '<i class="fa-solid fa-play"></i> কুইজ শুরু করুন';
-      startQuizBtn.style.background = 'var(--accent)';
-      startQuizBtn.style.color = '#fff';
-      startQuizBtn.onclick = function() {
-        window.location.href = 'quiz.html';
-      };
-      return;
-    } 
-    else {
-      targetTime.setDate(targetTime.getDate() + 1);
-      targetTime.setHours(startHour, 0, 0, 0);
-      showCountdown(targetTime, "আগামীকালের কুইজ শুরু হতে বাকি:");
-    }
-
-    quizCard.classList.remove('live');
-    quizBadge.classList.remove('live-badge');
-    quizBadge.innerHTML = '<i class="fa-solid fa-lock"></i> অপেক্ষা করুন';
-    startQuizBtn.disabled = true;
-    startQuizBtn.innerHTML = '<i class="fa-solid fa-lock"></i> কুইজ লকড';
-    startQuizBtn.style.background = '#CBD5E1';
-    startQuizBtn.style.color = '#64748B';
-  }
-
-  function showCountdown(target, label) {
-    const now = new Date();
-    const diff = target - now;
-    if (diff <= 0) return;
-
-    const h = Math.floor(diff / (1000 * 60 * 60));
-    const m = Math.floor((diff / (1000 * 60)) % 60);
-    const s = Math.floor((diff / 1000) % 60);
-
-    const bn = num => String(num).padStart(2, '0').replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
-    countdownLabel.textContent = label;
-    countdownTimer.textContent = `${bn(h)} : ${bn(m)} : ${bn(s)}`;
-  }
-
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
-
-
-  // ─── ২. Adsterra অ্যাড লোড করার নিরাপদ পদ্ধতি (Iframe Injection) ───
-  function loadAd(containerId, adCode, width, height) {
-    const container = document.getElementById(containerId);
-    if(!container) return;
-
-    const iframe = document.createElement('iframe');
-    iframe.style.width = width;
-    iframe.style.height = height;
-    iframe.style.border = 'none';
-    iframe.style.overflow = 'hidden';
-    iframe.setAttribute('scrolling', 'no');
-    
-    container.appendChild(iframe);
-
-    const doc = iframe.contentWindow.document;
-    doc.open();
-    doc.write(`
-      <html>
-        <head><style>body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; background: transparent; }</style></head>
-        <body>${adCode}</body>
-      </html>
-    `);
-    doc.close();
-  }
-
-  // 320x50 ব্যানার লোড
-  const ad320x50 = `
+/* ═══════════════════════════════════════════════════════════
+   ADSTERRA SAFE AD LOADING
+   ═══════════════════════════════════════════════════════════ */
+function getAd320x50() {
+  return `
     <script type="text/javascript">
       atOptions = {'key' : '7e2bfecea97b8d1c4d46994c09686617','format' : 'iframe','height' : 50,'width' : 320,'params' : {}};
     <\/script>
     <script type="text/javascript" src="https://bauval.org/22/7e2bfecea97b8d1c4d46994c09686617"><\/script>
   `;
-  loadAd('ad-top-banner', ad320x50, '320px', '50px');
-
-  // Native Banner লোড
-  const adNative = `
-    <script async="async" data-cfasync="false" src="https://bauval.org/21/f34bb8b6c4aa493eb66251b630110542"><\/script>
-    <div id="container-f34bb8b6c4aa493eb66251b630110542"></div>
-  `;
-  loadAd('ad-native', adNative, '100%', '250px');
-
-  // 300x250 ব্যানার লোড
-  const ad300x250 = `
+}
+function getAd300x250() {
+  return `
     <script type="text/javascript">
       atOptions = {'key' : '8c14f11bb2637107aa1a4f5781c7195d','format' : 'iframe','height' : 250,'width' : 300,'params' : {}};
     <\/script>
     <script type="text/javascript" src="https://bauval.org/22/8c14f11bb2637107aa1a4f5781c7195d"><\/script>
   `;
-  loadAd('ad-bottom-banner', ad300x250, '300px', '250px');
+}
 
+function loadAd(containerId, adCode, width, height) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  if (container.querySelector('iframe')) return;
+
+  const iframe = document.createElement('iframe');
+  iframe.style.width = width;
+  iframe.style.height = height;
+  iframe.style.border = 'none';
+  iframe.style.overflow = 'hidden';
+  iframe.setAttribute('scrolling', 'no');
+  
+  container.appendChild(iframe);
+
+  const doc = iframe.contentWindow.document;
+  doc.open();
+  doc.write(`
+    <html>
+      <head><style>body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; background: transparent; }</style></head>
+      <body>${adCode}</body>
+    </html>
+  `);
+  doc.close();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadAd('ad-home-top', getAd320x50(), '320px', '50px');
+  loadAd('ad-home-bottom', getAd300x250(), '300px', '250px');
 });
 </script>
 
